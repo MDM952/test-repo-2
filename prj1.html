@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Portfolio 🐒</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/css_project_page.css">
+        <link rel="stylesheet" href="css/cssmaster.css">
+        <link rel="icon" href="C:\Users\konra\Documents\Własne\Programowanie\HTML CSS Javascript Course\Web Developement 15\6 - Bootstrap Tindog\css\favicon.ico">
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/1c9ad4b785.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="scripts\code highlight\styles\atom-one-dark.min.css"/>
+        <script src="scripts\code highlight\highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+      </head>
+  <body>
+      
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1>Konrad Jarominiak - porftolio</h1>
+          <p class="lead text-muted">
+            Oto kilka projektów z dziedzin data science, danych przestrzennych i wizualizacji danych.
+          </p>
+          <p>
+            <a
+              href="https://getbootstrap.com/docs/4.4/examples/album/#"
+              class="btn btn-primary my-2"
+              >Main call to action</a
+            >
+            <a
+              href="https://getbootstrap.com/docs/4.4/examples/album/#"
+              class="btn btn-secondary my-2"
+              >Secondary action</a
+            >
+          </p>
+        </div>
+    </section>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+           <!-- Main content goes here -->
+
+          <div class="wizualizacja"> <!--Do nawigacji-->
+            <h4 id="wizualizacja-header">Wizualizacja danych</h4>
+
+            Po przetworzeniu danych na dane liczbowe wykorzystano bibliotekę Seaborn do wizualizacji danych. Na podstawie wizualizacji wprowadzono kolejne zmiany w danych przed modelowaniem, np. usunięto wartości znacznie odbiegające od normy.
+            
+            <div class="plot_container"> <!-- Historgram cen-->
+              <img src="css\p1_images\Histogram cen.png" class="img-fluid plot_img" alt="">
+              <div class="middle">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+sns.set_style("ticks")
+fig, ax = plt.subplots(figsize=(9,6),)
+ax.set_ylabel("Częstość")
+sns.histplot(df['Cena'], color='olivedrab').set_title('Histogram cen')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+
+            <div class="plot_container"> <!-- Wykres pudełkowy cen duży-->
+              <img src="css\p1_images\Pudełkowy cen dzielnice.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(100%, -65%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-66)
+chart  = sns.boxplot(data=df, y='Cena', x='lokalizacja', 
+    order=df.groupby('lokalizacja').mean()['Cena'].sort_values(ascending=True).index.tolist(),)
+    
+f = lambda x, pos: f'{x/10**6:,.0f}M'
+chart.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+chart.set(xlabel='Dzielnica', ylabel='Cena')
+chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+
+            <div class="plot_container"> <!-- Wykres pudełkowy cen mały-->
+              <img src="css\p1_images\Pudełkowy cen dzielnice mini.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(100%, -60%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+sns.set_style("ticks")
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-60)
+
+chart  = sns.boxplot(data=df.drop(df[df.Cena >= 2500000].index), y='Cena', x='lokalizacja', 
+    order=df.drop(df[df.Cena >= 2500000].index).groupby('lokalizacja')
+    .mean()['Cena'].sort_values(ascending=True).index.tolist(),
+    )
+
+f = lambda x, pos: f'{x/10**6:,.1f}M'
+chart.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+
+chart.set(xlabel='Dzielnica', ylabel='Cena')
+chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <li class="opis_wiz">
+              Najtańsza oferta to lokal usługowy w Wesołej, o powierzchni 20 m², który może pełnić funkcję mieszkalną, do wykończenia, niecałe 13 km od stacji Świętokrzyska. Niska cena wydaje się uzasadniona.
+            </li>
+
+            <br><br>
+            
+            <div class="plot_container"> <!-- Histogram powierzchni -->
+              <img src="css\p1_images\Histogram powierzchni.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(100%, -50%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9, 6))
+ax.set_ylabel("Częstość")
+chart =sns.histplot(df['powierzchnia'], bins=57, edgecolor=None, element='step', color='navy')
+chart.set_title('Histogram powierzchni')
+chart.set(xlabel='Powierzchnia [m²]', ylabel='Częstość')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <li class="opis_wiz">
+              Wykres wyraźnie współkształtny do histogramu cen - większość ofert to mieszkania do 100 m² w cenie do 1 mil zł.
+            </li>
+
+            <br><br>
+
+            <div class="plot_container"> <!-- XY powierzchnia | pokoje -->
+              <img src="css\p1_images\XY sq i n pokoi.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(65%, -44.3%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+# Kod tylko dla lewego wykresu
+chart = sns.jointplot(data=df, x='powierzchnia', y='Cena', 
+                      hue='zabudowa', kind='scatter', cmap='Mako', 
+ylim=(-1500000, 16000000), xlim=(-50, 500), linewidth = 0, height=8,
+palette={"apartamentowiec": "slateblue", 
+         "blok": "tan", 
+         "kamienica": "mediumaquamarine", 
+         "dom": "crimson"})
+f = lambda x, pos: f'{x/10**6:,.0f}M'
+chart.ax_joint.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+chart.ax_joint.set_xlabel("Powierzchnia [m²]")
+chart.ax_joint.set_ylabel("Cena [zł]")
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <li class="opis_wiz">
+              Oferta mieszkania z dwoma pokojami i powierzchnią 216 m² to lokal mieszkalny o powierzchni 116 m² wraz z lokalem usługowym 100 m². Wymaga wykończenia. Oferta została usunięta pzed modelowaniem. 
+            </li>
+
+            <br><br>
+
+            <div class="plot_container"> <!-- Kolumnowy stan mieszkań -->
+              <img src="css\p1_images\Kolumnowy stan mieszkań.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(100%, -60%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-60)
+
+chart = sns.histplot(
+    df,
+    x="lokalizacja", hue="wykonczenie",
+    multiple="stack",
+    palette="flare",)
+    
+chart.set_title('Stan mieszkań')
+chart.set(xlabel='Dzielnica', ylabel='Ilość')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+
+            <div class="plot_container"> <!-- Kolumnowy rodzaj zabudowy -->
+              <img src="css\p1_images\Histogram zabudowa.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(100%, -61%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-60)
+
+chart = sns.histplot(
+    df,
+    x="lokalizacja", hue="wykonczenie",
+    multiple="stack",
+    palette="flare",)
+    
+chart.set_title('Stan mieszkań')
+chart.set(xlabel='Dzielnica', ylabel='Ilość')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <li class="opis_wiz">
+              Duża ilość mieszkań do wykończenia na Ursusie to osiedle jednego dewelopera z liczbą ok. 120 małych mieszkań oznaczonych jako apartamentowce.
+            </li>
+
+            <br><br>
+
+            <div class="plot_container"> <!-- Histgoram odległości -->
+              <img src="css\p1_images\Odległości.png" class="img-fluid plot_img" alt="">
+              <div class="middle" style="transform: translate(100%, -50%);">
+                <div class="plot_text">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(df['Dystans do Swietokrzyskiej'],  
+            label="L do stacji Świętokrzyska", 
+            kde=False, element="step", alpha=0.3)
+sns.histplot(df["dystans do najblizszej stacji [m]"],  
+            label="L do najbliższej stacji metra [m]", 
+            kde=False, element="step", alpha=0.3)
+ax.set_title('Odległości do stacji metra')
+ax.set(xlabel='Odległość [m]', ylabel='Częstość')
+plt.legend() 
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <li class="opis_wiz">
+Uwagi            </li>
+
+          </div>
+
+          <br><br>
+
+          <div class="plot_container"> <!-- Histgoram odległości -->
+            <img src="css\p1_images\Korelacje.png" class="img-fluid plot_img" alt="">
+            <div class="middle" style="transform: translate(100%, -70%);">
+              <div class="plot_text">
+                <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(df['Dystans do Swietokrzyskiej'],  
+          label="L do stacji Świętokrzyska", 
+          kde=False, element="step", alpha=0.3)
+sns.histplot(df["dystans do najblizszej stacji [m]"],  
+          label="L do najbliższej stacji metra [m]", 
+          kde=False, element="step", alpha=0.3)
+ax.set_title('Odległości do stacji metra')
+ax.set(xlabel='Odległość [m]', ylabel='Częstość')
+plt.legend() 
+                </code></pre>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+          <br>
+          <div class="wiz_uwagi">
+            <h4 id="uwagi-header">Uwagi</h4>
+            <li>Wykres korelacji reprezentuje zależności wartości między atrybutami. Jeżeli wartość jest pozytywna, oznacza to że wraz ze wzrostem wartości w danej kolumnie, wartość w danym wierszu również wzrośnie, jeżeli będzie ujemna, zmaleje. Wartości korelacji bliżej 0 oznaczają, że  atrybut ma małe znaczenie. 
+            </li>
+            <li>Pierwszym wartym zaznaczenia wnioskiem jest fakt, że atrybuty odległości do centrum i najbliższej stacji metra mają niemałe znaczenie - są to jedne z większych wyników (-0,24 i -0,2) po najwyżej korelującymi z ceną powierzchnią i liczbą pokoi. 
+            </li>
+            <li>Innymi znaczącymi atrybutami są rodzaje zabudowy, w szczególności blok (cena maleje) i apartamentowiec (cena rośnie). Znaczna większość najdroższych mieszkań była apartamentowcami.
+            </li>
+            <li>Dom okazał się nieistotny, trzeba również zaznaczyć, że ilość ofert domów (tu połączonych domów wolnostojących i szeregowców) była nieduża. Możliwe że uwzględnienie terenów takich jak podmiejskie rejony Piaseczna z wieloma osiedlami domów jednorodzinnych dałyby bardziej interesujące wyniki. 
+            </li>
+            <li>Co prawda jest zauważalna bardzo duża korelacja między rokiem budowy a kamienicą, można przypuszczać że powinna być jeszcze większa. Wśród ofert znajdowało się kilka kamienic, gdzie za rok budowy najprawdopodobniej podano rok generalnego remontu.
+            </li>
+            <li>Interesująca jest również bliska zeru korelacja między tarasem a domem. Taras ma również dość wysoką korelację z ceną, powierzchnią i apartamentowcem, więc możliwe jest że dotyczą one np. rozległych tarasów na dachach budynków.
+            </li>
+            <li>Stan mieszkania okazał się również dość nieznaczny w stosunku do ceny, niemniej rozkład korelacji - negatywny dla stanu do remontu i do wykończenia i pozytywny dla stanu do zamieszkania jest logiczny.
+            </li>
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+          <!-- Sidebar content goes here -->
+          <div class="position-sticky">
+            <div class="nav flex-column">
+              <div class="inner_nav">
+                <p>Nawigacja:</p>
+                <a href="#wizualizacja-header">Wizualizacja danych</a> <br>
+                <a href="#uwagi-header">Uwagi</a>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+      
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

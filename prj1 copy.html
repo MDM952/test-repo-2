@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Portfolio 🐒</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/css_project_page.css">
+        <link rel="stylesheet" href="css/cssmaster.css">
+        <link rel="icon" href="C:\Users\konra\Documents\Własne\Programowanie\HTML CSS Javascript Course\Web Developement 15\6 - Bootstrap Tindog\css\favicon.ico">
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/1c9ad4b785.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="scripts\code highlight\styles\idea.min.css"/>
+        <script src="scripts\code highlight\highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+
+      </head>
+  <body>
+      
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1>Konrad Jarominiak - porftolio</h1>
+          <p class="lead text-muted">
+            Oto kilka projektów z dziedzin data science, danych przestrzennych i wizualizacji danych.
+          </p>
+          <p>
+            <a
+              href="https://getbootstrap.com/docs/4.4/examples/album/#"
+              class="btn btn-primary my-2"
+              >Main call to action</a
+            >
+            <a
+              href="https://getbootstrap.com/docs/4.4/examples/album/#"
+              class="btn btn-secondary my-2"
+              >Secondary action</a
+            >
+          </p>
+        </div>
+    </section>
+
+    <span class="border border-0">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+
+          <div class="tresc wstep">
+            <h4 id="wstep-header">1. Wstęp</h4>
+            Niniejszy projekt data science miał na celu przedstawienie prostego sposobu na wykorzystanie danych przestrzennych w modelowaniu data science.
+            W projekcie sprawdzono jak duże znaczenie odgrywa odległość mieszkania do centrum miasta i 
+            odległości mieszkania do najbliższej stacji metra na rynku mieszkaniowym w Warszawie. 
+            W projekcie wykorzystano:
+<li>Selenium i Beautiful Soup w celu zebrania danych</li>
+<li>SQLAlchemy do przechowania danych w bazie danych</li>
+<li>GIS do wyznaczenia odległości oraz przedstawienia mieszkań z zebranych ofert na mapie Warszawy</li>
+<li>Pandas do przetworzenia i oczyszczenia danych</li>
+<li>Matplotlib i Seaborn do wizualizacji danych</li>
+<li>sci-kit learn i Keras do stworzenia modelu</li>
+
+          </div>
+
+          <div class="tresc zebranie_danych">
+            <h4 id="zebranie_danych-header">2. Zebranie danych</h4>
+
+            Do zebrania danych wstępnych danych wykorzystano Selenium webdriver, czyli narzędzie umożlwiające zautomatyzowanie funkcjonalności przeglądarki. 
+            Wstępne dane (indeksy, linki i powiat) zebrano z pewnej strony z ofertami mieszkań z wynikami dla Warszawy. 
+            Wykorzystano tu Selenium ze względu na fakt, że oferty ładowane są wraz z przewijaniem strony przez użytkownika – Beautiful Soup nie wyłapałoby żadnych ofert.
+            Dane przechowano przy pomocy SQLAlchemy:
+            <pre><code> <!-- Kod bazy danych -->
+class Links(Base):  
+    __tablename__ = "Links"  
+    numer = Column("numer", Integer, primary_key=True)  
+    powiat = Column("powiat", String)  
+    link = Column("link", String)  
+
+    def __init__(self, numer, powiat, link):  
+        self.numer = numer  
+        self.link = link  
+        self.powiat = powiat  
+
+    def __repr__(self):  
+        return f"({self.numer}, {self.powiat}, {self.link})"
+            </code></pre>
+            W sumie uzyskano 3600 linków z czego część zawierała linki do ofert po za Warszawą. 
+            Na potrzeby stworzenia mapy w QGIS nie przefiltrowano wyników tylko do Warszawy.
+            <br>
+            Do zebrania szczegółowych danych również zastosowano Selenium. 
+            Web scraping przy pomocy Beautiful Soup byłby szybszy i o wiele prostszy, ale nie umożliwiłby zebrania współrzędnych z zaembedowanej mapy google. 
+            Bez przewijania strony, poniższa mapa nie byłaby widoczna i możliwa do zescrapowania.
+            <img src="css\p1_images\embed mapy googli.png" style="margin: 10px auto 10px; width: 100%;">
+            <br>
+            Zbierania współrzędnych dokonywano przy pomocy poniższego kodu:
+            <pre><code> <!-- Kod dla zbierania LATT LONG-->
+try:  
+    driver.execute_script("arguments[0].scrollIntoView();",  
+                          driver.find_element(By.ID, 'map')  
+                          )  
+except NoSuchElementException:  
+    driver.refresh()  
+    driver.execute_script("arguments[0].scrollIntoView();",  
+                          driver.find_element(By.ID, 'map')  
+                          )
+# ...
+map_link = driver.find_element(By.XPATH, "//a[contains(@href,'apiv3')]")  
+coord = map_link.get_attribute('href').split('ll=')[1].split('&')[0].split(',')  
+coord_dict = {  
+    'lat': float(coord[0]),  
+    'long': float(coord[1])  
+    }  
+            </code></pre>
+            Pozostałe dane zbierane były głównie w następujący sposób: dla każdego elementu z listy `all_topics` zbierano wartość z tabeli szczegółów na stronie. 
+            W przykładzie dla głównych informacji nie zdarzało się aby funkcja separująca dane z tekstu zwracała wartość `None`, zamiast tego zwracała 'Zapytaj' 
+            gdy danych nie doprecyzowano. W sekcji oczyszczania danych te dane zostały poprawione i zastąpione. 
+            <br>
+            <pre><code> <!-- Kod dla zbierania danych głównych -->
+def separate_value(text, topic):  
+    try:  
+        value = text.find_element(By.CSS_SELECTOR, f'div[aria-label="{topic}"]')  
+        value = value.text.split(topic)[1].replace('\n', '')  
+        return value  
+    except NoSuchElementException:  
+        return None  
+  
+  
+all_topics = ["Powierzchnia", "Liczba pokoi", "Piętro", "Powierzchnia działki", "Czynsz", "Forma własności", "Stan wykończenia",  
+                    "Balkon / ogród / taras", "Miejsce parkingowe", "Ogrzewanie"]  
+  
+try:  
+    main_info_dict = driver.find_element(By.CSS_SELECTOR, 'div[data-testid="ad.top-information.table"]')  
+except NoSuchElementException:  
+    driver.refresh()  
+    collect_info(link, numer)  
+    return  
+  
+main_dict = {}  
+for topic in all_topics:  
+    main_dict[topic] = separate_value(main_info_dict, topic)
+            </code></pre>
+            Wśród wszystkich ofert znalazła się niemała ilość ofert deweloperów, wśród których nie zostały podane żadne dane z informacji dodatkowych, 
+            np. rynek wtórny/pierwotny, winda czy rodzaj zabudowy. Te dane również uzupełniono w sekcji oczyszczania danych.
+
+            Zapisanie danych ofert dokonano w ten sam sposób co przy zbieraniu samych ofert i dało poniższą tabelę, wyświetlaną w SQLLiteStudio:
+            <br><br>
+            <img src="css\p1_images\SQL dane szczegółowe.png" style="width: 98%;">
+          </div>
+
+          <div class="tresc przetworzenie_w_QGIS">
+            <h4 id="QGIS-header">3. Przetworzenie danych w QGIS</h4>
+            Tabelę zawierającą szczegółowe dane załadowano do programu QGIS wraz warstwą dzielnic Warszawy oraz stacji metra. 
+            Do wyznaczenia odległości wykorzystano dwa narzędzia wektorowe: 
+            <li>
+            liniowa odległość do najbliższego huba, do obliczenia odległości do centrum Warszawy 
+            (na potrzeby tego projektu uznano stację Świętokrzyską za centrum)
+            </li>
+            <li>
+            macierz odległości do obliczenia odległości do najbliższej stacji metra, 
+            tu obliczono odległości do najbliższych pięciu, a następnie przefiltrowano tabelę
+            </li>
+            Efektem przetworzenia danych w QGIS jest mapa mieszkań oraz dwie nowe kolumny z odległościami, które zostały wykorzystane w modelowaniu. 
+            Kilka mieszkań w okolicach Ursynowa nie zostało poprawnie przefiltrowanych, niemniej nie powinny mieć one znaczenia, ze względu na ich niedużą odległość od stacji metra.
+          
+            <br><br>
+            <img src="css\p1_images\Warszawa.png" style="width: 95%;" alt="">
+          </div>
+
+          <div class="tresc oczyszczenie_danych">
+            <h4 id="pandas-header">4. Oczyszczenie danych w Pandas</h4>
+            Wstępne sprawdzenie rodzaju danych w tabeli przedstawia się następująco:
+            <pre><code class="language-python"> <!-- kod typy danych -->
+              numer int64 
+              link object 
+              Cena int64 
+              powierzchnia object 
+              powierzchnia_dzialki float64 
+              lokalizacja object 
+              n_pokojow int64 pietro object 
+              czynsz object 
+              wlasnosc object 
+              wykonczenie object 
+              zewnatrz object # taras, ogród, balkon
+              parking object 
+              ogrzewanie object 
+              rynek object 
+              ogloszenie object 
+              rok_budowy object 
+              zabudowa object 
+              winda object 
+              latt float64 
+              long float64 
+              Dystans do Swietokrzyskiej float64 
+              najblizsza stacja object 
+              dystans do najblizszej stacji [m] float64
+              dtype: object
+            </code></pre>
+
+            Oczyszczenie danych polegało na:
+            <ol>
+              <li>
+                Zamianie wartości na dane liczbowe, w przypadku kolumn takich jak cena czy powierzchnia wymagało usunięcia elementów z teksu takich jak m², 
+                zamianie przecinków na kropki i ogólną zmianę typu danych na int i float
+              </li>
+              <li>
+                Zamianie pól z 'Zapytaj' i NaN czyli niereprezentowalnych brakujących wartości na 
+                takie które miały sens w kontekście tabeli i danego wiersza np.:
+                <pre><code class="language-python"> <!-- kod blok a winda -->
+blok_a_winda = {0:None, 1:'blok'}
+df['zabudowa'] = df['zabudowa'].fillna(df['winda'].map(blok_a_winda))
+                </code></pre>
+                Innym przykładem uzupełnienia danych jest wykorzystanie Beautiful Soup. 
+                Przy pomocy tego scrapera sprawdzono, czy opis oferty zawiera wyrażenia takie jak 'wymaga remontu' i uzupełniono kolumny.
+                <pre><code class="language-python"> <!-- kod BS4 i remont -->
+def parse_remont(link):
+    response = requests.get(link, headers=HEADERS)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    try:
+        opis = soup.find('div',{'data-cy':'adPageAdDescription'}).text
+        ad_title = soup.find('h1',{'data-cy':'adPageAdTitle'}).text
+    except AttributeError: # przypadki gdy oferta została usunięta
+        return
+        
+    lista_remont = ['do remontu', 'wymaga remontu', 'wymagające remontu', 'wymagający remontu', 
+                    'częściowego remontu', 'generalnego remontu', 
+                    'całkowitego remontu', 'do odnowy', 'do odnowienia', ]
+
+    for r in lista_remont:
+        if r in ad_title or r in opis:
+            return 'do remontu'
+        else:
+            return 'do zamieszkania'
+            
+df.loc[df['wykonczenie'] == 'Zapytaj', 'wykonczenie'] 
+= df.loc[df['wykonczenie'] == 'Zapytaj', 'link'].apply(lambda x: parse_remont(x))
+                </code></pre>
+              </li>
+              <li>
+                Usunięto zbędne kolumny i kolumny ze zbyt dużą ilością brakujących danych, np. 'własność' czy 'ogłoszenie'
+              </li>
+              <li>
+                Zastosowano OneHotEncoding przy pomocy pandas.get_dummies - z kolumny 'zabudowa' utworzono cztery nowe kolumny: 'apartamentowiec', 'blok', 'dom', 'kamienica'. Jeżeli dane mieszkanie znajduje się w bloku, w kolumnie 'blok' będzie wartość 1, w pozostałych 0.
+                <br>
+                W przypadku kolumny 'zewnątrz' zastosowano własne funkcje do uzupełnienia kolumn, ze względu na fakt, że w jednym mieszkaniu mogą występować kilka opcji np. balkon i taras jednocześnie:
+                <pre><code class="language-python"> <!-- kod dummies dla zewnątrz1 -->
+def get_balkon(text):
+    if 'balkon' in text:
+        return 1
+    else:
+        return 0
+
+def get_ogrod(text):
+    if 'ogródek' in text:
+        return 1
+    else:
+        return 0
+
+def get_taras(text):
+    if 'taras' in text:
+        return 1
+    else:
+        return 0
+
+df["balkon"] = df["zewnatrz"].apply(lambda x: get_balkon(x))
+df["ogrod"] = df["zewnatrz"].apply(lambda x: get_ogrod(x))
+df["taras"] = df["zewnatrz"].apply(lambda x: get_taras(x))
+                </code></pre>                
+              </li>
+
+            </ol>
+
+
+
+          </div>
+
+          <div class="tresc AKORDEONY"> <!-- Początek wizualizacji i akordeonu -->
+            <h4 id="wizualizacja-header">5. Wizualizacja danych</h4>
+          <div class="accordion" id="accordionPanelsStayOpenExample"> 
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  <img src="css\p1_images\Histogram cen.png" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+sns.set_style("ticks")
+fig, ax = plt.subplots(figsize=(9,6),)
+ax.set_ylabel("Częstość")
+sns.histplot(df['Cena'], color='olivedrab').set_title('Histogram cen')
+                                                </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                  <img src="css\p1_images\Pudełkowy cen dzielnice.png" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-66)
+chart  = sns.boxplot(data=df, y='Cena', x='lokalizacja', 
+    order=df.groupby('lokalizacja').mean()['Cena'].sort_values(ascending=True).index.tolist(),)
+    
+f = lambda x, pos: f'{x/10**6:,.0f}M'
+chart.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+chart.set(xlabel='Dzielnica', ylabel='Cena')
+chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
+                                                </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseThree">
+                  <img src="css\p1_images\Pudełkowy cen dzielnice mini.png" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+sns.set_style("ticks")
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-60)
+
+chart  = sns.boxplot(data=df.drop(df[df.Cena >= 2500000].index), y='Cena', x='lokalizacja', 
+    order=df.drop(df[df.Cena >= 2500000].index).groupby('lokalizacja')
+    .mean()['Cena'].sort_values(ascending=True).index.tolist(),
+    )
+
+f = lambda x, pos: f'{x/10**6:,.1f}M'
+chart.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+
+chart.set(xlabel='Dzielnica', ylabel='Cena')
+chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+
+            <li class="opis_wiz">
+              Najtańsza oferta to lokal usługowy w Wesołej, o powierzchni 20 m², który może pełnić funkcję mieszkalną, do wykończenia, niecałe 13 km od stacji Świętokrzyska. Niska cena wydaje się uzasadniona.
+            </li>
+          </div>
+
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">
+<img src="css\p1_images\Histogram powierzchni.png" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9, 6))
+ax.set_ylabel("Częstość")
+chart =sns.histplot(df['powierzchnia'], bins=57, edgecolor=None, element='step', color='navy')
+chart.set_title('Histogram powierzchni')
+chart.set(xlabel='Powierzchnia [m²]', ylabel='Częstość')
+                                      </code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="opis_wiz">
+            Wykres wyraźnie współkształtny do histogramu cen - większość ofert to mieszkania do 100 m² w cenie do 1-1,2 mil zł.           
+          </li>
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
+<img src="css\p1_images\XY sq i n pokoi.png" style="width:100%" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+# Kod tylko dla lewego wykresu
+chart = sns.jointplot(data=df, x='powierzchnia', y='Cena', 
+                      hue='zabudowa', kind='scatter', cmap='Mako', 
+ylim=(-1500000, 16000000), xlim=(-50, 500), linewidth = 0, height=8,
+palette={"apartamentowiec": "slateblue", 
+         "blok": "tan", 
+         "kamienica": "mediumaquamarine", 
+         "dom": "crimson"})
+f = lambda x, pos: f'{x/10**6:,.0f}M'
+chart.ax_joint.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+chart.ax_joint.set_xlabel("Powierzchnia [m²]")
+chart.ax_joint.set_ylabel("Cena [zł]")
+                                      </code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="opis_wiz">
+            Oferta mieszkania z dwoma pokojami i powierzchnią 216 m² to lokal mieszkalny o powierzchni 116 m² wraz z lokalem usługowym 100 m², kóry wymaga wykończenia. 
+            <br>Oferta została usunięta pzed modelowaniem. 
+          </li>
+
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
+<img src="css\p1_images\Histogram zabudowa.png" alt="">                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                <div class="accordion-body">
+
+                  <pre><code>
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-60)
+chart = sns.histplot(
+    df,
+    x="lokalizacja", hue="zabudowa",
+    multiple="stack",
+    palette="viridis",)
+chart.set_title('Rodzaj zabudowy')
+chart.set(xlabel='Dzielnica', ylabel='Ilość')
+                  </code></pre>
+
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+<img src="css\p1_images\Kolumnowy stan mieszkań.png" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+                <div class="accordion-body">
+
+                  <pre><code>
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-60)
+chart = sns.histplot(
+    df,
+    x="lokalizacja", hue="wykonczenie",
+    multiple="stack",
+    palette="flare",)
+chart.set_title('Stan mieszkań')
+chart.set(xlabel='Dzielnica', ylabel='Ilość')
+                  </code></pre>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+<br>
+          
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseTen" aria-expanded="true" aria-controls="panelsStayOpen-collapseTen">
+<img src="css\p1_images\Odległości.png" style="width: 100%;">                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTen" class="accordion-collapse collapse">
+                <div class="accordion-body">
+<pre><code>
+  fig, ax = plt.subplots(figsize=(9,6))
+  sns.histplot(df['Dystans do Swietokrzyskiej'],  
+                      label="L do stacji Świętokrzyska", 
+                      kde=False, element="step", 
+                      alpha=0.3)
+  sns.histplot(df["dystans do najblizszej stacji [m]"],  
+                      label="L do najbliższej stacji metra [m]", 
+                      kde=False, element="step", alpha=0.3)
+  ax.set_title('Odległości do stacji metra')
+  ax.set(xlabel='Odległość [m]', ylabel='Częstość')
+  plt.legend() 
+</code></pre>                </div>
+              </div>
+            </div>
+          </div>
+
+<br>
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="true" aria-controls="panelsStayOpen-collapseNine">
+<img src="css\p1_images\Korelacje.png" style="width: 100%;">                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
+                <div class="accordion-body">
+<pre><code>
+  fig, ax = plt.subplots(figsize=(9,8))
+sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
+    fmt=".2f",
+    xticklabels=['Cena', 'Powierzchnia', 'Liczba pokojów', 'Piętro', 'Parking', 'Rok budowy', 
+    'Winda', '[m] do Centrum', '[m] do najbliższej stacji', 'Balkon', 'Ogród', 'Taras', 'Do remontu',
+    'Do wykończenia', 'Do zamieszkania', 'Rynek pierwotny', 'Rynek wtórny', 'Apartamentowiec', 'Blok', 'Dom', 'Kamienica'],
+    yticklabels=['Cena', 'Powierzchnia', 'Liczba pokojów', 'Piętro', 'Parking', 'Rok budowy', 
+    'Winda', '[m] do Centrum', '[m] do najbliższej stacji', 'Balkon', 'Ogród', 'Taras', 'Do remontu',
+    'Do wykończenia', 'Do zamieszkania', 'Rynek pierwotny', 'Rynek wtórny', 'Apartamentowiec', 'Blok', 'Dom', 'Kamienica'])
+</code></pre>                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <br>
+          <div class="wiz_uwagi">
+            <h4 id="uwagi-header">Uwagi dotyczące korelacji</h4>
+            <li>Wykres korelacji reprezentuje zależności wartości między atrybutami. Jeżeli wartość jest pozytywna, oznacza to że wraz ze wzrostem wartości w danej kolumnie, wartość w danym wierszu również wzrośnie, jeżeli będzie ujemna, zmaleje. Wartości korelacji bliżej 0 oznaczają, że  atrybut ma małe znaczenie. 
+            </li>
+            <li>Pierwszym wartym zaznaczenia wnioskiem jest fakt, że atrybuty odległości do centrum i najbliższej stacji metra mają niemałe znaczenie - są to jedne z większych wyników (-0,24 i -0,2) po najwyżej korelującymi z ceną powierzchnią i liczbą pokoi. 
+            </li>
+            <li>Innymi znaczącymi atrybutami są rodzaje zabudowy, w szczególności blok (cena maleje) i apartamentowiec (cena rośnie). Znaczna większość najdroższych mieszkań była apartamentowcami.
+            </li>
+            <li>Dom okazał się nieistotny, trzeba również zaznaczyć, że ilość ofert domów (tu połączonych domów wolnostojących i szeregowców) była nieduża. Możliwe że uwzględnienie terenów takich jak podmiejskie rejony Piaseczna z wieloma osiedlami domów jednorodzinnych dałyby bardziej interesujące wyniki. 
+            </li>
+            <li>Co prawda jest zauważalna bardzo duża korelacja między rokiem budowy a kamienicą, można przypuszczać że powinna być jeszcze większa. Wśród ofert znajdowało się kilka kamienic, gdzie za rok budowy najprawdopodobniej podano rok generalnego remontu.
+            </li>
+            <li>Interesująca jest również bliska zeru korelacja między tarasem a domem. Taras ma również dość wysoką korelację z ceną, powierzchnią i apartamentowcem, więc możliwe jest że dotyczą one np. rozległych tarasów na dachach budynków.
+            </li>
+            <li>Stan mieszkania okazał się również dość nieznaczny w stosunku do ceny, niemniej rozkład korelacji - negatywny dla stanu do remontu i do wykończenia i pozytywny dla stanu do zamieszkania jest logiczny.
+            </li>
+          </div>
+        
+          </div>
+
+          <div class="tresc modelowanie">
+            <h4 id="modelowanie-header">Modelowanie</h4>
+            Modelowanie przeprowadzono przy pomocy prostej regresji liniowej z biblioteki scikit-learn oraz sieci neuronowej Keras. Po oczyszczeniu danych pozostało tylko dobranie danych dla wytrenowania modelu. 
+            <br><br>
+            
+            Najpierw usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', ponieważ nie są one już potrzebne - 0 w kolumnie 'do wykończenia' i 0 w kolumnie 'do remontu' wystarczą. Przy skorzystaniu z funkcji get_dummies można skorzystać z drop_first=True by osiągnąć ten efekt. Tu zostało to zrobione dopiero na tym etapie w celu jaśniejszej wizualizacji korelacji. 
+            <br><br>
+            We wszystkich modelach test_size w Train-Test-Split ustawiono na 0.3 co oznacza, że 70% danych zostało przeznaczone na wytrenowanie modelu, a 30% na sprawdzenie. 
+            <br><br>
+            Do ewaluacji modelu wykorzystano:
+            <li>MAE - Mean Absolute Error - średni błąd bezwzględny</li>
+            <li>RMSE - Root Mean Squared Error - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, 
+            można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE)</li>
+            <li>R² - współczynnik determinacji - osiąga wartości od 0, do 1, wyższa wartość oznacza lepiej dopasowaną linię regresji</li>
+            <br>
+
+            $$MAE=\frac{1}{n}\sum^n_{i=1}|y_i-\hat{y_i}|$$	
+            <!-- MAE - średni błąd bezwzględny - średnia z sumy wartości bezwzględnych błędów -->
+            $$RSME=\sqrt{\frac{1}{n}\sum^n_{i=1}(y_i-\hat{y_i})^2}$$
+            $$R^2=1-\frac{\sum^n_{i=1}(y_i-\hat{y_i})^2}{\sum^n_{i=1}(y_i-\overline{y_i})^2}$$
+            gdzie: 
+            <li>\((y_i-\hat{y_i})^2\) to tzw. residuals, potęga różnicy między wartością prawdziwą a wartością przewidywaną</li>
+            <li>\((y_i-\overline{y_i})^2\) to wariancja, potęga różnicy między prawdziwą wartością a średnią tego rodzaju wartości</li>
+            <!-- RMSE - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE) -->
+            <br>MAE, MSE i RMSE są wartościami, które chcemy zminimalizować podczas budowania modelu.
+            <br><br>Modelowanie przeprowadzono dla kilku różnych przedziałów - najpierw usunięto mieszkania powyżej 9 000 000 zł. Wyniki przedstawiono poniżej. 
+
+
+            <div class="card mb-6" style="max-width: 900px;">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img src="css\p1_images\9mil reg.png" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Regresja liniowa <br> do 9 mln zł</h5>
+                    <li>MAE: 251 527 [zł]</li>
+                    <li>RMSE: 393 270 [zł]</li>
+                    <li>R²: 0.80</li>     
+                    <p class="card-text"><small class="text-body-secondary">Koszt mojego mieszkania: 365 607 zł</small></p>              
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-6" style="max-width: 900px;">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img src="css\p1_images\9mil keras.png" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Regresja TensorFlow<br> do 9 mln zł</h5>
+                    <li>MAE: 697 458 [zł]</li>
+                    <li>RMSE: 1 106 752 [zł]</li>
+                    <li>R²: 0.75</li>                    
+                    <p class="card-text"><small class="text-body-secondary">Koszt mojego mieszkania: 531320 zł</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            Mimo wysokiego wyniku R² taki model nie jest zbyt praktyczny - średnie błędy są zbyt wysokie, w szczególności 
+            w przypadku RMSE dla sieci neuronowej TensorFlow gdzie RMSE wynosi ponad 1 mln zł, czyli trochę więcej niż średnia cena mieszkania w zestawie danych. 
+            Jest tu też wyraźnie widoczny efekt badania RMSE, który jest bardziej 'wyczulony' na wartości mocno odbiegające od wartości średnich. 
+            Dlatego w kolejnym podejściu przedział danych ograniczono do cen od 125 000 do 2 500 000 mln zł. <br><br>
+             
+            
+            <div class="card mb-6" style="max-width: 900px;">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img src="css\p1_images\2mil reg.png" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Regresja liniowa <br> do 2,5 mln zł</h5>
+                    <li>MAE: 147 788 [zł]</li>
+                    <li>RMSE: 211 835 [zł]</li>
+                    <li>R²: 0.75</li>     
+                    <p class="card-text"><small class="text-body-secondary">Koszt mojego mieszkania: 494 160 zł</small></p>              
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-6" style="max-width: 900px;">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img src="css\p1_images\2mil keras.png" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Regresja TensorFlow<br> do 2,5 mln zł</h5>
+                    <li>MAE: 412 673 [zł]</li>
+                    <li>RMSE: 557 260 [zł]</li>
+                    <li>R²: 0.74</li>                    
+                    <p class="card-text"><small class="text-body-secondary">Koszt mojego mieszkania: 531320 zł</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Mieszkanie</th>
+                  <th scope="col">LR <9 mln zł</th>
+                  <th scope="col">TF <9 mln zł</th>
+                  <th scope="col">LR <2,5 mln zł</th>
+                  <th scope="col">TF <2,5 mln zł</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">37 m², blok, Włochy</th>
+                  <td>365 607 zł</td>
+                  <td>531 320 zł</td>
+                  <td>494 160 zł</td>
+                  <td>531 320 zł</td>
+                </tr>
+                <tr>
+                  <th scope="row">54 m², apartmanet, Kabaty</th>
+                  <td>394 026 zł</td>
+                  <td>628 492 zł</td>
+                  <td>577 780 zł</td>
+                  <td>667 709 zł</td>
+                </tr>
+                <tr>
+                  <th scope="row">96 m², apartmanet, Natolin</th>
+                  <td>1 501 197 zł</td>
+                  <td>1 358 248 zł</td>
+                  <td>1 397 107 zł</td>
+                  <td>1 519 427 zł</td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </span>
+        <div class="col-md-4"> <!-- SIDEBAR -->
+          <div class="sticky">
+            <p>Nawigacja:</p>
+            <a href="#wstep-header">1. Wstęp</a> <br>
+            <a href="#zebranie_danych-header">2. Zebranie danych</a> <br>
+            <a href="#QGIS-header">3. Przetworzenie danych w QGIS</a> <br>
+            <a href="#pandas-header">4. Oczyszczenie danych w Pandas</a> <br>
+            <a href="#wizualizacja-header">5. Wizualizacja danych</a> <br>
+            <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
+            <a href="#modelowanie-header">6. Modelowanie</a> <br>
+          </div>
+        </div>
+    </div>
+      
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>
