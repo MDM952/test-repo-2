@@ -64,7 +64,7 @@
 <li>GIS do wyznaczenia odległości oraz przedstawienia mieszkań z zebranych ofert na mapie Warszawy</li>
 <li>Pandas do przetworzenia i oczyszczenia danych</li>
 <li>Matplotlib i Seaborn do wizualizacji danych</li>
-<li>sci-kit learn i Keras do stworzenia modelu</li>
+<li>sci-kit learn i TensorFlow Keras do stworzenia modeli</li>
 
           </div>
 
@@ -287,7 +287,7 @@ df["taras"] = df["zewnatrz"].apply(lambda x: get_taras(x))
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                  <img src="css\p1_images\Histogram cen.png" alt="">
+                  <img src="css\p1_images\Histogram cen.png" style="width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
@@ -305,7 +305,7 @@ sns.histplot(df['Cena'], color='olivedrab').set_title('Histogram cen')
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                  <img src="css\p1_images\Pudełkowy cen dzielnice.png" alt="">
+                  <img src="css\p1_images\Pudełkowy cen dzielnice.png" style="width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
@@ -329,7 +329,7 @@ chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
                   aria-controls="panelsStayOpen-collapseThree">
-                  <img src="css\p1_images\Pudełkowy cen dzielnice mini.png" alt="">
+                  <img src="css\p1_images\Pudełkowy cen dzielnice mini.png" style="width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
@@ -365,7 +365,7 @@ chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">
-<img src="css\p1_images\Histogram powierzchni.png" alt="">
+<img src="css\p1_images\Histogram powierzchni.png" style="width: 100%;" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
@@ -424,7 +424,7 @@ chart.ax_joint.set_ylabel("Cena [zł]")
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
-<img src="css\p1_images\Histogram zabudowa.png" alt="">                </button>
+<img src="css\p1_images\Histogram zabudowa.png" style="width:100%" alt="">                </button>
               </h2>
               <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
                 <div class="accordion-body">
@@ -448,7 +448,7 @@ chart.set(xlabel='Dzielnica', ylabel='Ilość')
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
-<img src="css\p1_images\Kolumnowy stan mieszkań.png" alt="">
+<img src="css\p1_images\Kolumnowy stan mieszkań.png" style="width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
@@ -470,7 +470,10 @@ chart.set(xlabel='Dzielnica', ylabel='Ilość')
               </div>
             </div>
           </div>
-
+          <li class="opis_wiz">
+            Duża ilość mieszkań do wykończenia na Ursusie to osiedle jednego dewelopera z liczbą ok. 120 małych mieszkań.
+            <br>
+          </li>
 <br>
           
           <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -478,7 +481,7 @@ chart.set(xlabel='Dzielnica', ylabel='Ilość')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseTen" aria-expanded="true" aria-controls="panelsStayOpen-collapseTen">
-<img src="css\p1_images\Odległości.png" style="width: 100%;">                </button>
+<img src="css\p1_images\Odległości.png" style="width:100%" alt="">               </button>
               </h2>
               <div id="panelsStayOpen-collapseTen" class="accordion-collapse collapse">
                 <div class="accordion-body">
