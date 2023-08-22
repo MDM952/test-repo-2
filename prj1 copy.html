@@ -568,11 +568,31 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
           <div class="tresc modelowanie">
             <h4 id="modelowanie-header">Modelowanie</h4>
             Po oczyszczeniu danych pozostało tylko dobranie danych dla wytrenowania modelu.
-            Modelowanie przeprowadzono przy pomocy prostej regresji liniowej z biblioteki scikit-learn oraz sieci neuronowej Keras. 
+            Modelowanie przeprowadzono przy pomocy prostej regresji liniowej z biblioteki scikit-learn oraz sieci neuronowej TensorFlow. 
+            <br><br>
+            Regresja liniowa polega na znalezieniu zależności między wartością przewidywaną (zmienna objaśniana)
+            a predyktorami (zmienne objaśniające) poprzez dopasowanie wag predyktorów. 
+            Równanie regresji liniowej przedstawia się następująco:
 
+            $$y = β_0 + β_1 x_1 + β_2 x_2 + \dots + β_n x_n + \epsilon$$
+
+            gdzie: 
+            <li>\(y\) to zmienna objaśniana, zależna, to co model przewiduje</li>
+            <li>\(x_i\) to zmienna objaśniająca, niezależna, inaczej predyktor</li>
+            <li>\(β_i\) to współczynnik regresji, element który dobiera model podczas trenowania </li>
+            <li>\(\epsilon\) to nieskracalny błąd modelu</li>            
+ 
+            <br>
+            Z kolei sieć neuronowa naśladuje działanie ludzkiego mózgu - jest zbudowana z wielu poziomów neuronów przetwarzających dane. 
+            Każdy pojedynczy neuron w danym poziomie jest połączony ze wszystkimi neuronami w sąsiadujących poziomach. 
+            Proces modelowania przy pomocy sieci neuronowej zaczyna się wprowadzaniem danych w warstwie wejściowej,
+            następnie następuje propagacja w przód, dane są przekazywane kolejnym neuronom w kolejnych warstwach, wraz dobraniem wagi dla danego parametru.
+            Neurony są aktywowane na podstawie funkcji aktywacyjnej, w tym projekcie wykorzystano ReLU (Rectified Linear Unit) ze względu na jej proste i szybkie działanie.
+            Po propagacji w przód następuje propagacja wsteczna, podczas której aktualizowane są wagi i bias (obciążenie) idąc od warstwy końcowej do wejściowej.
+            Sieci neuronowe mają zastosowanie w wielu zagadnieniach w nauczaniu maszynowym, zaczynając od regresji, a kończąc na Chatbotach.
             <br><br>
             
-            Najpierw usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', ponieważ nie są one już potrzebne - 0 w kolumnie 'do wykończenia' i 0 w kolumnie 'do remontu' wystarczą. Przy skorzystaniu z funkcji get_dummies można skorzystać z drop_first=True by osiągnąć ten efekt. Tu zostało to zrobione dopiero na tym etapie w celu jaśniejszej wizualizacji korelacji. 
+            Przed modelowaniem usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', ponieważ nie są one już potrzebne - 0 w kolumnie 'do wykończenia' i 0 w kolumnie 'do remontu' wystarczą. Przy skorzystaniu z funkcji get_dummies można skorzystać z drop_first=True by osiągnąć ten efekt. Tu zostało to zrobione dopiero na tym etapie w celu jaśniejszej wizualizacji korelacji. 
             <br><br>
             We wszystkich modelach test_size w Train-Test-Split ustawiono na 0.3 co oznacza, że 70% danych zostało przeznaczone na wytrenowanie modelu, a 30% na sprawdzenie. 
             <br><br>
@@ -596,7 +616,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             
             Na wykresach rozrzutu zaznaczono również linię wzdłuż której przebiegałaby idealna koncentracja przewidywanych punktów. 
             Punkt znajdujący się bliżej tej linii będzie oznaczał mniejszy błąd. 
-            Gdyby model opierał się tylko na jednej wartości (np. powierzchni mieszkania), 
+            Gdyby model opierał się tylko na jednej wartości (np. powierzchni mieszkania) czyli nie był modelem regresji wielokrotnej, 
             możliwe byłoby wyprowadzenie faktycznej linii funkcji regresji liniowej. 
             
             Na wykresach po prawej przedstawiono dystrybucję wartości residuals, 
