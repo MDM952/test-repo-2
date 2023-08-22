@@ -589,10 +589,16 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <li>\((y_i-\hat{y_i})^2\) to tzw. residuals, potęga różnicy między wartością prawdziwą a wartością przewidywaną</li>
             <li>\((y_i-\overline{y_i})^2\) to wariancja, potęga różnicy między prawdziwą wartością a średnią tego rodzaju wartości</li>
             <!-- RMSE - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE) -->
-            <br>MAE, MSE i RMSE są wartościami, które chcemy zminimalizować podczas budowania modelu.
-            <br><br>Modelowanie przeprowadzono dla kilku różnych przedziałów - najpierw usunięto mieszkania powyżej 9 000 000 zł. Wyniki przedstawiono poniżej. 
+            <br>MAE, MSE i RMSE są wartościami, które chcemy zminimalizować podczas budowania modelu. 
+            Na wykresach rozrzutu zaznaczono również linię wzdłuż której przebiegałaby idealna koncentracja przewidywanych punktów. 
+            Punkt znajdujący się bliżej tej linii będzie oznaczał mniejszy błąd. Na wykresach po prawej przedstawiono dystrybucję wartości residuals, 
+            im więcej wartości bliżej 0, tym lepiej.
 
+            <br><br>Modelowanie przeprowadzono dla kilku różnych przedziałów - najpierw usunięto mieszkania powyżej 9 000 000 zł. 
+            Wyniki przedstawiono poniżej. 
+            
 
+              <br>
             <div class="card mb-6" style="max-width: 900px;">
               <div class="row g-0">
                 <div class="col-md-8">
