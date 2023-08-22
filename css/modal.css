@@ -14,7 +14,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 1%; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -30,7 +30,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   display: block;
   /* width: 80%; */
   /* max-width: 700px; */
-  height: 87%;
+  height: 98%;
   width: auto;
 }
 
