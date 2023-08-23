@@ -134,8 +134,9 @@ def separate_value(text, topic):
         return None  
   
   
-all_topics = ["Powierzchnia", "Liczba pokoi", "Piętro", "Powierzchnia działki", "Czynsz", "Forma własności", "Stan wykończenia",  
-                    "Balkon / ogród / taras", "Miejsce parkingowe", "Ogrzewanie"]  
+all_topics = ["Powierzchnia", "Liczba pokoi", "Piętro", "Powierzchnia działki", 
+              "Czynsz", "Forma własności", "Stan wykończenia",  
+              "Balkon / ogród / taras", "Miejsce parkingowe", "Ogrzewanie"]  
   
 try:  
     main_info_dict = driver.find_element(By.CSS_SELECTOR, 'div[data-testid="ad.top-information.table"]')  
@@ -590,6 +591,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             Neurony są aktywowane na podstawie funkcji aktywacyjnej, w tym projekcie wykorzystano ReLU (Rectified Linear Unit) ze względu na jej proste i szybkie działanie.
             Po propagacji w przód następuje propagacja wsteczna, podczas której aktualizowane są wagi i bias (obciążenie) idąc od warstwy końcowej do wejściowej.
             Sieci neuronowe mają zastosowanie w wielu zagadnieniach w nauczaniu maszynowym, zaczynając od regresji, a kończąc na Chatbotach.
+            <br>
+            <img src="css\p1_images\własna sieć.png" style="width: 98%; max-height: 300px; margin: auto; object-fit: contain;" alt="">
             <br><br>
             
             Przed modelowaniem usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', ponieważ nie są one już potrzebne - 0 w kolumnie 'do wykończenia' i 0 w kolumnie 'do remontu' wystarczą. Przy skorzystaniu z funkcji get_dummies można skorzystać z drop_first=True by osiągnąć ten efekt. Tu zostało to zrobione dopiero na tym etapie w celu jaśniejszej wizualizacji korelacji. 
