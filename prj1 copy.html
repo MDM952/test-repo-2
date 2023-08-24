@@ -430,6 +430,10 @@ chart.ax_joint.set_ylabel("Cena [zł]")
             </div>
           </div>
           <li class="opis_wiz">
+            Rozrzut cen w stosunku do powierzchni jest dość znaczny, oznacza to, że na cenę również wpływa wiele innych czynników  - 
+            tu np. widać że aparatamenty cechują się wyższą ceną niż inne rodzaje zabudowy.
+          </li>
+          <li class="opis_wiz">
             Oferta mieszkania z dwoma pokojami i powierzchnią 216 m² to lokal mieszkalny o powierzchni 116 m² wraz z lokalem usługowym 100 m², kóry wymaga wykończenia. 
             <br>Oferta została usunięta pzed modelowaniem. 
           </li>
@@ -595,15 +599,24 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <img src="css\p1_images\własna sieć.png" style="width: 98%; max-height: 300px; margin: auto; object-fit: contain;" alt="">
             <br><br>
             
-            Przed modelowaniem usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', ponieważ nie są one już potrzebne - 0 w kolumnie 'do wykończenia' i 0 w kolumnie 'do remontu' wystarczą. Przy skorzystaniu z funkcji get_dummies można skorzystać z drop_first=True by osiągnąć ten efekt. Tu zostało to zrobione dopiero na tym etapie w celu jaśniejszej wizualizacji korelacji. 
+            Przed modelowaniem usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', 
+            ponieważ nie są one już potrzebne - 0 w kolumnie 'do wykończenia' i 0 w kolumnie 'do remontu' wystarczą. 
+            Przy skorzystaniu z funkcji get_dummies można skorzystać z drop_first=True by osiągnąć ten efekt. 
+            Tu zostało to zrobione dopiero na tym etapie w celu jaśniejszej wizualizacji korelacji. 
             <br><br>
-            We wszystkich modelach test_size w Train-Test-Split ustawiono na 0.3 co oznacza, że 70% danych zostało przeznaczone na wytrenowanie modelu, a 30% na sprawdzenie. 
+            We wszystkich modelach test_size w Train-Test-Split ustawiono na 0.3 co oznacza, że 70% danych zostało przeznaczone na wytrenowanie modelu, 
+            a 30% na sprawdzenie. 
+            Przy modelowaniu siecią neuronową wykorzystano narzędzie MinMaxScaler, 
+            które normalizuje wartości na podstawie ich odchylenia standardowego oraz najmniejszej i największej wartości,
+            tak aby były w przedziale od 0 do 1. Dzięki temu błędy wynikające z różnic w wielkościach wartości (np. powierzchnia mieszkania a dystans do centrum) 
+            oraz ich wag i obciążeń zostaną zminimalizowane.
             <br><br>
             Do ewaluacji modelu wykorzystano:
             <li>MAE - Mean Absolute Error - średni błąd bezwzględny</li>
             <li>RMSE - Root Mean Squared Error - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, 
             można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE)</li>
             <li>R² - współczynnik determinacji - osiąga wartości od 0 do 1, wyższa wartość oznacza lepiej dopasowaną linię regresji</li>
+            <li>EV - Explained Variance Score - zastosowanie jak R², inaczej obliczany</li>
             <br>
 
             $$MAE=\frac{1}{n}\sum^n_{i=1}|y_i-\hat{y_i}|$$	
@@ -647,6 +660,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
               </div>
             </div>
 
+            <div style="height: 5px;"></div>
+
             <div class="card mb-6" style="max-width: 900px;">
               <div class="row g-0">
                 <div class="col-md-8">
@@ -657,13 +672,13 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                     <h5 class="card-title">Regresja TensorFlow<br> do 9 mln zł</h5>
                     <li>MAE: 697 458 [zł]</li>
                     <li>RMSE: 1 106 752 [zł]</li>
-                    <li>R²: 0.75</li>                    
+                    <li>EV: 0.75</li>                    
                   </div>
                 </div>
               </div>
             </div>
             <br>
-            Mimo wysokiego wyniku R² taki model nie jest zbyt praktyczny - średnie błędy są zbyt wysokie, w szczególności 
+            Mimo wysokiego wyniku R² i EV taki model nie jest zbyt praktyczny - średnie błędy są zbyt wysokie, w szczególności 
             w przypadku RMSE dla sieci neuronowej TensorFlow gdzie RMSE wynosi ponad 1 mln zł, czyli trochę więcej niż średnia cena mieszkania w zestawie danych. 
             Jest tu też wyraźnie widoczny efekt badania RMSE, który jest bardziej 'wyczulony' na wartości mocno odbiegające od wartości średnich. 
             Dlatego w kolejnym podejściu przedział danych ograniczono do cen od 125 000 do 2 500 000 mln zł. <br><br>
@@ -685,6 +700,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
               </div>
             </div>
 
+            <div style="height: 5px;"></div>
+
             <div class="card mb-6" style="max-width: 900px;">
               <div class="row g-0">
                 <div class="col-md-8">
@@ -695,7 +712,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                     <h5 class="card-title">Regresja TensorFlow<br> do 2,5 mln zł</h5>
                     <li>MAE: 412 673 [zł]</li>
                     <li>RMSE: 557 260 [zł]</li>
-                    <li>R²: 0.74</li>                    
+                    <li>EV: 0.74</li>                    
                   </div>
                 </div>
               </div>
@@ -704,7 +721,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <br><br>
             Poniżej przedstawiono ceny trzech mieszkań przewidziane przez modele. 
             Dane mieszkań zostały wprowadzone w formie Pythonowego dictionary, a następnie utworzono z nich jednowierszową tabelę Pandas.
-            W przypadku przewidywania cen mieszkań przez TensorFlow również należało użyć narzędzia Scaler.
+            W przypadku przewidywania cen mieszkań przez TensorFlow również należało użyć narzędzia MinMaxScaler.
             <br><br>
 
             <table class="table table-hover">
@@ -726,14 +743,14 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                   <td>531 320 zł</td>
                 </tr>
                 <tr>
-                  <th scope="row">54 m², apartmanet, Kabaty</th>
+                  <th scope="row">54 m², apartament, Kabaty</th>
                   <td>394 026 zł</td>
                   <td>628 492 zł</td>
                   <td>577 780 zł</td>
                   <td>667 709 zł</td>
                 </tr>
                 <tr>
-                  <th scope="row">96 m², apartmanet, Natolin</th>
+                  <th scope="row">96 m², apartament, Natolin</th>
                   <td>1 501 197 zł</td>
                   <td>1 358 248 zł</td>
                   <td>1 397 107 zł</td>
@@ -742,6 +759,41 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                 </tr>
               </tbody>
             </table>
+
+            <h6>
+              Na podstawie wyników z tabeli oraz interpretacji wykresów i błędów wyciągnięto następujące wnioski:
+            </h6>
+            <li>Model regresji liniowej mocno zaniża wartości mieszkań w najniższym przedziale cen - do ok. 500 tys. zł.</li>
+            <li>Natomiast w przedziale od ok. 0,5 do 1 mln zł ceny są lekko zawyżone.</li>
+            <li>Ceny mieszkań powyżej 1,5 mln zł również są zaniżane, im droższe mieszkania tym rozrzut przewidywanych cen jest większy,
+              ze względu na mniejszą ilość takich ofert w zestawie danych do wytrenowanie celnego modelu.</li>
+            <li>W przypadku sprawdzonych mieszkań z tabeli, model TF<9 mln zł okazał się dość trafny.
+            Wysokie wartości MEA i RMSE najprawdopodobniej wynikają z ofert mieszkań powyżej 2 mln zł. 
+            Niemniej do zbudowania modeli przydatnych do przewidywania cen tak drogich mieszkań, 
+            niezbędna byłaby większa ilość drogich mieszkań w zestawie danych.</li>
+            <li>Cena mieszkania na Kabatach wydaje się mocno zaniżona we wszystkich przypadkach, 
+            mimo niemałej powierzchni i świetnej lokalizacji względem stacji metra. 
+            Jedną z przyczyn może być korelacja atrybutu 'apartament' z małą powierzchnią lub innymi atrybutami - 
+            wiele ofert bardzo małych mieszkań zostało otagowanych przez deweloperów jako aparatamenty, 
+            również podczas oczyszczania danych wiele brakujących danych w kolumnie 'zabudowa' mogło zostać błędnie przypisanych.</li>
+          
+            <br>
+            <h6>Sugestie jak ulepszyć modele:
+            </h6>
+            <li>Dodanie więcej danych, np. z danych archiwalnych gdyby były dostępne</li>
+            <li>Zastosowanie lepszych metod podczas oczyszczania danych np. częściejsze uzupełnienie przy pomocy BeautifulSoup</li>
+            <li>Dodanie nowych atrybutów: w przypadku większego i bardziej wyrównanego  zestawu danych można by wykorzystać
+             one-hot encoding dla kolumny dzielnica - różnice korelacji między ceną a dzielnicą byłyby interesujące same w sobie i 
+             być może poprawiłyby jakość modeli.
+            Np. można by się spodziewać, że mieszkania w Wesołej będą korelować z niższą ceną niż mieszkania na Mokotowie.
+            Niestety obecnie w zestawie danych jest niewiele  ofert z dzielnic takie jak Wesoła czy Remembertów, 
+            co mogłoby spowodować np. znaczące zaniżenie przewidywanych ofert z tych dzielnic.
+            </li>
+            <li></li>
+
+
+
+
 
           </div>
 
@@ -757,6 +809,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <a href="#wizualizacja-header">5. Wizualizacja danych</a> <br>
             <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
             <a href="#modelowanie-header">6. Modelowanie</a> <br>
+            <h4>PUDEŁKOWY DLA POWIERZCHNI W DZIELNICACH, NAPISAĆ O EARLY STOPPING I DROPOUT, MOŻE O EXPLAINED VARIANCE</h4>
           </div>
         </div>
     </div>
