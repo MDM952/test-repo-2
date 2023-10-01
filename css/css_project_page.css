@@ -9,6 +9,30 @@ h6{
   font-weight: bold
 }
 
+
+
+
+li{
+  padding-top: 7px;
+}
+
+.accordion {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.center {
+  margin: 20px auto;
+}
+
+.true_center{
+  margin: auto;
+}
+
+.kontakt {
+  padding: 25px 20px 40px;
+}
+
 .opis_wiz {
     /* margin-left: 55px; 
     margin-right: 60px; */
@@ -81,3 +105,68 @@ h6{
   padding: 10px;
 }
 
+/* footer */
+
+.bottom{
+  text-align: center;
+  padding: 30px;
+  background: #ffffff;
+}
+
+#footer{
+  height: 50px;
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 66px;
+}
+
+.footer-icon{
+  margin: 5px;
+}
+
+.btn-link{
+  color: rgb(29, 29, 29);
+}
+
+.btn-link:hover{
+  color:rgb(0, 0, 0)
+}
+
+.footer-link{
+  color:rgb(44, 62, 100);
+  text-decoration: none;
+}
+
+.footer-link:hover{
+  color: black;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+
+.carousel-item {
+  transition-duration: 0s;
+}
+
+.testimonials {
+  text-align: center;
+  height: 630px;
+}
+
+.acc-image {
+  max-width:100%; 
+  max-height: 100%; 
+  margin: auto;
+}
+
+.center-h5s{
+  text-align: center;
+}
+
+.tablica-pomylek{
+  margin-top: 16px;
+}
+
+h6{
+  font-weight: 600;
+}

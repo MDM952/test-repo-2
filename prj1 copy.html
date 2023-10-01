@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Portfolio 🐒</title>
+        <title>Projekt I 🌐</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="css\modal.css">
         <link rel="stylesheet" href="css/css_project_page.css">
@@ -30,10 +30,12 @@
   <body>
       
     <section class="jumbotron text-center">
-        <div class="container">
-          <h1>Konrad Jarominiak - porftolio</h1>
+        <div class="container", style="padding: 30px;">
+          <h2>Model przewidujący ceny mieszkań w Warszawie</h2>
           <p class="lead text-muted">
-            Oto kilka projektów z dziedzin data science, danych przestrzennych i wizualizacji danych.
+            Autorski projekt z własnoręcznie zebranymi danymi.
+            <br>
+            Wizualizacja, analiza danych, przetwarzanie danych przestrzennych w QGIS, nauczanie maszynowe.
           </p>
           <p>
             <a
@@ -58,9 +60,9 @@
 
           <div class="tresc wstep">
             <h4 id="wstep-header">1. Wstęp</h4>
-            Niniejszy projekt data science miał na celu przedstawienie prostego sposobu na wykorzystanie danych przestrzennych w modelowaniu data science.
-            W projekcie sprawdzono jak duże znaczenie odgrywa odległość mieszkania do centrum miasta i 
-            odległości mieszkania do najbliższej stacji metra na rynku mieszkaniowym w Warszawie. 
+            Niniejszy projekt data science ma na celu przedstawienie prostego sposobu na wykorzystanie danych przestrzennych w modelowaniu data science.
+            W projekcie sprawdzono jak duże znaczenie odgrywa odległość mieszkania do centrum miasta i
+             do najbliższej stacji metra na rynku mieszkaniowym w Warszawie. 
             W projekcie wykorzystano:
 <li>Selenium i Beautiful Soup w celu zebrania danych</li>
 <li>SQLAlchemy do przechowania danych w bazie danych</li>
@@ -93,8 +95,8 @@ class Links(Base):
     def __repr__(self):  
         return f"({self.numer}, {self.powiat}, {self.link})"
             </code></pre>
-            W sumie uzyskano 3600 linków z czego część zawierała linki do ofert po za Warszawą. 
-            Na potrzeby stworzenia mapy w QGIS nie przefiltrowano wyników tylko do Warszawy.
+            W sumie uzyskano 3600 linków, z czego część zawierała linki do ofert poza Warszawą, 
+            które uwzględniono w mapie utworzonej w QGIS.
             <br>
             Do zebrania szczegółowych danych również zastosowano Selenium. 
             Web scraping przy pomocy Beautiful Soup byłby szybszy i o wiele prostszy, ale nie umożliwiłby zebrania współrzędnych z zaembedowanej mapy google. 
@@ -152,13 +154,13 @@ for topic in all_topics:
             Wśród wszystkich ofert znalazła się niemała ilość ofert deweloperów, wśród których nie zostały podane żadne dane z informacji dodatkowych, 
             np. rynek wtórny/pierwotny, winda czy rodzaj zabudowy. Te dane również uzupełniono w sekcji oczyszczania danych.
 
-            Zapisanie danych ofert dokonano w ten sam sposób co przy zbieraniu samych ofert i dało poniższą tabelę, wyświetlaną w SQLLiteStudio:
+            Zapisania danych ofert dokonano w ten sam sposób co przy zbieraniu samych ofert i dało poniższą tabelę, wyświetlaną w SQLLiteStudio:
             <br><br>
             <img src="css\p1_images\SQL dane szczegółowe.png" style="width: 98%;">
           </div>
 
           <div class="tresc przetworzenie_w_QGIS">
-            <h4 id="QGIS-header">3. Przetworzenie danych w QGIS</h4>
+            <h4 id="QGIS-header">3. Mapa i przetworzenie danych w QGIS</h4>
             Tabelę zawierającą szczegółowe dane załadowano do programu QGIS wraz warstwą dzielnic Warszawy oraz stacji metra. 
             Do wyznaczenia odległości wykorzystano dwa narzędzia wektorowe: 
             <li>
@@ -178,7 +180,9 @@ for topic in all_topics:
             <img id="myImg" src="css\p1_images\Warszawa.png"  style="width: 95%;">
 
             <div id="myModal" class="modal">
-              <span class="close">&times;</span>
+              <div class="opacity-background close">
+                <span class="close">&times;</span>
+              </div>
               <img class="modal-content" id="img01">
               <div id="caption"></div>
             </div>
@@ -221,7 +225,7 @@ for topic in all_topics:
             Oczyszczenie danych polegało na:
             <ol>
               <li>
-                Zamianie wartości na dane liczbowe, w przypadku kolumn takich jak cena czy powierzchnia wymagało usunięcia elementów z teksu takich jak m², 
+                Zamianie wartości na dane liczbowe, w przypadku kolumn takich jak cena czy powierzchnia wymagało usunięcia elementów z tektstu takich jak m², 
                 zamianie przecinków na kropki i ogólną zmianę typu danych na int i float
               </li>
               <li>
@@ -262,9 +266,9 @@ df.loc[df['wykonczenie'] == 'Zapytaj', 'wykonczenie']
                 Usunięto zbędne kolumny i kolumny ze zbyt dużą ilością brakujących danych, np. 'własność' czy 'ogłoszenie'
               </li>
               <li>
-                Zastosowano OneHotEncoding przy pomocy pandas.get_dummies - z kolumny 'zabudowa' utworzono cztery nowe kolumny: 'apartamentowiec', 'blok', 'dom', 'kamienica'. Jeżeli dane mieszkanie znajduje się w bloku, w kolumnie 'blok' będzie wartość 1, w pozostałych 0.
+                Zastosowano OneHotEncoding przy pomocy pandas.get_dummies - z kolumny 'zabudowa' utworzono cztery nowe kolumny: 'apartamentowiec', 'blok', 'dom', 'kamienica'. Jeżeli dane mieszkanie znajduje się w bloku, w kolumnie 'blok' będzie wartość 1, a w pozostałych 0.
                 <br>
-                W przypadku kolumny 'zewnątrz' zastosowano własne funkcje do uzupełnienia kolumn, ze względu na fakt, że w jednym mieszkaniu mogą występować kilka opcji np. balkon i taras jednocześnie:
+                W przypadku kolumny 'zewnątrz' zastosowano własne funkcje do uzupełnienia kolumn, ze względu na fakt, że w jednym mieszkaniu może występować kilka opcji np. balkon i taras jednocześnie:
                 <pre><code class="language-python"> <!-- kod dummies dla zewnątrz1 -->
 def get_balkon(text):
     if 'balkon' in text:
@@ -298,6 +302,11 @@ df["taras"] = df["zewnatrz"].apply(lambda x: get_taras(x))
 
           <div class="tresc AKORDEONY"> <!-- Początek wizualizacji i akordeonu -->
             <h4 id="wizualizacja-header">5. Wizualizacja danych</h4>
+
+
+
+
+            
           <div class="accordion" id="accordionPanelsStayOpenExample"> 
             <div class="accordion-item">
               <h2 class="accordion-header">
@@ -330,7 +339,7 @@ sns.histplot(df['Cena'], color='olivedrab').set_title('Histogram cen')
 fig, ax = plt.subplots(figsize=(9,6))
 plt.xticks(rotation=-66)
 chart  = sns.boxplot(data=df, y='Cena', x='lokalizacja', 
-    order=df.groupby('lokalizacja').mean()['Cena'].sort_values(ascending=True).index.tolist(),)
+    order=df.groupby('lokalizacja').median()['Cena'].sort_values(ascending=True).index.tolist(),)
     
 f = lambda x, pos: f'{x/10**6:,.0f}M'
 chart.yaxis.set_major_formatter(ticker.FuncFormatter(f))
@@ -357,7 +366,7 @@ plt.xticks(rotation=-60)
 
 chart  = sns.boxplot(data=df.drop(df[df.Cena >= 2500000].index), y='Cena', x='lokalizacja', 
     order=df.drop(df[df.Cena >= 2500000].index).groupby('lokalizacja')
-    .mean()['Cena'].sort_values(ascending=True).index.tolist(),
+    .median()['Cena'].sort_values(ascending=True).index.tolist(),
     )
 
 f = lambda x, pos: f'{x/10**6:,.1f}M'
@@ -377,6 +386,30 @@ chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
 
 
           <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+<img src="css\p1_images\Pudełkowy powierzchni dzielnice mini.png" style="width: 100%;" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=-66)
+
+chart  = sns.boxplot(data=df, y='powierzchnia', x='lokalizacja', 
+    order=df.groupby('lokalizacja').median()['powierzchnia'].sort_values(ascending=True).index.tolist(),
+    palette='tab20b'
+    )
+
+chart.set(xlabel='Dzielnica', ylabel='Powierzchnia [m²]')
+chart.set_title('Wykres pudełkowy powierzchni w zależności od dzielnicy')
+                                      </code></pre>
+                </div>
+              </div>
+            </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
@@ -428,10 +461,41 @@ chart.ax_joint.set_ylabel("Cena [zł]")
                 </div>
               </div>
             </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
+<img src="css\p1_images\XY sq i dystans.png" style="width:100%" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+# Kolumny nie uwzględnione w modelowaniu
+df['Przedział km do Świętokrzyskiej'] = df['Dystans do Swietokrzyskiej'] / 1000
+df['Przedział km do Świętokrzyskiej'] = df['Przedział km do Świętokrzyskiej'].apply(np.floor).astype('int')
+df['Przedział km do najbliższej stacji'] = df['dystans do najblizszej stacji [m]'] / 1000
+df['Przedział km do najbliższej stacji'] = df['Przedział km do najbliższej stacji'].apply(np.floor).astype('int')
+# Kod tylko dla prawego wykresu
+chart = sns.jointplot(data=df, x='powierzchnia', y='Cena', hue='Przedział km do najbliższej stacji', kind='scatter', 
+              ylim=(-1500000, 16000000), xlim=(-50, 500), linewidth = 0, height=6,
+              palette="mako")
+f = lambda x, pos: f'{x/10**6:,.0f}M'
+plt.legend(title="Przedział km do najbliższej stacji", labels=['0-2 km', '2-5 km', '5-7 km', '10-12 km', '10-12 km'])
+chart.ax_joint.yaxis.set_major_formatter(ticker.FuncFormatter(f))
+chart.ax_joint.set_xlabel("Powierzchnia [m²]")
+chart.ax_joint.set_ylabel("Cena [zł]")
+
+                                      </code></pre>
+                </div>
+              </div>
+            </div>
           </div>
+
+
           <li class="opis_wiz">
             Rozrzut cen w stosunku do powierzchni jest dość znaczny, oznacza to, że na cenę również wpływa wiele innych czynników  - 
-            tu np. widać że aparatamenty cechują się wyższą ceną niż inne rodzaje zabudowy.
+            tu np. widać że aparatamenty cechują się wyższą ceną niż inne rodzaje zabudowy, a mieszkania z dala od stacji (dzielnice Wesoła, Wawer) mają wyraźnie niższe ceny.
           </li>
           <li class="opis_wiz">
             Oferta mieszkania z dwoma pokojami i powierzchnią 216 m² to lokal mieszkalny o powierzchni 116 m² wraz z lokalem usługowym 100 m², kóry wymaga wykończenia. 
@@ -551,14 +615,14 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
 
           <br>
           <div class="wiz_uwagi">
-            <h4 id="uwagi-header">Uwagi dotyczące korelacji</h4>
+            <h6 id="uwagi-header">Uwagi dotyczące korelacji</h6>
             <li>Wykres korelacji reprezentuje zależności wartości między atrybutami. Jeżeli wartość jest pozytywna, oznacza to że wraz ze wzrostem wartości w danej kolumnie, wartość w danym wierszu również wzrośnie, jeżeli będzie ujemna, zmaleje. Wartości korelacji bliżej 0 oznaczają, że  atrybut ma małe znaczenie. 
             </li>
             <li>Pierwszym wartym zaznaczenia wnioskiem jest fakt, że atrybuty odległości do centrum i najbliższej stacji metra mają niemałe znaczenie - są to jedne z większych wyników (-0,24 i -0,2) po najwyżej korelującymi z ceną powierzchnią i liczbą pokoi. 
             </li>
             <li>Innymi znaczącymi atrybutami są rodzaje zabudowy, w szczególności blok (cena maleje) i apartamentowiec (cena rośnie). Znaczna większość najdroższych mieszkań była apartamentowcami.
             </li>
-            <li>Dom okazał się nieistotny, trzeba również zaznaczyć, że ilość ofert domów (tu połączonych domów wolnostojących i szeregowców) była nieduża. Możliwe że uwzględnienie terenów takich jak podmiejskie rejony Piaseczna z wieloma osiedlami domów jednorodzinnych dałyby bardziej interesujące wyniki. 
+            <li>Dom okazał się nieistotny, trzeba również zaznaczyć, że ilość ofert domów (tu połączono domy wolnostojące i szeregowce) była nieduża. Możliwe, że uwzględnienie terenów takich jak podmiejskie rejony Piaseczna z wieloma osiedlami domów jednorodzinnych dałyby bardziej interesujące wyniki. 
             </li>
             <li>Co prawda jest zauważalna bardzo duża korelacja między rokiem budowy a kamienicą, można przypuszczać że powinna być jeszcze większa. Wśród ofert znajdowało się kilka kamienic, gdzie za rok budowy najprawdopodobniej podano rok generalnego remontu.
             </li>
@@ -567,7 +631,22 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <li>Stan mieszkania okazał się również dość nieznaczny w stosunku do ceny, niemniej rozkład korelacji - negatywny dla stanu do remontu i do wykończenia i pozytywny dla stanu do zamieszkania jest logiczny.
             </li>
           </div>
-        
+          
+          <br> <br>
+          Na końcu wykonano prosty Dashboard w programie Power BI. 
+          Dzięki zastosowaniu etykietek, po przefiltrowaniu np. mieszkań w odległości do 1,5 km od stacji metra, można wyeksportować tabelę z linkami do takich ofert.
+          <br>
+
+          <div class="center"; style="height: 364px; width: 644px; border:solid; border-color: black; border-width: 2px;">
+            <div style="position:relative;width:fit-content;height:fit-content;">
+              <a style="position:absolute;top:20px;right:1rem;opacity:0.8;" href="https://clipchamp.com/watch/brMlZsUl7Ua?utm_source=embed&utm_medium=embed&utm_campaign=watch">
+                  <img loading="lazy" style="height:22px;" src="https://clipchamp.com/e.svg" alt="Made with Clipchamp" />
+              </a>
+              <iframe allow="autoplay;" allowfullscreen style="border:none" src="https://clipchamp.com/watch/brMlZsUl7Ua/embed" width="640" height="360"></iframe>
+          </div>
+        </div>
+
+
           </div>
 
           <div class="tresc modelowanie">
@@ -596,7 +675,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             Po propagacji w przód następuje propagacja wsteczna, podczas której aktualizowane są wagi i bias (obciążenie) idąc od warstwy końcowej do wejściowej.
             Sieci neuronowe mają zastosowanie w wielu zagadnieniach w nauczaniu maszynowym, zaczynając od regresji, a kończąc na Chatbotach.
             <br>
-            <img src="css\p1_images\własna sieć.png" style="width: 98%; max-height: 300px; margin: auto; object-fit: contain;" alt="">
+            <img src="css\p1_images\własna sieć.png" style="width: 98%; max-height: 300px; margin: auto; object-fit: contain; padding: 15px;" alt="">
             <br><br>
             
             Przed modelowaniem usunięto kolumny 'pierwotny' (rynek) i 'do zamieszkania', 
@@ -606,17 +685,25 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <br><br>
             We wszystkich modelach test_size w Train-Test-Split ustawiono na 0.3 co oznacza, że 70% danych zostało przeznaczone na wytrenowanie modelu, 
             a 30% na sprawdzenie. 
+            <div style="height: 5px;"></div>
             Przy modelowaniu siecią neuronową wykorzystano narzędzie MinMaxScaler, 
             które normalizuje wartości na podstawie ich odchylenia standardowego oraz najmniejszej i największej wartości,
             tak aby były w przedziale od 0 do 1. Dzięki temu błędy wynikające z różnic w wielkościach wartości (np. powierzchnia mieszkania a dystans do centrum) 
             oraz ich wag i obciążeń zostaną zminimalizowane.
+            <div style="height: 5px;"></div>
+            Podczas modelowania nadano również Dropout=0.2 przy każdej warstwie neuronowej. 
+            Dropout powoduje losowe wyłączenie części neuronów w warstwie, dzięki czemu model jest mniej podatny na overfitting - 
+            zbyt dokładne dopasowanie modelu pod treningowy zestaw danych, przez co stanie się on mniej uniwersalny.
+            Wykorzystano też EarlyStopping - narzędzie które zatrzymuje trening modelu w momencie gdy podany parametr przestanie się poprawiać, tu validation loss.
+            Narzędzie okazało się zbędne - przy ilości epok (iteracji przez treningowy zbiór danych) modelu ustawionej na 800 model nie został zatrzymany. 
+            Ilości epok nie zwiększono ze względu na minimalne różnice błędów między 800 a 1600 epokami.
+
             <br><br>
             Do ewaluacji modelu wykorzystano:
             <li>MAE - Mean Absolute Error - średni błąd bezwzględny</li>
             <li>RMSE - Root Mean Squared Error - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, 
             można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE)</li>
             <li>R² - współczynnik determinacji - osiąga wartości od 0 do 1, wyższa wartość oznacza lepiej dopasowaną linię regresji</li>
-            <li>EV - Explained Variance Score - zastosowanie jak R², inaczej obliczany</li>
             <br>
 
             $$MAE=\frac{1}{n}\sum^n_{i=1}|y_i-\hat{y_i}|$$	
@@ -672,7 +759,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                     <h5 class="card-title">Regresja TensorFlow<br> do 9 mln zł</h5>
                     <li>MAE: 697 458 [zł]</li>
                     <li>RMSE: 1 106 752 [zł]</li>
-                    <li>EV: 0.75</li>                    
+                    <li>R²: 0.75</li>                    
                   </div>
                 </div>
               </div>
@@ -712,7 +799,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                     <h5 class="card-title">Regresja TensorFlow<br> do 2,5 mln zł</h5>
                     <li>MAE: 412 673 [zł]</li>
                     <li>RMSE: 557 260 [zł]</li>
-                    <li>EV: 0.74</li>                    
+                    <li>R²: 0.74</li>                    
                   </div>
                 </div>
               </div>
@@ -738,7 +825,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                 <tr>
                   <th scope="row">37 m², blok, Włochy</th>
                   <td>365 607 zł</td>
-                  <td>531 320 zł</td>
+                  <td>516 649 zł</td>
                   <td>494 160 zł</td>
                   <td>531 320 zł</td>
                 </tr>
@@ -759,7 +846,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
                 </tr>
               </tbody>
             </table>
-            <br>  
+            <br>
+            <h4 id="wnioski-header">7. Wnioski</h4>
             <h6>
               Na podstawie wyników z tabeli oraz interpretacji wykresów i błędów wyciągnięto następujące wnioski:
             </h6>
@@ -789,7 +877,6 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             Niestety obecnie w zestawie danych jest niewiele  ofert z dzielnic takie jak Wesoła czy Remembertów, 
             co mogłoby spowodować np. znaczące zaniżenie przewidywanych ofert z tych dzielnic.
             </li>
-            <li></li>
 
 
 
@@ -804,16 +891,26 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <p>Nawigacja:</p>
             <a href="#wstep-header">1. Wstęp</a> <br>
             <a href="#zebranie_danych-header">2. Zebranie danych</a> <br>
-            <a href="#QGIS-header">3. Przetworzenie danych w QGIS</a> <br>
+            <a href="#QGIS-header">3. Mapa i przetworzenie danych w QGIS</a> <br>
             <a href="#pandas-header">4. Oczyszczenie danych w Pandas</a> <br>
             <a href="#wizualizacja-header">5. Wizualizacja danych</a> <br>
             <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
             <a href="#modelowanie-header">6. Modelowanie</a> <br>
-            <h4>PUDEŁKOWY DLA POWIERZCHNI W DZIELNICACH, NAPISAĆ O EARLY STOPPING I DROPOUT, MOŻE O EXPLAINED VARIANCE</h4>
+            <a href="#wnioski-header">7. Wnioski</a> <br>
           </div>
         </div>
     </div>
       
+
+
+    <div id="footer", class="bottom", style="font-size:0.77em;">      
+          <p style="margin:5px;">&copy; <script>document.write(new Date().getFullYear());</script> Konrad Jarominiak</p>
+          <p>Wykorzystano:
+            <a href="https://getbootstrap.com/" class="footer-link">Bootsrap 5</a>,
+            <a href="https://highlightjs.org/" class="footer-link">highlight.js</a>,
+            <a href="https://www.mathjax.org/" class="footer-link">MathJax</a> </p>
+      
+        </div>
 
     <script>hljs.highlightAll();</script>
     <script src="scripts\modal.js"></script>

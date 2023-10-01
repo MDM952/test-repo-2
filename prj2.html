@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Projekt II ✈️</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="css\modal.css">
+        <link rel="stylesheet" href="css/css_project_page.css">
+        <link rel="stylesheet" href="css/cssmaster.css">
+        <link rel="icon" href="C:\Users\konra\Documents\Własne\Programowanie\HTML CSS Javascript Course\Web Developement 15\6 - Bootstrap Tindog\css\favicon.ico">
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/1c9ad4b785.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="scripts\code highlight\styles\idea.min.css"/>
+        <script src="scripts\code highlight\highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+
+        
+
+      </head>
+  <body>
+      
+    <section class="jumbotron text-center">
+        <div class="container", style="padding: 30px;">
+          <h2>Analiza ocen usług lotniczych i satysfakcji klientów</h2>
+          <p class="lead text-muted">
+            Typowe dane ćwiczeniowe z dziedziny data science i nauczania maszynowego.
+            <br> Dogłębna analiza zależności ocen zależnie od wielu kryteriów.
+            <br> Modele przewidujące satysfakcję i lojalność klienta.
+          </p>
+          <p>
+            <a
+              href="https://getbootstrap.com/docs/4.4/examples/album/#"
+              class="btn btn-primary my-2"
+              >Kontakt</a
+            >
+            <a
+              href="index.html"
+              class="btn btn-secondary my-2"
+              >Powrót</a
+            >
+          </p>
+        </div>
+    </section>
+
+    <span class="border border-0">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+
+          <div class="tresc wstep">
+            <h4 id="wstep-header">1. Wstęp</h4>
+            Ten projekt jest typowym projektem z dziedziny Data Science mającym na celu analizę danych i utworzenie modelu przewidującego pewne aspekty zestawu danych.
+            Dane dotyczą ocen wystawianych przez klientów linii lotniczych np. satysfakcji z rozrywki zapewnionej na pokładzie samolotu, ogólnej satysfakcji klienta, dystansu lotu, wieku, płci etc. 
+            Zestaw danych został pobrany ze strony internetowej 
+            <a href="https://www.kaggle.com/datasets/johndddddd/customer-satisfaction">Kaggle</a>, niestety ich pierwotne źródło nie jest znane.
+            Osobiście przypuszczam, że są to zanonimowane dane przeznaczone do sprawdzenia umiejętności aplikantów na stanowisko np. analityka danych.
+            <br><br>
+            Do wykonania niniejszego projektu wykorzystano biblioteki:
+<li>Pandas i Numpy do przetworzenia i oczyszczenia danych</li>
+<li>Matplotlib i Seaborn do wizualizacji danych</li>
+<li>sci-kit learn do stworzenia modeli</li>
+
+          </div>
+
+          <div class="tresc analiza_zestawu_danych">
+            <h4 id="analiza_zestawu_danych-header">2. Analiza zestawu danych</h4>
+
+            W zestawie danych występują podstawowe kolumny:
+            <li>id - numer identyfikacyjny klienta</li> 
+            <li>satisfaction_v2 - ogólna satysfakcja klienta - usatsfakcjonowany / neutralny lub nieusatysfakcjonowany </li>
+            <li>Gender - płeć</li>
+            <li>Customer Type - typ klienta - loyalny / nielojalny</li>
+            <li>Age - wiek</li>
+            <li>Type of Travel - rodzaj podróży - podróż biznesowa / osobista</li>
+            <li>Class - klasa obsługi - ekonomiczna / ekonomiczna plus / biznesowa</li>
+            <li>Flight Distance - dystans lotu, najpewniej liczony w milach</li>
+            <li>Departure Delay in Minutes i Arrival Delay in Minutes - opóźnienia w minutach</li>
+
+            <br>
+            oraz kolumny ocen satysfakcji klienta:
+            <li>Seat comfort - wygoda siedzeń</li>
+            <li>Departure/Arrival time convenient - dogodność odlotu / przylotu</li>
+            <li>Food and drink - jedzenie i napoje</li>
+            <li>Gate location - lokalizacja bramek</li>
+            <li>Inflight wifi service - jakość internetu podczas lotu</li>
+            <li>Inflight entertainment - jakość rozrywki podczas lotu, np. wybór filmów</li>
+            <li>Online support - wsparcie internetowe</li>
+            <li>Ease of Online booking - łatwość zamawiania biletów przez internet</li>
+            <li>On-board service - obsługa na pokładzie</li>
+            <li>Leg room service - przestrzeń na nogi</li>
+            <li>Baggage handling - obsługa bagażowa</li>
+            <li>Checkin service - odprawa</li>
+            <li>Cleanliness - czystośc</li>
+            <li>Online boarding - odprawa przez internet</li>
+
+            <br>
+            Pierwszym problemem w zestawie danych są brakujące wartości oraz wartości 0 w ocenach. 
+            Brakujących wartości było około 400 i występowały jedynie w kolumnie <i>Arrival Delay in Minutes</i>. 
+            Ponieważ kolumna ta jest niemalże identyczna z kolumną <i>Departure Delay in Minutes</i>, została ona usunięta tuż przed modelowaniem.
+            Wartości 0 zostały zamienione na wartości średnie dla danej kolumny, w zależności od płci. 
+            <br>
+            Kwestia różnic między wartościami w zależności od sposobu uzupełnienia brakujących wartości została przedstawiona w sekcji wizualizacji.
+
+            <pre><code> <!-- Kod zamian 0 na średnie zależnie od płci -->
+df.iloc[:, 7:21] = df.iloc[:, 7:21].replace(0, np.nan)
+df.iloc[:, 7:21] = df.groupby('Gender', group_keys=False).apply(lambda x: x.fillna(x.mean().round(1))).iloc[:, 7:21]
+            </code></pre>
+
+            <br><br>
+            W celu uproszczenia danych na potrzeby modelowania, utworzono kolumny <i>Generation</i>, <i>simple distance</i> oraz kolumnę <i>score_avg</i> na potrzeby wizualizacji.
+            Kolumnę pokoleniową utworzono na podstawie wykresu pokoleń z <a href="https://commons.wikimedia.org/wiki/File:Generation_timeline.svg">Wikipedii</a>
+            i z poprawką na fakt, że zestaw danych pochodzi z 2015 roku. Ponadto usunięto kolumnę <i>id</i>.
+
+            <pre><code> <!-- Kod dla pokoleń i dystansu -->
+df['score_avg'] = df.iloc[:, 8:21].mean(axis=1).round(1)
+
+
+def get_generation(age):
+  if age <= 3:
+      return 'Alpha'
+  elif 3 < age <= 18:
+      return 'Zoomer'
+  elif 18 < age <= 34:
+      return 'Millenial'
+  elif 34 < age <= 50:
+      return 'GenX'
+  elif 50 < age <= 69:
+      return 'Boomer'
+  elif 69 < age <= 87:
+      return 'Silent Generation'
+
+df['Generation'] = df['Age'].apply(lambda x: get_generation(x))
+
+
+def simplify_disance(distance):
+if distance < 4250:
+    return 0
+else:
+    return 1
+
+df['simple distance'] = df['Flight Distance'].apply(lambda x: simplify_disance(x))
+            </code></pre>
+          </div>
+
+
+
+            <div class="tresc analiza_zestawu_danych">
+              <h4 id="wizualizacja-header">3. Wizualizacja danych</h4>
+
+
+              <br>
+
+              <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="true" aria-controls="panelsStayOpen-collapseNine", style="padding: auto;">
+                      <img src="css\p2_images\Pokolenia.png" style="max-width: 100%; margin: auto;">                
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+    <pre><code>
+    plt.figure(figsize=(6,4))
+    sns.countplot(data=df, x='Generation', palette='magma', 
+                  order=reversed(['Zoomer', 'Millenial', 'GenX', 'Boomer', 'Silent Generation']),
+                  width=0.66,)
+    plt.title('Ilość klientów według pokolenia', fontdict={'fontsize':'10'})
+    plt.xlabel('Pokolenie')
+    plt.ylabel('Ilość')
+    </code></pre>                </div>
+                  </div>
+                </div>
+              </div>
+              <li class="opis_wiz">
+                Wizualizacja rozkładu pokoleń, utworzonych na podstawie wieku.
+              </li>
+
+<br><br><br>
+            <div id="carouselExampleControls" class="carousel carousel-dark testimonials slide" data-bs-ride="false", data-interval="false", style="height: 572px;">
+              <div class="carousel-inner", style="padding: auto;">
+                <div class="carousel-item">
+                  Mediana ocen bez zamiany brakujących wartości
+                  <img class="testi-img " src="css\p2_images\Score avg NaN.png" > <br>
+                </div>
+                <div class="carousel-item">
+                  Mediana ocen z uzupełnieniem brakujących wartości średnią dla każdej kolumny
+                  <img class="testi-img" src="css\p2_images\Score avg.png" > <br>
+                </div>
+                <div class="carousel-item active">
+                  Mediana ocen z uzupełnieniem brakujących wartości średnią dla każdej kolumny i odpowiedniej płci
+                  <img class="testi-img" src="css\p2_images\Score avg gender 3.png" > <br>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+
+
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseCode" aria-expanded="true" aria-controls="panelsStayOpen-collapseCode">
+Kod dla wykresu powyżej
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseCode" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code>
+hue_order = ["Female", "Male"]
+order = ['Zoomer', 'Millenial', 'GenX', 'Boomer', 'Silent Generation']
+# order = ['Silent Generation', 'Boomer', 'GenX', 'Millenial', 'Zoomer']
+# - odwrotna kolejność, order.reverse() nie działało
+
+# order=df.groupby('Generation').mean()['score_avg'].sort_values(ascending=True).index.tolist()
+# - kolejność po średniej dla danego pokolenia
+
+plt.figure(figsize=(6,6))
+g = sns.boxplot(data=df, x='Generation', y='score_avg',
+            order=order,
+            hue='Gender', 
+            hue_order=hue_order,
+            palette={
+                'Female':'#00ffbf',
+                'Male' : '#ffbb33'
+            },
+            dodge=True)
+plt.legend(loc='upper right', labels=['Kobiety', 'Mężczyźni'])
+g.set_title('Średnia ocena usług lotniczych w zależności od pokolenia', fontdict={'size': 11})
+g.set(xlabel='Średnia ocena', ylabel='Pokolenie')
+                    </code></pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <li class="opis_wiz">
+            Pierwszym narzucającym się wnioskiem jest fakt, że kobiety oceniały usługi wyżej niż mężczyźni, niezależnie od pokolenia.
+          </li>
+          <li class="opis_wiz">
+            Usługi najlepiej ocenili Baby Boomers.
+          </li>
+          <li class="opis_wiz">
+            Usługi najgorzej oceniło Silent Generation, które jest najgorzej reprezentowane (ok. 2 tyś spośród ok. 130 tyś. klientów), 
+            a zaraz po nich pokolenie Z, z których najmłodsi mieli 7 lat.
+          </li>
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
+<img src="css\p2_images\Lojalność i satysfakcja.png" style="width:100%" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+# Kod tylko dla prawego wykresu
+plt.figure(figsize=(4,4))
+g = sns.countplot(data=df, x='satisfaction_v2', hue='Gender',
+              palette={
+                  'Female' : '#00ffbf',
+                  'Male': '#ffbb33'
+              },)
+g.set(xticklabels=["Klienci usatysfakcjonowani", "Klienci neutralni lub nieusatysfakcjonowani"])
+plt.legend(bbox_to_anchor=(1.02, 1), 
+           loc='upper left', 
+           borderaxespad=0,
+           labels=['Kobiety', 'Mężczyźni'])
+plt.xlabel('')
+plt.ylabel('')
+plt.title('Satysfakcja i lojalność klientow', fontdict={'fontsize':'11'})
+plt.ylim(0, 55000)
+wrap_labels(g, 22)
+
+                                      </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">
+<img src="css\p2_images\Satysfakcja pokolenia.png" style="width: 100%;" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+dfp = df.groupby('Generation')['satisfaction_v2'].value_counts(normalize=True).mul(100).rename('Percent').reset_index()
+# df utworzona z 10 wierszami - dwa dla każdego pokolenia, kolumnę z wartościami sat./dissat. i kolumnę z % dla obu wariantów
+
+dfp = dfp.pivot(index='Generation', columns='satisfaction_v2')['Percent']
+# df przekształcona na 5 wierszy i dwie kolumny sat./dissat. z %
+
+dfp = dfp.reindex(['Zoomer', 'Millenial', 'GenX', 'Boomer', 'Silent Generation'])
+# odwrócona kolejność, tak jak powyżej
+
+colors = ['#FF5959', '#325288']
+
+ax = dfp.plot(kind='barh', stacked=True, color=colors)
+# wykres prosto z pandas
+
+ax.set_xlabel('Procent')
+ax.set_ylabel('Pokolenie')
+
+x_ticks = np.arange(0, 101, 10)
+ax.set_xticks(x_ticks)
+plt.xticks(fontsize=9) 
+# zamienione ze znaczników co 20 na co 10
+
+plt.title('Satysfakcja według pokoleń', fontdict={'fontsize':11})
+
+legend_labels = ['Nieusatysfakcjonowani lub\nneutralni', 'Usatysfakcjonowani']
+wrapped_labels = [textwrap.fill(label, 22) for label in legend_labels]
+# plt.legend(wrapped_labels, bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
+
+handles, labels = ax.get_legend_handles_labels() # odwrócone kolejnością objaśnienia
+ax.legend(reversed(handles), reversed(wrapped_labels), bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0, title='Klienci:')
+
+ax.invert_yaxis()  # odwrócone kolejnością kolumny
+                                      </code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="opis_wiz">
+            Różnice między pokoleniami i między płciamy w satysfakcji są podobne do średniej oceny poszczególnych usług.
+          </li>
+
+          <li class="opis_wiz">
+            Tu również kobiety wykazują większą ogólną saysfakcję w ankiecie niż mężczyźni, jednak pod względem lojalności wypadają podobnie.
+          </li>
+          <li class="opis_wiz">
+            Ponad połowa mężczyzn (56%) była neutralna lub nieusatysfakcjonowana usługami.
+          </li>
+
+          <br>
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
+<img src="css\p2_images\Histogram odległości.png" style="max-width:100%; max-height: 100%; margin: auto;" alt="">                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                <div class="accordion-body">
+
+                  <pre><code>
+plt.figure(figsize=(8,4))
+ax = sns.histplot(data=df['Flight Distance'], binwidth=200, color='#D80032')
+
+ax.set_title('Histogram odległości', fontdict={'fontsize':11})
+ax.set_xlabel('Odległość [mi]')
+ax.set_ylabel('Częstość')
+                  </code></pre>
+
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+<img src="css\p2_images\Histogram opóźnień.png" style="width:100%" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+                <div class="accordion-body">
+
+                  <pre><code>
+# kod tylko dla prawego wykresu
+plt.figure(figsize=(4,4))
+ax = sns.histplot(data=df['Arrival Delay in Minutes'], bins=30, color='#F78CA2')
+ax.set_title('Histogram opóźnień', fontdict={'fontsize':11})
+ax.set_xlabel('Opóźnienie przylotu [min]')
+ax.set_ylabel('Częstość')
+                  </code></pre>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="opis_wiz">
+            Wyraźny spadek w ilości odległości powyżej 4000 mil przyjęto za granicę 
+            między krótkim/długim lotem przy tworzeniu kolumny 'simple distance' mającej uprościć i polepszyć wydajność przewidującego modelu.
+          </li>
+          <li class="opis_wiz">
+            Opóźnienia w odlocie i przylocie są bardzo podobne, jednak nie są identyczne. Niemniej, jedną z tych kolumn usunięto również w celu usprawnienia modelu.
+          </li>
+<br>
+          
+          <div class="accordion" id="accordionPanelsStayOpenExample"> 
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  <img src="css\p2_images\Usługi a płeć.png" class="acc-image" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+scores = df.iloc[:, 7:21] # ograniczenie tabeli do samych ocen
+scores['Gender'] = df['Gender'] # dodanie kolumny z pierwotnej df
+
+scores_melted = pd.melt(scores, id_vars=['Gender'], var_name='score')
+scores_melted['score'] = scores_melted['score'].map(service_dict)
+
+
+plt.figure(figsize=(8,4))
+plt.xticks(rotation=-90)
+ax = sns.barplot(x='score', 
+            y='value', 
+            order=scores_melted.groupby('score').mean().sort_values('value').reindex().index.tolist(),
+            hue='Gender',
+            data=scores_melted,
+            palette={
+                'Female':'#00ffbf',
+                'Male' : '#ffbb33'
+            },
+            errorbar=None)
+
+plt.legend(loc='lower left', labels=['Kobiety', 'Mężczyźni'])
+
+ax.set(ylabel='Ocena', xlabel='',)
+ax.set_title('Ocena usług w zależności od płci', fontdict={'size': 11})
+
+for patch in ax.patches:
+    patch.set_edgecolor('black')
+    patch.set_linewidth(0.6)
+                                                </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                  <img src="css\p2_images\Usługi a pokolenia.png" class="acc-image" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+scores = df.iloc[:, 7:21]
+scores['Generation'] = df['Generation']
+
+scores_melted = pd.melt(scores, id_vars=['Generation'], var_name='score')
+scores_melted['score'] = scores_melted['score'].map(service_dict)
+
+hue_order = ['Silent Generation', 'Boomer', 'GenX', 'Millenial', 'Zoomer']
+
+plt.figure(figsize=(8,4))
+plt.xticks(rotation=-90)
+ax = sns.barplot(x='score', 
+y='value', 
+order=scores_melted.groupby('score').mean().sort_values('value').reindex().index.tolist(),
+hue='Generation',
+hue_order=hue_order,
+data=scores_melted,
+palette='rocket',
+errorbar=None)
+
+plt.legend(loc='lower left', )
+
+ax.set(ylabel='Ocena', xlabel='',)
+ax.set_title('Ocena usług w zależności od pokolenia', fontdict={'size': 11})
+
+for patch in ax.patches:
+patch.set_edgecolor('#191717')
+patch.set_linewidth(0.4)
+                                                </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseThree">
+                  <img src="css\p2_images\Usługi a satysfakcja.png" class="acc-image" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+scores = df.iloc[:, 7:21]
+scores['satisfaction_v2'] = df['satisfaction_v2']
+
+scores_melted = pd.melt(scores, id_vars=['satisfaction_v2'], var_name='score')
+scores_melted['score'] = scores_melted['score'].map(service_dict)
+
+plt.figure(figsize=(8,4))
+plt.xticks(rotation=-90)
+ax = sns.barplot(x='score', 
+            y='value', 
+            order=scores_melted.groupby('score').mean().sort_values('value').reindex().index.tolist(),
+            hue='satisfaction_v2',
+            data=scores_melted,
+            palette={
+                'satisfied':'#325288',
+                'neutral or dissatisfied':'#FF5959'
+            },
+            errorbar=None)
+
+plt.legend(loc='lower left',
+           framealpha=0.9,
+           title='Klienci:',
+           labels=['Usatysfakcjonowani', 'Nieusatysfakcjonowani lub\nneutralni'])
+
+ax.set(ylabel='Ocena', xlabel='',)
+ax.set_title('Ocena usług w zależności od ogólnej satysfakcji', fontdict={'size': 11})
+
+for patch in ax.patches:
+    patch.set_edgecolor('black')
+                        patch.set_linewidth(0.6)
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseThree">
+                  <img src="css\p2_images\Usługi a lojalność.png" class="acc-image" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+scores = df.iloc[:, 7:21]
+scores['Customer Type'] = df['Customer Type']
+
+scores_melted = pd.melt(scores, id_vars=['Customer Type'], var_name='score')
+scores_melted['score'] = scores_melted['score'].map(service_dict)
+
+plt.figure(figsize=(8,4))
+plt.xticks(rotation=-90)
+ax = sns.barplot(x='score', 
+            y='value', 
+            order=scores_melted.groupby('score').mean().sort_values('value').reindex().index.tolist(),
+            hue='Customer Type',
+            data=scores_melted,
+            palette={
+                'Loyal Customer':'#B85C38',
+                'disloyal Customer':'#2D2424'
+            },
+            errorbar=None)
+
+plt.legend(loc='lower left',
+           framealpha=0.9,
+           title='Klienci:',
+           labels=['Lojalni', 'Nielojalni'])
+
+ax.set(ylabel='Ocena', xlabel='',)
+ax.set_title('Ocena usług w zależności od lojalności', fontdict={'size': 11})
+
+for patch in ax.patches:
+    patch.set_edgecolor('#080202')
+    patch.set_linewidth(0.6)
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseFour">
+                  <img src="css\p2_images\Usługi a klasa.png" class="acc-image" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+scores = df.iloc[:, 7:21]
+scores['Class'] = df['Class']
+
+scores_melted = pd.melt(scores, id_vars=['Class'], var_name='score')
+scores_melted['score'] = scores_melted['score'].map(service_dict)
+
+hue_order = ['Eco', 'Eco Plus', 'Business']
+
+plt.figure(figsize=(8,4))
+plt.xticks(rotation=-90)
+ax = sns.barplot(x='score', 
+            y='value', 
+            order=scores_melted.groupby('score').mean().sort_values('value').reindex().index.tolist(),
+            hue='Class',
+            hue_order=hue_order,
+            data=scores_melted,
+            palette='mako_r',
+            errorbar=None)
+
+plt.legend(loc='lower left',
+           framealpha=0.9,
+           title='Klasa:',)
+
+ax.set(ylabel='Ocena', xlabel='',)
+ax.set_title('Ocena usług w zależności od klasy', fontdict={'size': 11})
+
+for patch in ax.patches:
+    patch.set_edgecolor('#080202')
+    patch.set_linewidth(0.6)
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="opis_wiz"></div>
+            <li>
+              Jedyna usługa wyżej oceniona przez mężczyzn niż przez kobiety to dogodność czasowa wylotu / odlotu. 
+              Tą usługę najwyżej ocenili klienci z pokolenia Z, którzy ogólnie dość nisko oceniali większość usług.
+              Rozkład ocen między pokoleniami i płciami nie jest aż tak znaczący. Większe różnice widoczne są w kolejnych kategoriach.
+            </li>
+            <li>
+              Zależność ocen w kontekście ogólnej satysfakcji jest dość logiczna, usatysfakcjonowani klienci w większości dawali dużo wyźsze oceny.
+              Co ciekawe lokalizacja bramek i dogodność czasowa wylotu / odlotu została wyżej oceniona przez nieusatysfakcjonowanych i neutralnych klientów.
+              Najgorzej ocenieone przez nich usługi to wygoda siedzeń (jak większość klientów) i jakość rozrywki, 
+              która z kolei została najwyżej oceniana przez usatsfakcjonowanych klientów.
+            </li>
+            <li>
+              Znaczenie jakości rozrywki również zdaje się być najistotniejsze pod względem lojalności klientów. 
+              Nielojalni klienci najgorzej ocenili rozrwykę, widoczna też jest tu największa różnica ocen między klientami lojalnymi a nielojalnymi.
+            </li>
+            <li>
+              Okazało się też że, klienci z klasą biznesową są bardziej zadowoleni z zapewnionych usług. 
+              Warto zaznaczyć, że ci klienci ocenili lokalizację i dogodność czasową odlotu i przylotu niżej niż pozostali klienci. 
+              Dogodność czasowa powinna być niezależne od klasy, czyli jest to coś czego pieniądze nie kupią i najwyraźniej związane z tym niedogodnienia bolą bardziej. 
+
+              Jest to również widoczne w porównaniu typu podróży (nieprzedstawiona na wykresach), 
+              gdzie klienci podróżujący osobiście ocenili tę 'usługę' średnio o ponad 0,5 punkta wyżej niż podróżujący biznesowo.
+
+              Oczywiście, wygoda siedzeń również została najniżej oceniona przez klientów z klasy biznesowej. 
+            </li>
+          </div>
+
+<br>
+
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="true" aria-controls="panelsStayOpen-collapseNine">
+<img src="css\p2_images\Korelacja.png" style="width: 100%;" >                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
+                <div class="accordion-body">
+<pre><code>
+service_text3 = """score_avg - Średnia ocena
+neutral or dissatisfied - neutralny lub nieusat.
+satisfied - usatsfakcjonowany
+Female - Kobieta
+Male - Mężczyzna
+Loyal Customer - Lojalny
+disloyal Customer - Nielojalnyy
+Business travel - podróż biznesowa
+Personal Travel - podróż osobista"""
+
+service_text3 = service_text3.replace(' - ', '|').split('\n')
+service_dict3 = {elem.split('|')[0]: elem.split('|')[1].capitalize() for elem in service_text3}
+# Tłumaczenie kolumn
+
+
+fig, ax = plt.subplots(figsize=(10,9))
+sns.heatmap(dfd.drop(['satisfaction_v2', 'Gender', 'Customer Type', 'Type of Travel', 'Class', 'Generation', 'Arrival Delay in Minutes'], axis=1)
+            .rename(columns=service_dict)
+            .rename(columns=service_dict2)
+            .rename(columns=service_dict3)
+            .corr(method='spearman', min_periods=33),
+            cmap='RdBu_r',
+            annot=True, 
+            annot_kws={"fontsize":5},
+            fmt=".2f",)
+</code></pre>                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <br>
+          <div class="wiz_uwagi">
+            <h6 id="uwagi-header">Uwagi dotyczące korelacji</h6>
+            <li>
+              Na podstawie wykresu korelacji można wywnioskować, że jakość rozrywki jest najbardziej istotnym czynnikiem wpływającym na dyssatysfakcję klienta, 
+              a pozostałe usługi nie mają aż tak dużego znaczenia.
+
+            </li>
+            <li>
+              Z kolei w przypadku usatsfakcjonowanych klientów, większość ocen wysoko ze sobą koreluje. Można wnioskować, że jeśli klient jest zadowolony, oceni on wysoko każdą z nich, 
+              w przeciwieństwie do klientów nieusatysfakcjonowanych, którzy np. nisko ocenią tylko jedną usługę, a resztę bardziej neutralnie (może to lepiej napisać.).
+            </li>
+            <li>
+              Spośród usług, dogodność czasowa odlotu / przylotu i lokalizacja bramek ma małe znaczenie dla nieusatysfakcjonowanych klientów. 
+              Są to dwie usługi wyżej przez nich oceniane niż klienci usatysfakcjonowani.
+            </li>
+            <li>
+              Dystans lotu ma zerowe korelacje z oceną usług, poza, co prawda dość niskim, wynikiem korelacji -0,1 dla wygody siedzeń. 
+              Osobiście spodziewałem się, że będzie on nieco bardziej znaczący, niemniej to logiczne, że wraz z dłuższym lotem, niewygodne siedzenie daje się we znaki.
+            </li>
+            <li>
+              Zauważalna jest pewna anomalia przy korelacji wieku z pokoleniam -  
+              najwyższa korelacja wieku zaznacza się dla pokolenia Baby Boomers, a nie starszej Silent Generation. 
+              Można to wytłumaczyć znacznie niższą ilością klientów z Silent Generation - niezbyt normalną dystrybucją wieku.
+              Anomalia ta też podkreśla problematykę one hot encoding-u, czyli tworzeniem nowych kolumn wartościami 0-1 reprezentującymi obecność pojedynczego atrybutu. 
+            </li>
+          </div>
+          
+          </div>
+
+          <div class="tresc modelowanie">
+            <h4 id="modelowanie-header">Modelowanie</h4>
+            Po przeprowadzeniu analizy danych wykonano dwa modele regresji logistycznej, 
+            pierwszy przewidujący czy podany klient będzie usatysfakcjonowany, drugi czy będzie lojalny.
+            <br><br>
+            Regresja logistyczna polega na funkcji sigmoidalnej, wykorzystującej regresję liniową, w taki sposób, że wartości mieszczą się w zakresie od 0 do 1.
+            Wartości te zwykle dzieli się na te powyżej i poniżej wartości 0,5 (próg ten można zmienić), klasyfikując je do odpowiedniej kategorii. 
+            
+            Regresja liniowa polega na znalezieniu zależności między wartością przewidywaną (zmienna objaśniana)
+            a predyktorami (zmienne objaśniające) poprzez dopasowanie wag predyktorów. 
+            Równania regresji logistycznej i liniowej przedstawia się następująco: 
+
+            $$y = β_0 + β_1 x_1 + β_2 x_2 + \dots + β_n x_n + \epsilon$$
+
+            gdzie: 
+            <li>\(y\) to zmienna objaśniana, zależna, to co model przewiduje</li>
+            <li>\(x_i\) to zmienna objaśniająca, niezależna, inaczej predyktor</li>
+            <li>\(β_i\) to współczynnik regresji, element który dobiera model podczas trenowania </li>
+            <li>\(\epsilon\) to nieskracalny błąd modelu</li>
+            
+            $$P = \frac{1}{1+e^{-z}}$$
+            gdzie: 
+            <li>\(P\) to prawdopodobieństwo, w przedziale 0-1, im bliżej progu odcięcia (tu 0,5) tym mniej pewna klasyfikacja</li>
+            <li>\(e\) to liczba Eulera (~2,71828)</li>
+            <li>\(z\) to zmienna objaśniająca, niezależna, tutaj \(y\), równanie regresji liniowej</li>
+ 
+            <br>
+            <img src="css\p2_images\logreg.png" style="width: 98%; max-height: 400px; margin: auto; object-fit: contain; padding: 15px;" alt="">
+            <br><br>
+
+            <br>
+            Przed modelowaniem usunięto kolumnę Arrival Delay in Minutes, 
+            ponieważ niemal całkowicie pokrywa się z Departure Delay in Minutes, wszystkie kolumny wykorzystane do one hot encoding-u, 
+            np. 'satisfaction_v2' i zostawiając tylko 'satisifed' z wartościami 0 albo 1 oraz score_avg.
+            Ponadto utworzono kolumnę 'simple distance', wskazującą czy lot był dłuższy od 4250 mil, czy nie. 
+            Tu również usunięto pierwotną kolumnę dystansu oraz kolumnę wieku.
+            <br><br>
+            Modelowania wykonano dwa razy, za pierwszym razem bez uproszczonego dystansu i bez uzupełnionych średnimi ocenami usług według płci i bez uproszczonego dystansu.
+            W poprawionej wersji danych do o modelowania odrzucono kolumny poszczególnych pokoleń na rzecz kolumny utworzonej poprzez ordinal-encoding z wartościami od 1 do 5, reprezentującymi każde pokolenie.
+            Dzięki temu można było porównać efekty poprawienia zestawu danych. 
+            We wszystkich modelach test_size w Train-Test-Split ustawiono na 0.3 co oznacza, że 70% danych zostało przeznaczone na wytrenowanie modelu, 
+            a 30% na sprawdzenie. 
+            <br><br>
+            Do ewaluacji modeli wykorzystano raport klasyfikacyjny i <a href="https://pl.wikipedia.org/wiki/Tablica_pomy%C5%82ek">tablicę pomyłek</a> z biblioteki sklearn.metrics. 
+            Raport klasyfikacyjny opiera się na następujących miarach: <br>
+            <li class="tablica-pomylek">True positive - prawdziwie pozytywna</li>
+            <li class="tablica-pomylek">True negative - prawdziwie negatywna</li>
+            <li class="tablica-pomylek">True positive - fałszywie pozytywna</li>
+            <li class="tablica-pomylek">True positive - fałszywie negatywna</li>
+
+            <li class="tablica-pomylek">Accuracy - dokładność, 
+              \(\frac{correct\text{ }predictions}{all\text{ }predictions}\)
+               - dobrze się sprawdza przy wyrównanej proporcji badanego atrybutu</li>
+               
+            <li class="tablica-pomylek">Recall - czułość, 
+              \(\frac{true\text{ }positives}{true\text{ }positives + false\text{ }negatives}\)
+               - odsetek prawdziwych pozytywów</li>
+
+            <li class="tablica-pomylek">Precision - precyzja, 
+              \(\frac{true\text{ }positives}{true\text{ }positives + false\text{ }positves}\)
+               - brane pod uwagę tylko pozytywy, ile z nich jest prawdziwych</li>
+
+            <li class="tablica-pomylek">F1-Score - 
+              \(2*\frac{precision \text{ } * \text{ } recall}{precision \text{ } + \text{ } recall}\)
+               - kombinacja (średnia harmoniczna) czułości i precyzji, 
+               eliminuje znaczne odchylenia i znajduje zastosowanie w również zestawach danych z różną dystrybucją badanego atrybutu</li>
+
+              <br>
+            <div class="center-h5s">
+              <h5>Surowe dane, brak lojalności klienta</h5>
+            </div>
+
+            <div style="display: flex; justify-content: center; ">
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 450px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                      <td> </td>
+                      <td>precision</td>
+                      <td>recall</td>
+                      <td>f1-score</td>
+                      <td>amount</td>
+                  </tr>
+                  <tr>
+                      <td>0</td>
+                      <td>0,91</td>
+                      <td>0,95</td>
+                      <td>0,93</td>
+                      <td>31932</td>
+                  </tr>
+                  <tr>
+                      <td>1</td>
+                      <td>0,70</td>
+                      <td>0,56</td>
+                      <td>0,62</td>
+                      <td>7032</td>
+                  </tr>
+                  <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>accuracy</td>
+                      <td></td>
+                      <td></td>
+                      <td>0,88</td>
+                      <td>38964</td>
+                  </tr>
+                  <tr>
+                      <td>macro avg</td>
+                      <td>0,80</td>
+                      <td>0,75</td>
+                      <td>0,78</td>
+                      <td>38964</td>
+                  </tr>
+                  <tr>
+                      <td>weighted avg</td>
+                      <td>0,87</td>
+                      <td>0,88</td>
+                      <td>0,87</td>
+                      <td>38964</td>
+                  </tr>
+              </table>
+              </div>
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 350px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                      <td></td>
+                      <td>Predicted 0</td>
+                      <td>Predicted 1</td>
+                  </tr>
+                  <tr>
+                      <td>Actual 0</td>
+                      <td>30223</td>
+                      <td>1709</td>
+                  </tr>
+                  <tr>
+                      <td>Actual 1</td>
+                      <td>3074</td>
+                      <td>3958</td>
+                  </tr>
+              </table>
+              </div>
+            </div>
+
+            <br><br>
+
+            <div class="center-h5s">
+              <h5>Surowe dane, satysfakcja klienta</h5>
+            </div>
+
+
+            <div style="display: flex; justify-content: center; ">
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 450px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                    <td>#</td>
+                    <td>precision</td>
+                    <td>recall</td>
+                    <td>f1-score</td>
+                    <td>amount</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0,80</td>
+                    <td>0,78</td>
+                    <td>0,79</td>
+                    <td>17598</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0,82</td>
+                    <td>0,84</td>
+                    <td>0,83</td>
+                    <td>7032</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>accuracy</td>
+                    <td></td>
+                    <td></td>
+                    <td>0,81</td>
+                    <td>38964</td>
+                </tr>
+                <tr>
+                    <td>macro avg</td>
+                    <td>0,81</td>
+                    <td>0,81</td>
+                    <td>0,81</td>
+                    <td>38964</td>
+                </tr>
+                <tr>
+                    <td>weighted avg</td>
+                    <td>0,81</td>
+                    <td>0,81</td>
+                    <td>0,81</td>
+                    <td>38964</td>
+                </tr>
+            </table>
+              </div>
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 350px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                    <td></td>
+                    <td>Predicted 0</td>
+                    <td>Predicted 1</td>
+                </tr>
+                <tr>
+                    <td>Actual  0</td>
+                    <td>13711</td>
+                    <td>3887</td>
+                </tr>
+                <tr>
+                    <td>Actual 1</td>
+                    <td>3327</td>
+                    <td>18039</td>
+                </tr>
+            </table>
+              </div>
+            </div>
+            
+            Jak widać, model przewidujący lojalność klienta miał dość duży problem z przewidywaniem faktycznie nielojalnych klientów. 
+            Najprawdopodobniej wynika to z dysproporcji między ilością lojalnych a nielojalnych klientów (ok. 16%).
+            Proporcja usatsfakcjonowanych do nieusatysfakcjonowanych jest bardziej wyrównana (ok. 54%).
+
+            <br><br>
+
+            <div class="center-h5s">
+              <h5>Poprawione dane, brak lojalności klienta</h5>
+            </div>
+
+            <div style="display: flex; justify-content: center; ">
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 450px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                    <td></td>
+                    <td>precision</td>
+                    <td>recall</td>
+                    <td>f1-score</td>
+                    <td>support</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0,92</td>
+                    <td>0,94</td>
+                    <td>0,93</td>
+                    <td>31932</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0,71</td>
+                    <td>0,62</td>
+                    <td>0,66</td>
+                    <td>7032</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>accuracy</td>
+                    <td></td>
+                    <td></td>
+                    <td>0,88</td>
+                    <td>38964</td>
+                </tr>
+                <tr>
+                    <td>macro avg</td>
+                    <td>0,81</td>
+                    <td>0,78</td>
+                    <td>0,79</td>
+                    <td>38964</td>
+                </tr>
+                <tr>
+                    <td>weighted avg</td>
+                    <td>0,88</td>
+                    <td>0,88</td>
+                    <td>0,88</td>
+                    <td>38964</td>
+                </tr>
+            </table>
+              </div>
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 350px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                    <td></td>
+                    <td>Przewidziane 0</td>
+                    <td>Przewidziane 1</td>
+                </tr>
+                <tr>
+                    <td>Prawdziwe 0</td>
+                    <td>30150</td>
+                    <td>1782</td>
+                </tr>
+                <tr>
+                    <td>Prawdziwe 1</td>
+                    <td>2706</td>
+                    <td>4326</td>
+                </tr>
+            </table>
+              </div>
+            </div>
+
+            <br><br>
+
+            <div class="center-h5s">
+              <h5>Poprawione dane, satysfakcja klienta</h5>
+            </div>
+
+
+            <div style="display: flex; justify-content: center; ">
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 450px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                    <td></td>
+                    <td>precision</td>
+                    <td>recall</td>
+                    <td>f1-score</td>
+                    <td>support</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0,84</td>
+                    <td>0,82</td>
+                    <td>0,83</td>
+                    <td>17598</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0,86</td>
+                    <td>0,88</td>
+                    <td>0,87</td>
+                    <td>21366</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>accuracy</td>
+                    <td></td>
+                    <td></td>
+                    <td>0,85</td>
+                    <td>38964</td>
+                </tr>
+                <tr>
+                    <td>macro avg</td>
+                    <td>0,85</td>
+                    <td>0,85</td>
+                    <td>0,85</td>
+                    <td>38964</td>
+                </tr>
+                <tr>
+                    <td>weighted avg</td>
+                    <td>0,85</td>
+                    <td>0,85</td>
+                    <td>0,85</td>
+                    <td>38964</td>
+                </tr>
+            </table>
+              </div>
+              <div class="table-responsive table-bordered" style="width: 100%; max-width: 350px; margin: auto; object-fit: contain; padding: 10px;">
+                <table class="table" style="padding: 10px; margin: 10px;">
+                  <tr>
+                    <td></td>
+                    <td>Predicted 0</td>
+                    <td>Predicted 1</td>
+                </tr>
+                <tr>
+                    <td>Actual  0</td>
+                    <td>14474</td>
+                    <td>3124</td>
+                </tr>
+                <tr>
+                    <td>Actual 1</td>
+                    <td>2660</td>
+                    <td>18706</td>
+                </tr>
+            </table>
+              </div>
+            </div>
+
+
+
+            <div style="height: 5px;"></div>
+            Poprawienie danych pozytywnie wpłynęło na większość miar - jedyne miejsce w którym model się nieznacznie pogorszył to recall dla lojalności.
+            Patrząc na F-1 Score przewidywanie lojalności poprawiło się, jednak problem z rozpoznawaniem nielojalnych klientów pozostał.
+            Celność poprawiła się o 295 (zmiana mniejsza niż 1%) przypadków poprawnie rozpoznanych w przypadku lojalności i o  1 430 przypadków w przypadku satysfakcji (zmiana 4%).
+            <div style="height: 5px;"></div>
+
+            <br><br>
+            W przypadku gdy chcielibyśmy przewidzieć pojedynczy przykład, można sprawdzić pewność (prawdopodobieństwo) przynależości do danej klasy przy pomocy poniższego kodu:
+
+            <div style="display: flex; justify-content: center; padding: 10px; margin: 10px;">
+              <pre><code>
+sample = Xl_test.sample(n=1)
+pred = logmodel.predict(sample)
+log_probs = logmodel.predict_log_proba(sample)[:,1]
+probs = np.exp(log_probs)
+print(f'Wynik: {pred}\n 
+        Prawdopodobieństwo: {probs}\n 
+        Logarytm prawdopodobieństwa: {log_probs}')
+
+# out:
+Wynik: [0]
+Prawdopodobieństwo: [0.05414234] 
+Logarytm prawdopodobieństwa: [-2.91613885]
+                            </code></pre>
+                            <pre><code>
+            
+
+
+            </code></pre>
+          </div>
+          Czyli w tym przypadku dość pewna przynależność do lojalnych klientów - prawdopodobieństwo bardzo bliskie 0.
+          <br><br>
+            <h4 id="wnioski-header">7. Wnioski</h4>
+            <h6>
+              Na podstawie wyników z tabeli oraz interpretacji wykresów i błędów wyciągnięto następujące wnioski:
+            </h6>
+            <li>Modele okazały się dość celne, z wyjątkiem przewidywania nielojalnych klientów</li>
+            <li>KNiemal wszystkie usługi są lepiej oceniane przez kobiety niż mężczyźn</li>
+            <li>Dana linia lotnicza powinna wymienić siedzenia w swoich samolotach</li>
+            <li>Pieniądze nie kupią lepszych czasów odlotów/przylotów, chyba że posiadamy prywatny odrzutowiec</li>
+            <li>Jednym z najisotniejszych problemów jest jakość rozrywki na pokładzie - najlepiej nie polegać na jakości filmów dostępnych podczas lotu</li>
+          
+            <br>
+            <h6>Sugestie jak ulepszyć modele:
+            </h6>
+            <li>Sprawdzić czy uzupełnie brakujących ocen usług wg innych kryteriów np. średnia dla danej usługi dla danego pokolenia przyniosłaby lepszy efekt, 
+              lub spróbowanie uzupełnienia danych średnimi wartościami dla dwóch kryteriów np. i płeć i pokolenie.
+            </li>
+            <li>
+              Zastosować GridSearch aby znaleźć najlepszy próg odcięcia, inny niż 0,5.
+            </li>
+
+
+
+
+
+
+          </div>
+
+        </div>
+      </span>
+        <div class="col-md-4"> <!-- SIDEBAR -->
+          <div class="sticky">
+            <p>Nawigacja:</p>
+            <a href="#wstep-header">1. Wstęp</a> <br>
+            <a href="#analiza_zestawu_danych-header">2. Analiza zestawu danych</a> <br>
+            <a href="#wizualizacja-header">3. Wizualizacja danych</a> <br>
+            <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
+            <a href="#modelowanie-header">6. Modelowanie</a> <br>
+            <a href="#wnioski-header">7. Wnioski</a> <br>
+          </div>
+        </div>
+    </div>
+      
+
+
+    <div id="footer", class="bottom", style="font-size:0.77em;">      
+          <p style="margin:5px;">&copy; <script>document.write(new Date().getFullYear());</script> Konrad Jarominiak</p>
+          <p>Wykorzystano:
+            <a href="https://getbootstrap.com/" class="footer-link">Bootsrap 5</a>,
+            <a href="https://highlightjs.org/" class="footer-link">highlight.js</a>,
+            <a href="https://www.mathjax.org/" class="footer-link">MathJax</a> </p>
+      
+        </div>
+
+    <script>hljs.highlightAll();</script>
+    <script src="scripts\modal.js"></script>
+  </body>
+</html>
