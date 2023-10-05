@@ -29,34 +29,133 @@
       </head>
   <body>
       
-    <section class="jumbotron text-center">
-        <div class="container", style="padding: 30px;">
-          <h2>Model przewidujący ceny mieszkań w Warszawie</h2>
-          <p class="lead text-muted">
-            Autorski projekt z własnoręcznie zebranymi danymi.
-            <br>
-            Wizualizacja, analiza danych, przetwarzanie danych przestrzennych w QGIS, nauczanie maszynowe.
-          </p>
-          <p>
-            <a
-              href="https://getbootstrap.com/docs/4.4/examples/album/#"
-              class="btn btn-primary my-2"
-              >Kontakt</a
-            >
-            <a
-              href="index.html"
-              class="btn btn-secondary my-2"
-              >Powrót</a
-            >
-          </p>
+    <section class="jumbotron text-center" id="top">
+      <div class="container", style="padding: 40px;">
+        <h2>Model przewidujący ceny mieszkań w Warszawie z uwzględnieniem odległości</h2>
+        <p class="lead text-muted">
+          Autorski projekt z własnoręcznie zebranymi danymi. 
+          <br>
+          Wizualizacja, analiza danych, przetwarzanie danych przestrzennych w QGIS, nauczanie maszynowe.<br>
+        </p>
+
+        <div style="height: 40px;"></div>
+
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div class="col col-lg-4">
+              <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 450px;">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" style="margin: auto;">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#panelsStayOpen-collapseTwelve" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwelve">
+                    Kontakt ↴
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseTwelve" class="accordion-collapse collapse" style="margin-top: 20px; margin-bottom: 20px">
+                    <div class="accordion-body" style="padding: 5px" >
+  <!-- The text field -->
+  
+                        <div class="container">
+                          <div class="row" style="padding:0px">
+                            <div class="col">
+
+                              <div style="margin: auto; padding: auto;">
+                                <input type="text" 
+                                id="myInput" 
+                                class="form-control form-control-sm" 
+                                value="konrad.jarominiak0@gmail.com" disabled
+                               style="width: 220px">
+                              </div>
+
+
+                            </div>
+                            <div class="col">
+
+                              <div style="margin: auto; padding: auto;">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" style="width: 140px; margin: 0;" onclick="myFunction()">skopiuj do schowka</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div style="width: 220px; margin-top: 10px;">
+                                <a
+                                href="https://www.linkedin.com/in/konrad-jarominiak-941ba0294/"
+                                class="btn btn-outline-primary btn-sm"
+                                style="width: 120px; border-color: #0a66c2; "
+                                >
+                                LinkedIn
+                                </a>
+                              </div>
+
+                              </div>
+                            <div class="col">
+                               
+                            </div>
+                          </div>
+                        </div>
+  
+  
+  
+  
+  <!-- The button used to copy the text -->
+  
+  
+  <!-- The toast -->
+                        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+                          <div class="toast" style="position: absolute; top: 0px; right: 0; width:250px">
+                            <div class="toast-body">
+                              Skopiowano do schowka!
+                            </div>
+                          </div>
+                        </div>
+                        
+                    </div>
+                  </div>
+                </div>
+    
+              </div>   
+            </div>
+
+            <div class="col col-lg-4">
+              
+
+              <div style="width: 450px; padding-top: 15px; padding-bottom: 15px;">
+                <a
+                href="index.html"
+                class="btn btn-secondary my-2"
+                >Powrót do strony głównej</a>
+              </div>
+
+            </div>
+          </div>
         </div>
-    </section>
+
+
+        <div class="true_center">
+          <div class="row" style="margin:margin-top: 40px; width: 100%">
+            <div class="col col-sm">
+           </div>
+            <div class="col col-sm">
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        
+
+      </div>
+  </section>
 
     <span class="border border-0">
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
 
           <div class="tresc wstep">
             <h4 id="wstep-header">1. Wstęp</h4>
@@ -101,7 +200,7 @@ class Links(Base):
             Do zebrania szczegółowych danych również zastosowano Selenium. 
             Web scraping przy pomocy Beautiful Soup byłby szybszy i o wiele prostszy, ale nie umożliwiłby zebrania współrzędnych z zaembedowanej mapy google. 
             Bez przewijania strony, poniższa mapa nie byłaby widoczna i możliwa do zescrapowania.
-            <img src="css\p1_images\embed mapy googli.png" style="margin: 10px auto 10px; width: 100%;">
+            <img src="css\p1_images\embed mapy googli.png" style="margin: 36px; ;">
             <br>
             Zbierania współrzędnych dokonywano przy pomocy poniższego kodu:
             <pre><code> <!-- Kod dla zbierania LATT LONG-->
@@ -186,8 +285,6 @@ for topic in all_topics:
               <img class="modal-content" id="img01">
               <div id="caption"></div>
             </div>
-
-            <!-- <img src="css\p1_images\Warszawa.png" style="width: 95%;" alt=""> -->
 
 
           </div>
@@ -312,7 +409,7 @@ df["taras"] = df["zewnatrz"].apply(lambda x: get_taras(x))
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                  <img src="css\p1_images\Histogram cen.png" style="width:100%" alt="">
+                  <img src="css\p1_images\Histogram cen.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
@@ -330,7 +427,7 @@ sns.histplot(df['Cena'], color='olivedrab').set_title('Histogram cen')
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                  <img src="css\p1_images\Pudełkowy cen dzielnice.png" style="width:100%" alt="">
+                  <img src="css\p1_images\Pudełkowy cen dzielnice.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
@@ -354,7 +451,7 @@ chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
                   aria-controls="panelsStayOpen-collapseThree">
-                  <img src="css\p1_images\Pudełkowy cen dzielnice mini.png" style="width:100%" alt="">
+                  <img src="css\p1_images\Pudełkowy cen dzielnice mini.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
@@ -390,7 +487,7 @@ chart.set_title('Wykres pudełkowy cen w zależności od dzielnicy')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
-<img src="css\p1_images\Pudełkowy powierzchni dzielnice mini.png" style="width: 100%;" alt="">
+<img src="css\p1_images\Pudełkowy powierzchni dzielnice mini.png"  alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
@@ -414,7 +511,7 @@ chart.set_title('Wykres pudełkowy powierzchni w zależności od dzielnicy')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">
-<img src="css\p1_images\Histogram powierzchni.png" style="width: 100%;" alt="">
+<img src="css\p1_images\Histogram powierzchni.png" style="max-width: 100%;" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
@@ -439,7 +536,7 @@ chart.set(xlabel='Powierzchnia [m²]', ylabel='Częstość')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
-<img src="css\p1_images\XY sq i n pokoi.png" style="width:100%" alt="">
+<img src="css\p1_images\XY sq i n pokoi.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
@@ -465,7 +562,7 @@ chart.ax_joint.set_ylabel("Cena [zł]")
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
-<img src="css\p1_images\XY sq i dystans.png" style="width:100%" alt="">
+<img src="css\p1_images\XY sq i dystans.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
@@ -508,7 +605,7 @@ chart.ax_joint.set_ylabel("Cena [zł]")
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
-<img src="css\p1_images\Histogram zabudowa.png" style="width:100%" alt="">                </button>
+<img src="css\p1_images\Histogram zabudowa.png" style="max-width:100%" alt="">                </button>
               </h2>
               <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
                 <div class="accordion-body">
@@ -532,7 +629,7 @@ chart.set(xlabel='Dzielnica', ylabel='Ilość')
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
-<img src="css\p1_images\Kolumnowy stan mieszkań.png" style="width:100%" alt="">
+<img src="css\p1_images\Kolumnowy stan mieszkań.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
@@ -565,7 +662,7 @@ chart.set(xlabel='Dzielnica', ylabel='Ilość')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseTen" aria-expanded="true" aria-controls="panelsStayOpen-collapseTen">
-<img src="css\p1_images\Odległości.png" style="width:100%" alt="">               </button>
+<img src="css\p1_images\Odległości.png" style="max-width:100%" alt="">               </button>
               </h2>
               <div id="panelsStayOpen-collapseTen" class="accordion-collapse collapse">
                 <div class="accordion-body">
@@ -593,7 +690,7 @@ chart.set(xlabel='Dzielnica', ylabel='Ilość')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="true" aria-controls="panelsStayOpen-collapseNine">
-<img src="css\p1_images\Korelacje.png" style="width: 100%;">                </button>
+<img src="css\p1_images\Korelacje.png" style="max-width: 100%;">                </button>
               </h2>
               <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
                 <div class="accordion-body">
@@ -886,10 +983,10 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
 
         </div>
       </span>
-        <div class="col-md-4"> <!-- SIDEBAR -->
+        <div class="col-md-3" style="padding-left: 36px;"> <!-- SIDEBAR -->
           <div class="sticky">
             <p>Nawigacja:</p>
-            <a href="#wstep-header">1. Wstęp</a> <br>
+            <a href="#top">1. Wstęp</a> <br>
             <a href="#zebranie_danych-header">2. Zebranie danych</a> <br>
             <a href="#QGIS-header">3. Mapa i przetworzenie danych w QGIS</a> <br>
             <a href="#pandas-header">4. Oczyszczenie danych w Pandas</a> <br>
@@ -897,11 +994,22 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
             <a href="#modelowanie-header">6. Modelowanie</a> <br>
             <a href="#wnioski-header">7. Wnioski</a> <br>
+
+            <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
+
+            <a href="#top">Powrót do początku</a> <br>
           </div>
         </div>
     </div>
       
-
+    <section class="jumbotron text-center">
+      <div class="container", style="padding-top: 90px;">
+        <p>
+          <a href="#top" class="btn btn-outline-secondary my-2 botbuttons" >Powrót do początku</a>
+          <a href="index.html"class="btn btn-secondary my-2 botbuttons" >Powrót do strony głównej</a>
+        </p>
+      </div>
+  </section>
 
     <div id="footer", class="bottom", style="font-size:0.77em;">      
           <p style="margin:5px;">&copy; <script>document.write(new Date().getFullYear());</script> Konrad Jarominiak</p>
@@ -909,7 +1017,6 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <a href="https://getbootstrap.com/" class="footer-link">Bootsrap 5</a>,
             <a href="https://highlightjs.org/" class="footer-link">highlight.js</a>,
             <a href="https://www.mathjax.org/" class="footer-link">MathJax</a> </p>
-      
         </div>
 
     <script>hljs.highlightAll();</script>

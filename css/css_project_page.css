@@ -9,8 +9,22 @@ h6{
   font-weight: bold
 }
 
+.eng{
+  font-weight: 550;
+}
 
+img{
+  max-width: 100%; 
+  max-height: 100%;
+  
+  object-fit: cover;
+  margin: auto;
+}
 
+.botbuttons{
+  margin: 10px;
+  width: 220px;
+}
 
 li{
   padding-top: 7px;

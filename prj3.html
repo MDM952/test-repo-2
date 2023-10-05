@@ -28,7 +28,7 @@
       </head>
   <body>
       
-    <section class="jumbotron text-center">
+    <section class="jumbotron text-center" id="top">
         <div class="container", style="padding: 40px;">
           <h2>Model przewidujący jakość horroru na podstawie jego tytułu 
             <br>(Niemal 100% skuteczności! Niezwykle praktyczny!)</h2>
@@ -47,28 +47,52 @@
                     <h2 class="accordion-header" style="margin: auto;">
                       <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                       data-bs-target="#panelsStayOpen-collapseTwelve" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwelve">
-                      Mój email ↴
+                      Kontakt ↴
                       </button>
                     </h2>
                     <div id="panelsStayOpen-collapseTwelve" class="accordion-collapse collapse" style="margin-top: 20px; margin-bottom: 20px">
-                      <div class="accordion-body" >
+                      <div class="accordion-body" style="padding: 5px" >
     <!-- The text field -->
     
-                        <div style="margin: auto">
-                          <div class="row g-3 align-items-center">
-
-                            <div class="col-auto" style="margin: 0px">
-                              <input type="text" 
-                                      id="myInput" 
-                                      class="form-control form-control-sm" 
-                                      value="konrad.jarominiak0@gmail.com" disabled
-                                     style="width: 250px">
+                          <div class="container">
+                            <div class="row" style="padding:0px">
+                              <div class="col">
+  
+                                <div style="margin: auto; padding: auto;">
+                                  <input type="text" 
+                                  id="myInput" 
+                                  class="form-control form-control-sm" 
+                                  value="konrad.jarominiak0@gmail.com" disabled
+                                 style="width: 220px">
+                                </div>
+  
+  
+                              </div>
+                              <div class="col">
+  
+                                <div style="margin: auto; padding: auto;">
+                                  <button type="button" class="btn btn-outline-secondary btn-sm" style="width: 140px; margin: 0;" onclick="myFunction()">skopiuj do schowka</button>
+                                </div>
+                              </div>
                             </div>
-                            <div class="col-auto" style="margin: auto; padding:auto">
-                              <button type="button" class="btn btn-outline-secondary btn-sm" onclick="myFunction()">skopiuj do schowka</button>
+                            <div class="row">
+                              <div class="col">
+                                <div style="width: 220px; margin-top: 10px;">
+                                  <a
+                                  href="https://www.linkedin.com/in/konrad-jarominiak-941ba0294/"
+                                  class="btn btn-outline-primary btn-sm"
+                                  style="width: 120px; border-color: #0a66c2; "
+                                  >
+                                  LinkedIn
+                                  </a>
+                                </div>
+  
+                                </div>
+                              <div class="col">
+                                 
+                              </div>
                             </div>
                           </div>
-                        </div>
     
     
     
@@ -91,17 +115,17 @@
       
                 </div>   
               </div>
-
+  
               <div class="col col-lg-4">
                 
-
+  
                 <div style="width: 450px; padding-top: 15px; padding-bottom: 15px;">
                   <a
                   href="index.html"
                   class="btn btn-secondary my-2"
-                  >Powrót</a>
+                  >Powrót do strony głównej</a>
                 </div>
-
+  
               </div>
             </div>
           </div>
@@ -139,10 +163,10 @@
             Pomysł na ten projekt zrodził się z przemyśleń nad zatrzęsieniem niezaprzeczalnie fatalnych, tanich filmów na serwisach VOD, 
             których jedynym celem jest <a href="https://www.giantfreakinrobot.com/ent/watchbait-new-clickbait.html">przyciągnięcie</a> 
             widza swoim tytułem nawiązującym do starych, słynnych filmów. 
-            Na przykład multum filmów o rekinach udających sequele "Szczęk" Spielberg'a.
+            Przykładowo multum filmów o rekinach udających sequele "Szczęk" Spielberg'a.
             <br> <br>  
             Czy można przewidzieć powodzenie takiego filmu na podstawie jego tytułu? 
-            Ten projekt jest nieporadną próbą utworzenia modelu, który przewiduje oceny horrorów i ich podróbek na podstawie ich tytułów.
+            Ten projekt jest próbą utworzenia modelu, który przewiduje oceny horrorów i ich podróbek na podstawie ich tytułów.
             <br><br>
             Projekt opiera się na zestawie danych z <a href="https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset?select=movies_metadata.csv">Kaggle</a>,
             który, według opisu, jest połączeniem danych z <a href="https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset?select=movies_metadata.csv">TMDB</a> i 
@@ -154,7 +178,7 @@
             <ul>
             <li>Pandas i Numpy do przetworzenia i oczyszczenia danych</li>
             <li>Matplotlib i Seaborn do wizualizacji danych</li>
-            <li>sci-kit learn do stworzenia modeli</li>
+            <li>sci-kit learn do stworzenia modelu</li>
             </ul>
 
           </div>
@@ -162,7 +186,7 @@
           <div class="tresc analiza_zestawu_danych">
             <h4 id="analiza_zestawu_danych-header">2. Analiza zestawu danych</h4>
 
-            W tabeli znajdują się aż 24 kolumny dotyczące danych poszczególnych filmów, np. tytuł, tagline, popularność, przychód, opis, etc.
+            W tabeli znajdują się 24 kolumny dotyczące danych poszczególnych filmów, np. tytuł, tagline, popularność, przychód, opis, etc.
             Na potrzeby modelu, kolumny które byłyby przydatne to:
 
             <ul>
@@ -174,20 +198,188 @@
             </ul>
 
             W pierwszej kolejności spisano listę członów tytułów. Cześć z nich może wyglądać dość dziwnie, np. 'Dea'.
-            Taki człon ma wyłapać tytuły zawierające zarówno 'Death' jak i 'Dead' i zostać połączone w tytuł jak np.
-            'shark' w <a href="https://www.imdb.com/title/tt2724064/">Sharknado</a>. 
+            Taki człon ma wyłapać tytuły zawierające zarówno 'Death' jak i 'Dead'. Człony łączą się w tytuły jak np.
+            'shark' i 'tornado' w <a href="https://www.imdb.com/title/tt2724064/">Sharknado</a>. 
             <br><br>
             Lista członów przedstawia się następująco:
-            <pre><code>
-['Evil', 'Final', 'Night', 'Kill', 'Scar', 'Scream', 'Land', 'Nado', 'Wolf', 'Dea', 
-'Moon', 'Chainsaw', 'American', 'Witch', 'Cannibal', 'Monster', 'Child', 'Haunt', 
-'Fear', 'Clown', 'Curs', 'Blac', 'Devil', '3D', 'Asylum', 'Conjur', 'Ouija', 'Shark', 
-'Ville', 'Town', 'Texas', 'Mummy', 'Corn', 'Exorc', 'Psycho', 'Dino', 'Virus', 'House', 
-'Vengeance', 'Blood', 'Nurse', 'Demon', 'Zombie', 'Cula', 'Stein', 'Geist']
-            </code></pre>
+<div style="height: 9px;"></div>
 
+            <div class="container text-left">
+              <div class="row">
 
-            <br>
+                <div class="col">
+                  <li>3D</li>
+                </div>
+                <div class="col">
+                  <li>American</li>
+                </div>
+                <div class="col">
+                  <li>Asylum</li>
+                </div>
+                <div class="col">
+                  <li>Blac</li>
+                </div>
+                <div class="col">
+                  <li>Blood</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Chainsaw</li>
+                </div>
+                <div class="col">
+                  <li>Child</li>
+                </div>
+                <div class="col">
+                  <li>Clown</li>
+                </div>
+                <div class="col">
+                  <li>Conjur</li>
+                </div>
+                <div class="col">
+                  <li>Corn</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Cula</li>
+                </div>
+                <div class="col">
+                  <li>Curs</li>
+                </div>
+                <div class="col">
+                  <li>Dea</li>
+                </div>
+                <div class="col">
+                  <li>Demon</li>
+                </div>
+                <div class="col">
+                  <li>Devil</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Dino</li>
+                </div>
+                <div class="col">
+                  <li>Evil</li>
+                </div>
+                <div class="col">
+                  <li>Exorc</li>
+                </div>
+                <div class="col">
+                  <li>Fear</li>
+                </div>
+                <div class="col">
+                  <li>Final</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Geist</li>
+                </div>
+                <div class="col">
+                  <li>Haunt</li>
+                </div>
+                <div class="col">
+                  <li>House</li>
+                </div>
+                <div class="col">
+                  <li>Kill</li>
+                </div>
+                <div class="col">
+                  <li>Land</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Monster</li>
+                </div>
+                <div class="col">
+                  <li>Moon</li>
+                </div>
+                <div class="col">
+                  <li>Mummy</li>
+                </div>
+                <div class="col">
+                  <li>Nado</li>
+                </div>
+                <div class="col">
+                  <li>Night</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Nurse</li>
+                </div>
+                <div class="col">
+                  <li>Ouija</li>
+                </div>
+                <div class="col">
+                  <li>Psycho</li>
+                </div>
+                <div class="col">
+                  <li>Scar</li>
+                </div>
+                <div class="col">
+                  <li>Scream</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Shark</li>
+                </div>
+                <div class="col">
+                  <li>Stein</li>
+                </div>
+                <div class="col">
+                  <li>Texas</li>
+                </div>
+                <div class="col">
+                  <li>Town</li>
+                </div>
+                <div class="col">
+                  <li>Vengeance</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Ville</li>
+                </div>
+                <div class="col">
+                  <li>Virus</li>
+                </div>
+                <div class="col">
+                  <li>Witch</li>
+                </div>
+                <div class="col">
+                  <li>Wolf</li>
+                </div>
+                <div class="col">
+                  <li>Zombie</li>
+                </div>
+                
+                </div>
+                
+            </div>
+
+            <br><br>
             Następnie utworzono funkcję agregującą tytuły do sprawdzenia ilości filmów z danymi członami.
 
             <pre><code>
@@ -244,7 +436,7 @@ chart.set(xlabel='Część tytułu', ylabel='Ilość')
             Kolejno przefiltrowano zestaw danych tak, aby pozostały tylko te horrory, które zawierają przynajmniej jeden człon z naszej listy.
             Sprawdzono również jaka ilość filmów zawiera dane dotyczące budżetu i przychodu. 
             Niestety znaczna większość z nich nie ma tych wartości sprecyzowanych i ostatecznie kolumny 'budget' i 'revenue' zostały usunięte przed modelowaniem.
-            Tak duże ilości brakujących danych bardzo negatywnie wpłynęły by na jakość modelu. 
+            Tak duże ilości brakujących danych bardzo negatywnie wpłynęłyby na jakość modelu. 
             <br> <br>
 
 
@@ -272,7 +464,7 @@ Total amount of titles: 1425
 
             Usunięto również filmy z ilością ocen 0, 1 i 2. 
             Filmy z ilością ocen równą 3 miały wystarczająco sensowne wyniki tzn. oceny były niewiększe niż 7. 
-            Gdyby końcowy rozmiar zestawu danych nie był mały (115 tytułów), odcięcie po ilości ocen oczywiście by zwiększono.
+            Gdyby końcowy rozmiar zestawu danych nie był mały (115 tytułów), odcięcie po ilości ocen oczywiście by zwiększono np. do 10.
             Kolejno przeprowadzono następujące operacje:
 
             <li>Usunięto duplikaty</li>
@@ -372,10 +564,6 @@ ax.set_ylabel('Częstość', fontdict={'fontsize':11})
             <div class="tresc analiza_zestawu_danych">
               <h4 id="wizualizacja-header">3. Sprawdzenie korelacji</h4>
 
-
-              
-
-              <br>
               Przed rozpoczęciem modelowania sprawdzono, 
               czy w zestawie danych istnieje zależność między samymi członami tytułów a oceną filmów.
               Dokonano tego zestawiając korelację członów do oceny (słupki) wraz samą średnią oceną dla danego członu (linia).
@@ -430,7 +618,7 @@ plt.title('Korelacja i średnia ocena członów tytułów', fontdict={'fontsize'
             </div>
           </div>
           <li class="opis_wiz">
-            Korelacje są niskie, czego można się było spodziewać. Na szczęście celem tego modelu jest dowcip, nie trafność czy słuszność.
+            Korelacje są niskie, czego można się było spodziewać.
           </li>
 
           <li class="opis_wiz">
@@ -440,29 +628,29 @@ plt.title('Korelacja i średnia ocena członów tytułów', fontdict={'fontsize'
 
           </li>
           <li class="opis_wiz">
-            Najgorszym członem okazało się "Zombie", co ma sens, ze względu na częstość tego członu, ogólną sztampowość filmów o zombie i ich niską ocenę. 
-            Tu znów pojawia się problem braku równowagi w ilości poszczególnych atrybutów i wpływu na korelację, jak w przypadku pokoleń w projekcie ocen usług lotniczych.
-            Aby wartości korelacji najlepiej oddawały te zależności, istotne jest aby dane atrybuty były w miarę równo reprezentowane.
+            Najgorszym członem okazało się "Zombie", co ma sens, przede wszystkim ze względu na częstość tego członu. 
+            
+          </li>
+          <li class="opis_wiz">
+            Warto znów poruszyć problem braku równowagi w ilości poszczególnych atrybutów i wpływu na korelację, jak w przypadku pokoleń w projekcie ocen usług lotniczych.
+            Aby wartości korelacji najlepiej oddawały te zależności, istotne jest aby dane atrybuty były w miarę równo reprezentowane. 
           </li>
 
           
           </div>
 
           <div class="tresc modelowanie">
-            <h4 id="modelowanie-header">Modelowanie</h4>
-            Do modelowania wykorzystano tzw. las losowy (ang. random forest), świetną metodę klasyfikacyjną. 
+
+            <h4 id="modelowanie-header">4. Modelowanie</h4>
+            Do modelowania wykorzystano tzw. <span class="eng">las losowy</span> (ang. random forest), świetny model do klasyfikacji. 
             Metoda lasu losowego opiera się na wykorzystywaniu wielu drzewek decyzyjnych, 
             gdzie każdy z nich otrzymuje inny, losowo wybrany podzbiór danych uczących.
-            <br><br>
+
             <h6>Działanie drzewek decyzyjnych</h6>
             Drzewo decyzyjne polega na podziałach zestawu danych na podzbiory, w taki sposób, 
             aby jak najlepiej rozróżnić je na podstawie danego atrybutu (np. pogoda - słonecznie/pochmurnie czy waga - powyżej/poniżej 7kg).
-            Decyzje jak podzielić zbiór opierają się na funckjach entropii (minimalizuje nieporządek w podziale, jak dobrze dane zostały podzielone) i 
+            Decyzje jak podzielić zbiór opierają się na funkcjach entropii (minimalizuje nieporządek w podziale, jak dobrze dane zostały podzielone) i 
             przyrostu informacji (information gain, bada poprawę w jakości klasyfikacji).
-            Takich podziałów można zastosować wiele, w przypadku jednego atrybutu nie musi to być też tylko podział na 2.
-
-            Zestaw danych można dzielić, aż w końcowych odnogach drzewka, czyli liściach, znajdą się pojedyncze klasy. 
-
 
             <div class="d-flex align-items-center justify-content-center">
               <figure class="figure mx-auto">
@@ -470,19 +658,26 @@ plt.title('Korelacja i średnia ocena członów tytułów', fontdict={'fontsize'
                 <figcaption class="figure-caption">Schemat budowy drzewa decyzyjnego</figcaption>
               </figure>
             </div>
-            
+            Takie podziały można tworzyć na wiele sposobów, a z jednego węzła mogą odchodzić więcej niż tylko dwie gałęzie.
+            Zestaw danych można dzielić, aż w końcowych odnogach drzewka, znajdą się pojedyncze klasy. 
+
+
+
+            <br><br>
             <h6>Działanie lasu losowego</h6>
             Niestety skomplikowane i duże zestawy danych wiążą się z przeuczeniem modelu drzewa decyzyjnego i zatraceniem jego uniwersalności - 
             pojedyncze drzewo decyzyjne może być zbudowane na bardzo wiele sposobów, z różnymi węzłami i przez to różnymi, mało celnymi wynikami.
-            <br><br>
-            Las losowy jest bardziej zaawansowaną wersją drzewa decyzyjnego, która wykorzystuje wiele drzew, bagging oraz feature randomness: 
-            <li>bagging (inaczej Bootstrap Aggregation) - losowe wybieranie próbek z powtórzeniami, w jednym podzbiorze przekazanym do drzewa decyzyjnego może znaleźć się kilka takich samych próbek.</li>
-            <li>feature randomness - losowe wybieranie, jaka część cech (kolumn zestawu danych np. wiek, waga) zostaną wykorzystane w węzłach drzewa. 
+            <div style="height: 9px;"></div>
+            <span class="eng">Las losowy</span> jest bardziej zaawansowaną wersją drzewa decyzyjnego, która wykorzystuje wiele drzew oraz techniki <span class="eng">bagging</span> i <span class="eng">feature randomness</span>: 
+            <li><span class="eng">bagging</span> (inaczej Bootstrap Aggregation) - losowe wybieranie próbek z powtórzeniami, w jednym podzbiorze przekazanym do drzewa decyzyjnego może znaleźć się kilka takich samych próbek.</li>
+            <li><span class="eng">feature randomness</span> - losowe wybieranie, jaka część cech (kolumn zestawu danych np. wiek, waga) zostaną wykorzystane w węzłach drzewa. 
               W drzewach decyzyjnych model rozpatruje wszystkie cechy zbioru.</li>
-            Techniki te redukują powiązania między osobnymi drzewami decyzyjnymi lasu losowego, dzięki czemu można uniknąć nadmiernego dopasowania danych.
+              <div style="height: 9px;"></div>
+              Techniki te redukują powiązania między osobnymi drzewami decyzyjnymi lasu losowego, dzięki czemu można uniknąć nadmiernego dopasowania danych.
 
             <br><br>
-            Podczas modelowania wykorzystano GridSearch, czyli narzędzie porównujące jakość modeli, w zależności od wartości parametrów im nadanych. Te parametry to:
+            Podczas modelowania wykorzystano GridSearch, czyli narzędzie porównujące jakość modeli, w zależności od wartości parametrów im nadanych, które wyprowadza najlepsze parametry modelu. 
+            Te parametry to:
             <li>n_estimators - ilość drzew w lesie, domyślna ilość to 100</li> 
             <li>max_depth - maksymalna głębokość węzłów drzew, nadanie maksymalnej głębokości zapobiega nadmiernemu dopasowaniu</li>
             <li>min_samples_split - ile gałęzi wychodzi z węzła</li>
@@ -519,7 +714,7 @@ print(forest.score(X_test, y_test))
 0.78125
               </code></pre>
               Początkowo, przed zastosowaniem wielu poprawek  w modelu i przed użyciem metody GridSearch modele osiągały celność poniżej 50%. 
-              Obecna calność modelu jest dla mnie nieco zaskakująca. Pozostało sprawdzenie na ile sensowne są przewidziane przez model oceny.
+              Obecna celność modelu jest więc trochę zaskakująca. Pozostało sprawdzenie na ile sensowne są przewidziane przez model oceny.
               Najpierw wykonano funkcję do łatwego sprawdzania oceny filmu.
 
               <pre><code>
@@ -536,14 +731,15 @@ def get_scoring(your_title):
     return forest.predict(my_title.drop('title', axis=1))[0]
               </code></pre>
 
-              Następnie sprawdzono kilka tytułów i przewidziane dla nich oceny. Poniżej przedstawiono kilka wyników.
+              Następnie sprawdzono kilka tytułów i przewidziane dla nich oceny. Poniżej przedstawiono kilka wyników. 
+              
 
               <pre><code>
 get_scoring("House of demons")
 # out:
 'Decent'
 
-get_scoring("House of demon zombies")
+get_scoring("House of demon zombies") 
 # out:
 'Awful'
 
@@ -568,20 +764,19 @@ get_scoring('American Exorcist')
 'Decent'
               </code></pre>
 
-
-
-            <br><br>
-            <h4 id="wnioski-header">7. Wnioski</h4>
+            <h4 id="wnioski-header">5. Wnioski</h4>
               Model, który pierwotnie był jedynie niepoważnym żartem, okazał się dość celny. 
-              Choć nie można o nim powiedzieć, że ma prawdziwie praktyczne zastosowanie, spełnia on pierwotnie zamierzoną funkcję. Poniżej zamieszczono parę wniosków i uwag.
+              Choć nie można o nim powiedzieć, że ma prawdziwie praktyczne zastosowanie, spełnia on pierwotnie zamierzoną funkcję. 
+              Można powiedzieć, że jest nieco bardziej zaawansowaną odmianą generatorów nazw zespołów heavy metalowych.
+              Poniżej zamieszczono parę wniosków i uwag.
             <li>Model był oparty na bardzo małej ilości danych, mimo to udało się coś z nich wyciągnąć.</li>
             <li>Model wskazuje wszystkie spośród 3 możliwych ocen.</li>
             <li>Ilość członów nie ma znaczenia, model w pewnym sensie wyprowadza 'uśrednienie' członów.</li>
             <li>Wcześniej przedstawiona korelacja okazała się w całkiem prawdziwa - np. człon 'Zombie' zaniża oceny tytułów, ale nie do takiego stopnia, że każdy film z tym członem dostanie ocenę 'Awful'.</li>
-            <li>Ciekawe, jak na model wpłynęłaby by obecność cech takich jak budżet i przychód. 
+            <li>Ciekawe, jak na model wpłynęłaby obecność cech takich jak budżet i przychód. 
               Najprostszym sposobem byłoby sprawdzenie, czy film zarobił lub nie, lub jaki jest stosunek budżetu do przychodu. 
-              Najpewniej większość filmów, które na siebie nie zarobiły miałyby negatywne oceny.
-              Jednak może zaistniała by taka sytuacja, gdzie film nie zarobił na siebie, a otrzymał pozytywną ocenę. W jaki sposób człony tytułu takich filmów wpłynęłyby na model?</li>
+              Najpewniej większość filmów, które by na siebie nie zarobiły, miałyby negatywne oceny.
+              Jednak może zaistniałaby taka sytuacja, gdzie film nie zarobił na siebie, a otrzymał pozytywną ocenę. W jaki sposób człony tytułu takich filmów wpłynęłyby na model?</li>
 
 
 
@@ -593,19 +788,30 @@ get_scoring('American Exorcist')
 
         </div>
       </span>
-        <div class="col-md-3"> <!-- SIDEBAR -->
+        <div class="col-md-3" style="padding-left: 36px;"> <!-- SIDEBAR -->
           <div class="sticky">
             <p>Nawigacja:</p>
-            <a href="#wstep-header">1. Wstęp</a> <br>
+            <a href="#top">1. Wstęp</a> <br>
             <a href="#analiza_zestawu_danych-header">2. Analiza zestawu danych</a> <br>
             <a href="#wizualizacja-header">3. Wizualizacja danych</a> <br>
-            <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
-            <a href="#modelowanie-header">6. Modelowanie</a> <br>
-            <a href="#wnioski-header">7. Wnioski</a> <br>
+            <a href="#modelowanie-header">4. Modelowanie</a> <br>
+            <a href="#wnioski-header">5. Wnioski</a> <br>
+
+            <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
+
+            <a href="#top">Powrót do początku</a> <br>
           </div>
         </div>
     </div>
       
+    <section class="jumbotron text-center">
+      <div class="container", style="padding-top: 90px;">
+        <p>
+          <a href="#top" class="btn btn-outline-secondary my-2 botbuttons" >Powrót do początku</a>
+          <a href="index.html"class="btn btn-secondary my-2 botbuttons" >Powrót do strony głównej</a>
+        </p>
+      </div>
+  </section>
 
 
     <div id="footer", class="bottom", style="font-size:0.77em;">      

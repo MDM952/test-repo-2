@@ -29,34 +29,135 @@
       </head>
   <body>
       
-    <section class="jumbotron text-center">
-        <div class="container", style="padding: 30px;">
-          <h2>Analiza ocen usług lotniczych i satysfakcji klientów</h2>
-          <p class="lead text-muted">
-            Typowe dane ćwiczeniowe z dziedziny data science i nauczania maszynowego.
-            <br> Dogłębna analiza zależności ocen zależnie od wielu kryteriów.
-            <br> Modele przewidujące satysfakcję i lojalność klienta.
-          </p>
-          <p>
-            <a
-              href="https://getbootstrap.com/docs/4.4/examples/album/#"
-              class="btn btn-primary my-2"
-              >Kontakt</a
-            >
-            <a
-              href="index.html"
-              class="btn btn-secondary my-2"
-              >Powrót</a
-            >
-          </p>
+    <section class="jumbotron text-center" id="top">
+      <div class="container", style="padding: 40px;">
+        <h2>Analiza ocen usług lotniczych i satysfakcji klientów</h2>
+        <p class="lead text-muted">
+          Typowe dane ćwiczeniowe z dziedziny data science i nauczania maszynowego.
+          <br>
+          Dogłębna analiza zależności ocen zależnie od wielu kryteriów.
+          <br>
+          Modele przewidujące satysfakcję i lojalność klienta. 
+        </p>
+
+        <div style="height: 40px;"></div>
+
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div class="col col-lg-4">
+              <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 450px;">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" style="margin: auto;">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#panelsStayOpen-collapseTwelve" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwelve">
+                    Kontakt ↴
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseTwelve" class="accordion-collapse collapse" style="margin-top: 20px; margin-bottom: 20px">
+                    <div class="accordion-body" style="padding: 5px" >
+  <!-- The text field -->
+  
+                        <div class="container">
+                          <div class="row" style="padding:0px">
+                            <div class="col">
+
+                              <div style="margin: auto; padding: auto;">
+                                <input type="text" 
+                                id="myInput" 
+                                class="form-control form-control-sm" 
+                                value="konrad.jarominiak0@gmail.com" disabled
+                               style="width: 220px">
+                              </div>
+
+
+                            </div>
+                            <div class="col">
+
+                              <div style="margin: auto; padding: auto;">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" style="width: 140px; margin: 0;" onclick="myFunction()">skopiuj do schowka</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div style="width: 220px; margin-top: 10px;">
+                                <a
+                                href="https://www.linkedin.com/in/konrad-jarominiak-941ba0294/"
+                                class="btn btn-outline-primary btn-sm"
+                                style="width: 120px; border-color: #0a66c2; "
+                                >
+                                LinkedIn
+                                </a>
+                              </div>
+
+                              </div>
+                            <div class="col">
+                               
+                            </div>
+                          </div>
+                        </div>
+  
+  
+  
+  
+  <!-- The button used to copy the text -->
+  
+  
+  <!-- The toast -->
+                        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+                          <div class="toast" style="position: absolute; top: 0px; right: 0; width:250px">
+                            <div class="toast-body">
+                              Skopiowano do schowka!
+                            </div>
+                          </div>
+                        </div>
+                        
+                    </div>
+                  </div>
+                </div>
+    
+              </div>   
+            </div>
+
+            <div class="col col-lg-4">
+              
+
+              <div style="width: 450px; padding-top: 15px; padding-bottom: 15px;">
+                <a
+                href="index.html"
+                class="btn btn-secondary my-2"
+                >Powrót do strony głównej</a>
+              </div>
+
+            </div>
+          </div>
         </div>
-    </section>
+
+
+        <div class="true_center">
+          <div class="row" style="margin:margin-top: 40px; width: 100%">
+            <div class="col col-sm">
+           </div>
+            <div class="col col-sm">
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        
+
+      </div>
+  </section>
 
     <span class="border border-0">
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
 
           <div class="tresc wstep">
             <h4 id="wstep-header">1. Wstęp</h4>
@@ -184,14 +285,15 @@ df['simple distance'] = df['Flight Distance'].apply(lambda x: simplify_disance(x
                 </div>
               </div>
               <li class="opis_wiz">
-                Wizualizacja rozkładu pokoleń, utworzonych na podstawie wieku.
+                Wizualizacja rozkładu pokoleń, utworzonych na podstawie wieku. Warto zaznaczyć bardzo niewielką ilość osób z pokolenia "Silent Generation"
               </li>
 
 <br><br><br>
             <div id="carouselExampleControls" class="carousel carousel-dark testimonials slide" data-bs-ride="false", data-interval="false", style="height: 572px;">
               <div class="carousel-inner", style="padding: auto;">
                 <div class="carousel-item">
-                  Mediana ocen bez zamiany brakujących wartości
+                  <div  style="width: 570px; text-align: center; margin: auto;">Mediana ocen bez zamiany brakujących wartości
+                  </div>
                   <img class="testi-img " src="css\p2_images\Score avg NaN.png" > <br>
                 </div>
                 <div class="carousel-item">
@@ -269,7 +371,7 @@ g.set(xlabel='Średnia ocena', ylabel='Pokolenie')
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
-<img src="css\p2_images\Lojalność i satysfakcja.png" style="width:100%" alt="">
+<img src="css\p2_images\Lojalność i satysfakcja.png" style="max-width:100%; max-height: 100%;" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
@@ -301,7 +403,7 @@ wrap_labels(g, 22)
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">
-<img src="css\p2_images\Satysfakcja pokolenia.png" style="width: 100%;" alt="">
+<img src="css\p2_images\Satysfakcja pokolenia.png" style="max-width: 100%;" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
@@ -383,7 +485,7 @@ ax.set_ylabel('Częstość')
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
-<img src="css\p2_images\Histogram opóźnień.png" style="width:100%" alt="">
+<img src="css\p2_images\Histogram opóźnień.png" style="max-width:100%" alt="">
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
@@ -665,7 +767,7 @@ for patch in ax.patches:
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="true" aria-controls="panelsStayOpen-collapseNine">
-<img src="css\p2_images\Korelacja.png" style="width: 100%;" >                </button>
+<img src="css\p2_images\Korelacja.png" style="max-width: 100%;" >                </button>
               </h2>
               <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
                 <div class="accordion-body">
@@ -758,7 +860,7 @@ sns.heatmap(dfd.drop(['satisfaction_v2', 'Gender', 'Customer Type', 'Type of Tra
             <li>\(z\) to zmienna objaśniająca, niezależna, tutaj \(y\), równanie regresji liniowej</li>
  
             <br>
-            <img src="css\p2_images\logreg.png" style="width: 98%; max-height: 400px; margin: auto; object-fit: contain; padding: 15px;" alt="">
+            <img src="css\p2_images\logreg.png" style="max-width: 98%; max-height: 400px; margin: auto; object-fit: contain; padding: 15px;" alt="">
             <br><br>
 
             <br>
@@ -1190,19 +1292,32 @@ Logarytm prawdopodobieństwa: [-2.91613885]
 
         </div>
       </span>
-        <div class="col-md-4"> <!-- SIDEBAR -->
+        <div class="col-md-3" style="padding-left: 36px;"> <!-- SIDEBAR -->
           <div class="sticky">
             <p>Nawigacja:</p>
-            <a href="#wstep-header">1. Wstęp</a> <br>
+            <a href="#top">1. Wstęp</a> <br>
             <a href="#analiza_zestawu_danych-header">2. Analiza zestawu danych</a> <br>
             <a href="#wizualizacja-header">3. Wizualizacja danych</a> <br>
             <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
             <a href="#modelowanie-header">6. Modelowanie</a> <br>
             <a href="#wnioski-header">7. Wnioski</a> <br>
+
+            <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
+
+            <a href="#top">Powrót do początku</a> <br>
           </div>
         </div>
     </div>
       
+
+    <section class="jumbotron text-center">
+      <div class="container", style="padding-top: 90px;">
+        <p>
+          <a href="#top" class="btn btn-outline-secondary my-2 botbuttons" >Powrót do początku</a>
+          <a href="index.html"class="btn btn-secondary my-2 botbuttons" >Powrót do strony głównej</a>
+        </p>
+      </div>
+  </section>
 
 
     <div id="footer", class="bottom", style="font-size:0.77em;">      
