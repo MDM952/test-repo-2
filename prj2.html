@@ -161,11 +161,11 @@
 
           <div class="tresc wstep">
             <h4 id="wstep-header">1. Wstęp</h4>
-            Ten projekt jest typowym projektem z dziedziny Data Science mającym na celu analizę danych i utworzenie modelu przewidującego pewne aspekty zestawu danych.
-            Dane dotyczą ocen wystawianych przez klientów linii lotniczych np. satysfakcji z rozrywki zapewnionej na pokładzie samolotu, ogólnej satysfakcji klienta, dystansu lotu, wieku, płci etc. 
-            Zestaw danych został pobrany ze strony internetowej 
+            Ten projekt jest typowym projektem z dziedziny Data Science mającym na celu analizę danych biznesowych / ankiet.
+            Dane dotyczą ocen wystawianych przez klientów linii lotniczych np. satysfakcji z rozrywki zapewnionej na pokładzie samolotu oraz ogólnej satysfakcji klienta, dystansu lotu, wieku, płci etc. 
+            Zestaw danych został pobrany z portalu 
             <a href="https://www.kaggle.com/datasets/johndddddd/customer-satisfaction">Kaggle</a>, niestety ich pierwotne źródło nie jest znane.
-            Osobiście przypuszczam, że są to zanonimowane dane przeznaczone do sprawdzenia umiejętności aplikantów na stanowisko np. analityka danych.
+            Najprawdopodobniej są to zanonimowane dane, przeznaczone do sprawdzenia umiejętności aplikantów na stanowisko np. analityka danych.
             <br><br>
             Do wykonania niniejszego projektu wykorzystano biblioteki:
 <li>Pandas i Numpy do przetworzenia i oczyszczenia danych</li>
@@ -181,11 +181,11 @@
             <li>id - numer identyfikacyjny klienta</li> 
             <li>satisfaction_v2 - ogólna satysfakcja klienta - usatsfakcjonowany / neutralny lub nieusatysfakcjonowany </li>
             <li>Gender - płeć</li>
-            <li>Customer Type - typ klienta - loyalny / nielojalny</li>
+            <li>Customer Type - typ klienta - lojalny / nielojalny</li>
             <li>Age - wiek</li>
             <li>Type of Travel - rodzaj podróży - podróż biznesowa / osobista</li>
             <li>Class - klasa obsługi - ekonomiczna / ekonomiczna plus / biznesowa</li>
-            <li>Flight Distance - dystans lotu, najpewniej liczony w milach</li>
+            <li>Flight Distance - dystans lotu, najpewniej liczony w km</li>
             <li>Departure Delay in Minutes i Arrival Delay in Minutes - opóźnienia w minutach</li>
 
             <br>
@@ -195,7 +195,7 @@
             <li>Food and drink - jedzenie i napoje</li>
             <li>Gate location - lokalizacja bramek</li>
             <li>Inflight wifi service - jakość internetu podczas lotu</li>
-            <li>Inflight entertainment - jakość rozrywki podczas lotu, np. wybór filmów</li>
+            <li>Inflight entertainment - rozrywka podczas lotu, np. wybór filmów</li>
             <li>Online support - wsparcie internetowe</li>
             <li>Ease of Online booking - łatwość zamawiania biletów przez internet</li>
             <li>On-board service - obsługa na pokładzie</li>
@@ -210,7 +210,6 @@
             Brakujących wartości było około 400 i występowały jedynie w kolumnie <i>Arrival Delay in Minutes</i>. 
             Ponieważ kolumna ta jest niemalże identyczna z kolumną <i>Departure Delay in Minutes</i>, została ona usunięta tuż przed modelowaniem.
             Wartości 0 zostały zamienione na wartości średnie dla danej kolumny, w zależności od płci. 
-            <br>
             Kwestia różnic między wartościami w zależności od sposobu uzupełnienia brakujących wartości została przedstawiona w sekcji wizualizacji.
 
             <pre><code> <!-- Kod zamian 0 na średnie zależnie od płci -->
@@ -218,7 +217,6 @@ df.iloc[:, 7:21] = df.iloc[:, 7:21].replace(0, np.nan)
 df.iloc[:, 7:21] = df.groupby('Gender', group_keys=False).apply(lambda x: x.fillna(x.mean().round(1))).iloc[:, 7:21]
             </code></pre>
 
-            <br><br>
             W celu uproszczenia danych na potrzeby modelowania, utworzono kolumny <i>Generation</i>, <i>simple distance</i> oraz kolumnę <i>score_avg</i> na potrzeby wizualizacji.
             Kolumnę pokoleniową utworzono na podstawie wykresu pokoleń z <a href="https://commons.wikimedia.org/wiki/File:Generation_timeline.svg">Wikipedii</a>
             i z poprawką na fakt, że zestaw danych pochodzi z 2015 roku. Ponadto usunięto kolumnę <i>id</i>.
@@ -285,7 +283,7 @@ df['simple distance'] = df['Flight Distance'].apply(lambda x: simplify_disance(x
                 </div>
               </div>
               <li class="opis_wiz">
-                Wizualizacja rozkładu pokoleń, utworzonych na podstawie wieku. Warto zaznaczyć bardzo niewielką ilość osób z pokolenia "Silent Generation"
+                Wizualizacja rozkładu pokoleń, utworzonych na podstawie wieku. Warto zaznaczyć bardzo niewielką ilość osób z pokolenia "Silent Generation", będzie to istotne w sekcji o korelacji cech.
               </li>
 
 <br><br><br>
@@ -363,7 +361,7 @@ g.set(xlabel='Średnia ocena', ylabel='Pokolenie')
           </li>
           <li class="opis_wiz">
             Usługi najgorzej oceniło Silent Generation, które jest najgorzej reprezentowane (ok. 2 tyś spośród ok. 130 tyś. klientów), 
-            a zaraz po nich pokolenie Z, z których najmłodsi mieli 7 lat.
+            a zaraz po nich pokolenie Z, z których najmłodsi mieli 7 lat, więc można uznać część opdowiedzi z tego pokolenia za nierzetelne.
           </li>
 
           <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -451,7 +449,7 @@ ax.invert_yaxis()  # odwrócone kolejnością kolumny
           </li>
 
           <li class="opis_wiz">
-            Tu również kobiety wykazują większą ogólną saysfakcję w ankiecie niż mężczyźni, jednak pod względem lojalności wypadają podobnie.
+            Tu również kobiety wykazują większą ogólną satysfakcję w ankiecie niż mężczyźni, jednak pod względem lojalności wypadają podobnie.
           </li>
           <li class="opis_wiz">
             Ponad połowa mężczyzn (56%) była neutralna lub nieusatysfakcjonowana usługami.
@@ -505,8 +503,9 @@ ax.set_ylabel('Częstość')
             </div>
           </div>
           <li class="opis_wiz">
-            Wyraźny spadek w ilości odległości powyżej 4000 mil przyjęto za granicę 
-            między krótkim/długim lotem przy tworzeniu kolumny 'simple distance' mającej uprościć i polepszyć wydajność przewidującego modelu.
+            Wyraźny spadek w ilości odległości powyżej 4000 km przyjęto za granicę 
+            między krótkim/długim lotem przy tworzeniu kolumny 'simple distance' mającej uprościć i polepszyć wydajność przewidującego modelu. 
+            Biorąc pod uwagę, że największa odległość z zachodniego do wschodniego wybrzeża Stanów Zjednoczonych (San Francisco - Boston) to ok. 4400 km, 'simple_distance' wskazuje na loty krajowe i na loty do innych państw.
           </li>
           <li class="opis_wiz">
             Opóźnienia w odlocie i przylocie są bardzo podobne, jednak nie są identyczne. Niemniej, jedną z tych kolumn usunięto również w celu usprawnienia modelu.
@@ -741,7 +740,7 @@ for patch in ax.patches:
             <li>
               Zależność ocen w kontekście ogólnej satysfakcji jest dość logiczna, usatysfakcjonowani klienci w większości dawali dużo wyźsze oceny.
               Co ciekawe lokalizacja bramek i dogodność czasowa wylotu / odlotu została wyżej oceniona przez nieusatysfakcjonowanych i neutralnych klientów.
-              Najgorzej ocenieone przez nich usługi to wygoda siedzeń (jak większość klientów) i jakość rozrywki, 
+              Najgorzej ocenione przez nich usługi to wygoda siedzeń (jak przez większość klientów) i jakość rozrywki, 
               która z kolei została najwyżej oceniana przez usatsfakcjonowanych klientów.
             </li>
             <li>
@@ -813,7 +812,7 @@ sns.heatmap(dfd.drop(['satisfaction_v2', 'Gender', 'Customer Type', 'Type of Tra
             </li>
             <li>
               Z kolei w przypadku usatsfakcjonowanych klientów, większość ocen wysoko ze sobą koreluje. Można wnioskować, że jeśli klient jest zadowolony, oceni on wysoko każdą z nich, 
-              w przeciwieństwie do klientów nieusatysfakcjonowanych, którzy np. nisko ocenią tylko jedną usługę, a resztę bardziej neutralnie (może to lepiej napisać.).
+              w przeciwieństwie do klientów nieusatysfakcjonowanych, którzy np. nisko ocenią tylko jedną usługę, a resztę bardziej neutralnie.
             </li>
             <li>
               Spośród usług, dogodność czasowa odlotu / przylotu i lokalizacja bramek ma małe znaczenie dla nieusatysfakcjonowanych klientów. 
@@ -824,7 +823,7 @@ sns.heatmap(dfd.drop(['satisfaction_v2', 'Gender', 'Customer Type', 'Type of Tra
               Osobiście spodziewałem się, że będzie on nieco bardziej znaczący, niemniej to logiczne, że wraz z dłuższym lotem, niewygodne siedzenie daje się we znaki.
             </li>
             <li>
-              Zauważalna jest pewna anomalia przy korelacji wieku z pokoleniam -  
+              Zauważalna jest pewna anomalia przy korelacji wieku z pokoleniami -  
               najwyższa korelacja wieku zaznacza się dla pokolenia Baby Boomers, a nie starszej Silent Generation. 
               Można to wytłumaczyć znacznie niższą ilością klientów z Silent Generation - niezbyt normalną dystrybucją wieku.
               Anomalia ta też podkreśla problematykę one hot encoding-u, czyli tworzeniem nowych kolumn wartościami 0-1 reprezentującymi obecność pojedynczego atrybutu. 
@@ -867,7 +866,7 @@ sns.heatmap(dfd.drop(['satisfaction_v2', 'Gender', 'Customer Type', 'Type of Tra
             Przed modelowaniem usunięto kolumnę Arrival Delay in Minutes, 
             ponieważ niemal całkowicie pokrywa się z Departure Delay in Minutes, wszystkie kolumny wykorzystane do one hot encoding-u, 
             np. 'satisfaction_v2' i zostawiając tylko 'satisifed' z wartościami 0 albo 1 oraz score_avg.
-            Ponadto utworzono kolumnę 'simple distance', wskazującą czy lot był dłuższy od 4250 mil, czy nie. 
+            Ponadto utworzono kolumnę 'simple distance', wskazującą czy lot był dłuższy od 4250 km, czy nie. 
             Tu również usunięto pierwotną kolumnę dystansu oraz kolumnę wieku.
             <br><br>
             Modelowania wykonano dwa razy, za pierwszym razem bez uproszczonego dystansu i bez uzupełnionych średnimi ocenami usług według płci i bez uproszczonego dystansu.
@@ -880,8 +879,8 @@ sns.heatmap(dfd.drop(['satisfaction_v2', 'Gender', 'Customer Type', 'Type of Tra
             Raport klasyfikacyjny opiera się na następujących miarach: <br>
             <li class="tablica-pomylek">True positive - prawdziwie pozytywna</li>
             <li class="tablica-pomylek">True negative - prawdziwie negatywna</li>
-            <li class="tablica-pomylek">True positive - fałszywie pozytywna</li>
-            <li class="tablica-pomylek">True positive - fałszywie negatywna</li>
+            <li class="tablica-pomylek">False positive - fałszywie pozytywna</li>
+            <li class="tablica-pomylek">False negative - fałszywie negatywna</li>
 
             <li class="tablica-pomylek">Accuracy - dokładność, 
               \(\frac{correct\text{ }predictions}{all\text{ }predictions}\)
@@ -1268,10 +1267,10 @@ Logarytm prawdopodobieństwa: [-2.91613885]
               Na podstawie wyników z tabeli oraz interpretacji wykresów i błędów wyciągnięto następujące wnioski:
             </h6>
             <li>Modele okazały się dość celne, z wyjątkiem przewidywania nielojalnych klientów</li>
-            <li>KNiemal wszystkie usługi są lepiej oceniane przez kobiety niż mężczyźn</li>
+            <li>Niemal wszystkie usługi są lepiej oceniane przez kobiety niż mężczyźn</li>
             <li>Dana linia lotnicza powinna wymienić siedzenia w swoich samolotach</li>
             <li>Pieniądze nie kupią lepszych czasów odlotów/przylotów, chyba że posiadamy prywatny odrzutowiec</li>
-            <li>Jednym z najisotniejszych problemów jest jakość rozrywki na pokładzie - najlepiej nie polegać na jakości filmów dostępnych podczas lotu</li>
+            <li>Jednym z najistotniejszych problemów jest jakość rozrywki na pokładzie - najlepiej nie polegać na jakości filmów dostępnych podczas lotu i zabrać ze sobą jakiegoś Kindle'a</li>
           
             <br>
             <h6>Sugestie jak ulepszyć modele:
