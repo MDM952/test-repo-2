@@ -649,29 +649,50 @@ plt.title('Korelacja i średnia ocena członów tytułów', fontdict={'fontsize'
             <h6>Działanie drzewek decyzyjnych</h6>
             Drzewo decyzyjne polega na podziałach zestawu danych na podzbiory, w taki sposób, 
             aby jak najlepiej rozróżnić je na podstawie danego atrybutu (np. pogoda - słonecznie/pochmurnie czy waga - powyżej/poniżej 7kg).
-            Decyzje jak podzielić zbiór opierają się na funkcjach entropii (minimalizuje nieporządek w podziale, jak dobrze dane zostały podzielone) i 
-            przyrostu informacji (information gain, bada poprawę w jakości klasyfikacji).
+            
 
+            <br><br>
             <div class="d-flex align-items-center justify-content-center">
               <figure class="figure mx-auto">
                 <img src="css\p3_images\Drzewko decyzyjne v2.png" class="figure-img img-fluid rounded" alt="...">
                 <figcaption class="figure-caption">Schemat budowy drzewa decyzyjnego</figcaption>
               </figure>
             </div>
-            Takie podziały można tworzyć na wiele sposobów, a z jednego węzła mogą odchodzić więcej niż tylko dwie gałęzie.
-            Zestaw danych można dzielić, aż w końcowych odnogach drzewka, znajdą się pojedyncze klasy. 
+
+
+            Podział zbiorów można oprzeć na kilku różnych metodach, m.in. na współczynniku Giniego, entropii lub przyroście informacj.
+            Domyślnym sposobem w bibliotece sci-kit learn to wsp. Giniego, czyli miarze nierównomierności (ang. measure of impurity), która w przypadku drzew decyzyjnych osiąga wartości od 0 do 0,5.
+            Wzór wygląda następująco:
+
+            $$G_i = 1 - \sum_{j=1}^C p^2_{i,j}$$
+
+            gdzie: 
+            <li>\(G_i\) to współczynnik Giniego dla danego węzła \(i\)</li>
+            <li>\(C\) to ilść klas</li>
+            <li>\(p^2_{i,j}\) to stosunek próbek w danym węźle \(i\), które należą do danej klasy \(j\)</li>
+            <div style="height: 9px;"></div>
+            Czyli przykładowo: w węźle dzielącym zbiór wg wieku (Wiek ≤ 32 lat) z 339 próbkami rozdzielono je na 272 próbek spełniających warunek i 67 nie spełniających. Współczynnik Giniego dla tego węzła wyniósł:
+
+            $$G = 1 - (272/339)^2 - (67/339)^2$$
+            $$G = 1 - 0,64 - 0,04$$
+            $$G = 0,32$$
+
+            Im \(G\) jest bliższe 0, tym podział będzie bardziej jednoznaczny (np. \(G=0,12\) dla stosunku \(2-29\)), a klasyfikacja trafniejsza.
+
+            Takie podziały można tworzyć na wiele sposobów, a zestaw danych można dzielić, aż w końcowych odnogach drzewa (liściach), znajdzie się określona wcześniej minimalna ilość próbek, 
+            lub pojedyncze klasy. W takim przypadku model zostatnie totalnie przeuczony.
+            Niestety pojedyncze drzewa losowe nie są zbyt trafnymi modelami, m.in. ze względu na ich podatność na przeuczenie.
+
 
 
 
             <br><br>
             <h6>Działanie lasu losowego</h6>
-            Niestety skomplikowane i duże zestawy danych wiążą się z przeuczeniem modelu drzewa decyzyjnego i zatraceniem jego uniwersalności - 
-            pojedyncze drzewo decyzyjne może być zbudowane na bardzo wiele sposobów, z różnymi węzłami i przez to różnymi, mało celnymi wynikami.
             <div style="height: 9px;"></div>
-            <span class="eng">Las losowy</span> jest bardziej zaawansowaną wersją drzewa decyzyjnego, która wykorzystuje wiele drzew oraz techniki <span class="eng">bagging</span> i <span class="eng">feature randomness</span>: 
+            Las losowy jest bardziej zaawansowaną wersją drzewa decyzyjnego, która wykorzystuje wiele drzew oraz techniki <span class="eng">bagging</span> i <span class="eng">feature randomness</span>: 
             <li><span class="eng">bagging</span> (inaczej Bootstrap Aggregation) - losowe wybieranie próbek z powtórzeniami, w jednym podzbiorze przekazanym do drzewa decyzyjnego może znaleźć się kilka takich samych próbek.</li>
             <li><span class="eng">feature randomness</span> - losowe wybieranie, jaka część cech (kolumn zestawu danych np. wiek, waga) zostaną wykorzystane w węzłach drzewa. 
-              W drzewach decyzyjnych model rozpatruje wszystkie cechy zbioru.</li>
+              W drzewach decyzyjnych model rozpatruje wszystkie cechy zbioru (ale niekoniecznie wykorzystuje wszystkie).</li>
               <div style="height: 9px;"></div>
               Techniki te redukują powiązania między osobnymi drzewami decyzyjnymi lasu losowego, dzięki czemu można uniknąć nadmiernego dopasowania danych.
 
