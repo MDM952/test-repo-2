@@ -807,8 +807,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             $$RSME=\sqrt{\frac{1}{n}\sum^n_{i=1}(y_i-\hat{y_i})^2}$$
             $$R^2=1-\frac{\sum^n_{i=1}(y_i-\hat{y_i})^2}{\sum^n_{i=1}(y_i-\overline{y_i})^2}$$
             gdzie: 
-            <li>\((y_i-\hat{y_i})^2\) to tzw. residuals, potęga różnicy między wartością prawdziwą a wartością przewidywaną</li>
-            <li>\((y_i-\overline{y_i})^2\) to wariancja, potęga różnicy między prawdziwą wartością a średnią tego rodzaju wartości</li>
+            <li>\(\sum(y_i-\hat{y_i})^2\) to suma kwadratów pozostałości, tzw. residuals, potęga różnicy między wartością prawdziwą a wartością przewidywaną</li>
+            <li>\(\sum(y_i-\overline{y_i})^2\) to suma kwadratów ogółem, potęga różnicy między prawdziwą wartością a średnią tego rodzaju wartości</li>
             <!-- RMSE - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE) -->
             <br>
             MAE, MSE i RMSE są wartościami, które chcemy zminimalizować podczas budowania modelu. 
@@ -994,7 +994,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            Wartość λ można dobierać poprzez walidację krzyżową, technikę dzięki której można znaleźć najepsze hiperparametry modelu lub podział zestawu danych na zestaw treningowy i testowy.
            Szuka się minimalnej wartości funkcji straty z poniższego wzoru:
 
-           $$min = \sum^n_{i=1}(y_i - \hat{y_i})^2 + \lambda \sum^p_{j=1} |\hat\beta_j|$$
+           $$\underset{\gamma}{argmin} \; \sum^n_{i=1}(y_i - \hat{y_i})^2 + \lambda \sum^p_{j=1} |\hat\beta_j|$$
+
            gdzie: 
            <li>\((y_i-\hat{y_i})^2\) to residuals</li>
            <li>\(\lambda\) to hiperparametr regularyzacji, odpowiada za kurczenie się (shrinkage) ważności cech </li>
@@ -1026,6 +1027,45 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            Z wykresu można odczytać, że cechy takie jak <span style="font-weight: 600;">powierzchnia mieszkania, dystans do Świętokrzyskiej i dystans do najbliższej stacji metra oraz blok</span>
            są najistotniejszymi cechami z zestawu danych. Oczywiście powierzchnia jest zdecydowanie najważniejsza. Widoczne jest również że cechy te najdłużej „przetrwały” wzrost λ, w przeciwieństwie do np. roku budowy.
 
+           <br>
+           <br>
+
+           <h5>XGBoost</h5>
+           XGBoost, a właściwie eXtremeGradientBoostRegressor to jeden z najbardziej skutecznych i celnych algorytmów uczenia maszynowego stosowany do zagadnień z regresji i klasyfikacji.
+           Jest oparty na zespole drzew decyzyjnych, w którym każde drzewo jest dość słabym modelem przewidującym, zwykle mającym od 3 do 5 poziomów głębokości. 
+           Z każdą iteracją XGBoostRegressor buduje poprawki na podstawie poprzednich wyników i błędów. 
+           W przypadku tu przeprowadzonego modelu, błędy były liczone na podstawie funkcji straty z <span style="font-weight: 600;">SSR</span>, czyli <span style="font-weight: 600;">Sum of Squared Residuals</span> - \((y_i-\hat{y_i})^2\) 
+          , a hiperparametry znalezione przy pomocy walidacji krzyżowej to ilość drzew równa 100 i głębokość drzew równa 5. Model osiągnął bardzo wysoką celność 84%:
+
+           <div class="card mb-6" style="max-width: 900px; padding: 10px;">
+            <div class="row g-0">
+              <div class="col-md-8">
+                <img src="css\p1_images\XGB scatter perfect.png" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-4">
+                <div class="card-body">
+                  <h5 class="card-title">XGBoostRegressor<br> do 2.5 mln zł</h5>
+                  <li>MAE: 115 486 [zł]</li>
+                  <li>RMSE: 166 262 [zł]</li>
+                  <li>R²: 0.84</li>     
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <br>
+          <img src="css\p1_images\XGB residuals.png" style="max-width: 98%;  margin: auto; object-fit: contain; padding: 15px;" alt="">
+          <br><br> -->
+
+
+          <div class="card mb-6" style="max-width: 900px; padding: 10px;">
+            <div class="row g-0">
+              <div class="col-md-12">
+                <img src="css\p1_images\XGB residuals.png" class="img-fluid rounded-start" alt="...">
+              </div>
+
+            </div>
+          </div>
 
           </div>
 
