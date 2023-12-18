@@ -276,8 +276,7 @@ for topic in all_topics:
             <br><br>
 
 
-            <img id="myImg" src="css\p1_images\Warszawa.png"  style="width: 95%;">
-
+            <img class="myImg" src="css\p1_images\Warszawa.png"  style="width: 95%;">
             <div id="myModal" class="modal">
               <div class="opacity-background close">
                 <span class="close">&times;</span>
@@ -760,7 +759,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             gdzie: 
             <li>\(y\) to zmienna objaśniana, zależna, to co model przewiduje</li>
             <li>\(x_i\) to zmienna objaśniająca, niezależna, inaczej predyktor</li>
-            <li>\(β_i\) to współczynnik regresji, element który dobiera model podczas trenowania </li>
+            <li>\(β_i\) to współczynnik kierunkowy regresji, element który dobiera model podczas trenowania </li>
             <li>\(\epsilon\) to nieskracalny błąd modelu</li>            
  
             <br>
@@ -965,7 +964,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <br>
             <h6>Sugestie jak ulepszyć modele:
             </h6>
-            <li>Dodanie więcej danych, np. z danych archiwalnych gdyby były dostępne</li>
+            <li>Dodanie więcej danych, np. z danych archiwalnych lub innych stron z ofertami mieszkąń</li>
             <li>Zastosowanie lepszych metod podczas oczyszczania danych np. częściejsze uzupełnienie przy pomocy BeautifulSoup</li>
             <li>Dodanie nowych atrybutów: w przypadku większego i bardziej wyrównanego  zestawu danych można by wykorzystać
              one-hot encoding dla kolumny dzielnica - różnice korelacji między ceną a dzielnicą byłyby interesujące same w sobie i 
@@ -974,9 +973,58 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             Niestety obecnie w zestawie danych jest niewiele  ofert z dzielnic takie jak Wesoła czy Remembertów, 
             co mogłoby spowodować np. znaczące zaniżenie przewidywanych ofert z tych dzielnic.
             </li>
+            <li>
+              Zastosowanie lepszych modeli i metod nauczania maszynowego, np. zastosować walidację krzyżową lub regularyzację.
+            </li>
+            <br>
+            <h4 id="poprawki-header">8. LASSO, XGBoost, SHAP</h4>
+            Do tego projektu postanowiłem wrócić ze świeżo zdobytą wiedzą na temat regularyzacji, 
+            bardziej zaawansowanych algorytmów nauczania maszynowego oraz metod analizy modeli. 
+            <li>LASSO - metoda regularyzacji regresji liniowej, umożliwająca wyeliminowanie nieistotnych cech. Tu wykorzystana do wizualizacji znaczenia cech.</li>
+            <li>XGBoostRegressor - model poprawiający się poprzez uwzględninie wyników z każdej poprzedniej iteracji</li>
+            <li>SHAP - narzędzie wyjaśniające, jak model przewidział szukaną dla danej próbki</li>
 
+            <br>
+            <h5>LASSO</h5>
+           LASSO - Least Absolute Shrinkage and Selection Operator to odmiana regresji liniowej, która wykorzystuje regularyzację L1.
+           <div style="height: 5px;"></div>
 
+           Regularyzacja L1 polega na zmniejszeniu obciążenia (bias) poprzez nałożenie kary na wsp. kierunkowy wartością λ (lambda). 
+           Dzięki niej można zmniejszyć lub całkowiecie „wyłączyć” wagę nieistotnej cechy. 	
+           Wartość λ można dobierać poprzez walidację krzyżową, technikę dzięki której można znaleźć najepsze hiperparametry modelu lub podział zestawu danych na zestaw treningowy i testowy.
+           Szuka się minimalnej wartości funkcji straty z poniższego wzoru:
 
+           $$min = \sum^n_{i=1}(y_i - \hat{y_i})^2 + \lambda \sum^p_{j=1} |\hat\beta_j|$$
+           gdzie: 
+           <li>\((y_i-\hat{y_i})^2\) to residuals</li>
+           <li>\(\lambda\) to hiperparametr regularyzacji, odpowiada za kurczenie się (shrinkage) ważności cech </li>
+           <li>\(\beta_i\) to wsp. kierunkowy regresji danej cechy</li>
+           <div style="height: 15px;"></div>
+           Lasso nie zostało tu wykorzystane do utworzenia modelu, ale do wskazania, które cechy zestawu danych są istotne oraz jaką mają wagę.
+           Użyto tu moetody lasso_paths i wykreślono zależność między wartością λ a współczynnikami wagi cech. 
+           Zestaw danych jest ten same, ograniczony do próbek o cenach od 125 000 do 2 500 000 zł.
+
+           <div style="height: 15px;"></div>
+
+           <img class="myImg" src="css\p1_images\Lasso paths.png"  style="width: 95%;">
+           <div id="myModal" class="modal">
+             <div class="opacity-background close">
+               <span class="close">&times;</span>
+             </div>
+             <img class="modal-content" id="img01">
+             <div id="caption"></div>
+           </div>
+
+           <div style="height: 15px;"></div>
+
+           
+           
+           
+           Oś X reprezentuje wzrost wartości λ, czyli karę.
+           Odległość od 0 na osi y wskazuje na istotność cechy, a krzywe poniżej 0 wskazują, że wzrost danej cechy obniży przewidywaną cenę, nie że są mniej istotne.
+           <br>
+           Z wykresu można odczytać, że cechy takie jak <span style="font-weight: 600;">powierzchnia mieszkania, dystans do Świętokrzyskiej i dystans do najbliższej stacji metra oraz blok</span>
+           są najistotniejszymi cechami z zestawu danych. Oczywiście powierzchnia jest zdecydowanie najważniejsza. Widoczne jest również że cechy te najdłużej „przetrwały” wzrost λ, w przeciwieństwie do np. roku budowy.
 
 
           </div>
@@ -994,6 +1042,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
             <a href="#modelowanie-header">6. Modelowanie</a> <br>
             <a href="#wnioski-header">7. Wnioski</a> <br>
+            <a href="#poprawki-header">8. LASSO, XGBoost, SHAP</a>
 
             <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
 
