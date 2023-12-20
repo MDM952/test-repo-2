@@ -759,7 +759,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             gdzie: 
             <li>\(y\) to zmienna objaśniana, zależna, to co model przewiduje</li>
             <li>\(x_i\) to zmienna objaśniająca, niezależna, inaczej predyktor</li>
-            <li>\(β_i\) to współczynnik kierunkowy regresji, element który dobiera model podczas trenowania </li>
+            <li>\(β_i\) to współczynnik kierunkowy regresji, waga którą dobiera model podczas trenowania </li>
             <li>\(\epsilon\) to nieskracalny błąd modelu</li>            
  
             <br>
@@ -997,7 +997,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            $$\underset{\gamma}{argmin} \; \sum^n_{i=1}(y_i - \hat{y_i})^2 + \lambda \sum^p_{j=1} |\hat\beta_j|$$
 
            gdzie: 
-           <li>\((y_i-\hat{y_i})^2\) to residuals</li>
+           <li>\((y_i-\hat{y_i})^2\) to pozostałości, residuals</li>
            <li>\(\lambda\) to hiperparametr regularyzacji, odpowiada za kurczenie się (shrinkage) ważności cech </li>
            <li>\(\beta_i\) to wsp. kierunkowy regresji danej cechy</li>
            <div style="height: 15px;"></div>
@@ -1034,6 +1034,9 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            XGBoost, a właściwie eXtremeGradientBoostRegressor to jeden z najbardziej skutecznych i celnych algorytmów uczenia maszynowego stosowany do zagadnień z regresji i klasyfikacji.
            Jest oparty na zespole drzew decyzyjnych, w którym każde drzewo jest dość słabym modelem przewidującym, zwykle mającym od 3 do 5 poziomów głębokości. 
            Z każdą iteracją XGBoostRegressor buduje poprawki na podstawie poprzednich wyników i błędów. 
+
+
+           <br><br>
            W przypadku tu przeprowadzonego modelu, błędy były liczone na podstawie funkcji straty z <span style="font-weight: 600;">SSR</span>, czyli <span style="font-weight: 600;">Sum of Squared Residuals</span> - \((y_i-\hat{y_i})^2\) 
           , a hiperparametry znalezione przy pomocy walidacji krzyżowej to ilość drzew równa 100 i głębokość drzew równa 5. Model osiągnął bardzo wysoką celność 84%:
 
