@@ -980,8 +980,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <h4 id="poprawki-header">8. LASSO, XGBoost, SHAP</h4>
             Do tego projektu postanowiłem wrócić ze świeżo zdobytą wiedzą na temat regularyzacji, 
             bardziej zaawansowanych algorytmów nauczania maszynowego oraz metod analizy modeli. Wykorzystałem narzędzia i biblioteki:
-            <li>LASSO - model z regularyzacją, umożliwającą wyeliminowanie nieistotnych cech. Tutaj wykorzystana do wizualizacji znaczenia cech.</li>
-            <li>XGBoost - model poprawiający się poprzez uwzględninie wyników z każdej poprzedniej iteracji</li>
+            <li>LASSO - model z regularyzacją, umożliwiającą wyeliminowanie nieistotnych cech. Tutaj wykorzystany do wizualizacji znaczenia cech.</li>
+            <li>XGBoost - model zespołowy, poprawiający się poprzez uwzględnienie wyników z każdej poprzedniej iteracji</li>
             <li>SHAP - narzędzie wyjaśniające jak model przewidział szukaną dla danej próbki</li>
 
             <br>
@@ -990,8 +990,8 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            <div style="height: 5px;"></div>
 
            Regularyzacja L1 polega na zmniejszeniu obciążenia (bias) poprzez nałożenie kary na wsp. kierunkowy wartością λ (lambda). 
-           Dzięki niej można zmniejszyć lub całkowiecie „wyłączyć” wagę nieistotnej cechy przy wystarczająco wysokiej wartości. 	
-           Wartość λ można dobierać poprzez walidację krzyżową, technikę dzięki której można znaleźć najepsze hiperparametry modelu lub podział zestawu danych na zestaw treningowy i testowy.
+           Dzięki niej można zmniejszyć lub całkowicie „wyłączyć” wagę nieistotnej cechy przy wystarczająco wysokiej wartości. 	
+           Wartość λ można dobierać poprzez walidację krzyżową, technikę dzięki której można znaleźć najlepsze hiperparametry modelu lub podział zestawu danych na zestaw treningowy i testowy.
            <div style="height: 5px;"></div>
            W LASSO szuka się minimalnej wartości funkcji straty z poniższego wzoru:
 
@@ -1003,7 +1003,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            <li>\(\beta_i\) to wsp. kierunkowy regresji danej cechy</li>
            <div style="height: 15px;"></div>
            Lasso nie zostało tu wykorzystane do utworzenia modelu, ale do wskazania, które cechy zestawu danych są istotne oraz jaką mają wagę.
-           Użyto tu moetody lasso_paths i wykreślono zależność między wartością λ a współczynnikami wagi cech. 
+           Użyto tu metody lasso_paths i wykreślono zależność między wartością λ a współczynnikami wagi cech. 
            Zestaw danych jest ten sam, ograniczony do próbek o cenach od 125 000 do 2 500 000 zł.
 
            <div style="height: 15px;"></div>
@@ -1022,12 +1022,12 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            
            
            
-           Oś X reprezentuje  wartości λ, czasem określana jako kara.
+           Oś X reprezentuje  wartości λ, „karę”.
            Odległość od 0 na osi Y wskazuje na istotność cechy. Krzywe poniżej 0 wskazują, że dana cecha obniży przewidywaną cenę.
            <br>
            Z wykresu można odczytać, że cechy takie jak <span style="font-weight: 600;">powierzchnia mieszkania, dystans do Świętokrzyskiej i dystans do najbliższej stacji metra oraz blok</span>
            są najistotniejszymi cechami z zestawu danych. Oczywiście powierzchnia jest zdecydowanie najważniejsza. Widoczne jest również że cechy te najdłużej „przetrwały” wzrost λ, w przeciwieństwie do np. roku budowy.
-           Oznacza to, że rok budowy miał niemałe znaczenienie, jednak w mniejszej ilości obserwacji. 
+           Oznacza to, że rok budowy miał niemałe znaczenie, jednak w mniejszej ilości obserwacji. 
 
            <br>
            <br>
@@ -1053,7 +1053,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            gdzie residuals to wcześniej wspomniane pozostałości \((y_i-\hat{y_i})^2\).
 
            <br><br>
-           Model zbudowano na tym samym zestawie danych co wcześniej, ograniczonym do mieszkań od 125 000 do 2 500 000 zł. Do dobrania parametrów wykorzystano walidację krzyżową, a model ostatecznie osiągnął bardzo wysoką celnoś 84%. 
+           Model zbudowano na tym samym zestawie danych co wcześniej, ograniczonym do mieszkań od 125 000 do 2 500 000 zł. Do dobrania parametrów wykorzystano walidację krzyżową, a model ostatecznie osiągnął bardzo wysoką celność 84%. 
 
            <div class="card mb-6" style="max-width: 900px; padding: 10px;">
             <div class="row g-0">
@@ -1118,15 +1118,15 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
 
           <h5 id="SHAP">SHAP</h5>
           SHAP (SHapley Additive exPlanations) to narzędzie umożliwiające interpretację, jak dane cechy wpłynęły na budowę modelu i jego predykcje. 
-          SHAP jest oparte na wartości Shapleya wywodzącej się z teorii gier, która umożliwa sprawiedliwy rozdział nagrody w danej koalicji między graczy na podstawie wszystkich innych możliwych koalicji.
+          SHAP jest oparte na wartości Shapleya wywodzącej się z teorii gier, która umożliwia sprawiedliwy rozdział nagrody w danej koalicji między graczy na podstawie wszystkich innych możliwych koalicji.
 
           <div style="height: 7px;"></div>
           W kontekście nauczania maszynowego koalicję tworzą cechy (np. rok budowy) i oblicza się, jak te cechy wpłynęły na przewidzianą wartość lub na prawdopodobieństwo przynależenia do danej klasy w zagadnieniach związanych z klasyfikacją.
-          Ze względu na fakt, że wraz ze wzrostem ilości cech w zestawie danych, ilość możliwych koalicji wzrasta wykładniczo, obliczanie wartości Shapleya staje się bardziej wymagające obiczeniowo i czasochłonne.
-          Dlatego wartość tę się oszacowywuje, a biblioteka SHAP ma jedne z najszybszych i efektywnych metod oszacowywania, w szczególności dla modeli opartych na drzewach decyzyjnych jak np. XGBoost. 
+          Ze względu na fakt, że wraz ze wzrostem ilości cech w zestawie danych, ilość możliwych koalicji wzrasta wykładniczo, obliczanie wartości Shapleya staje się bardziej wymagające obliczeniowo i czasochłonne.
+          Dlatego wartość tę oszacowywuje się, a biblioteka SHAP ma jedne z najszybszych i efektywnych metod oszacowywania, w szczególności dla modeli opartych na drzewach decyzyjnych jak np. XGBoost. 
 
           <div style="height: 7px;"></div>
-          Shap oferuje wiele sposobów na zwizualizowanie udziału cech w modelu jak i pojedynczych predykcji. Poniżej zamieszczono wykres typu swarm dla wartości Shapleya dla cech modelu.
+          SHAP oferuje wiele sposobów na zwizualizowanie udziału cech w modelu jak i pojedynczych predykcji. Poniżej zamieszczono wykres typu swarm dla wartości Shapleya dla cech modelu.
 
           <img src="css\p1_images\SHAP imp2.png" style="margin: 36px; ;">
           <br>
@@ -1137,11 +1137,11 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
           Na przykładzie cechy Dystans do Świętokrzyskiej:
           <li>większość obserwacji ma ujemne wartości - duża gęstość poniżej 0</li>
           <li>obserwacje o ujemnej wartości w znacznej większości mają kolor czerwony - niska wartość podwyższa wartość predykcji, wysoka wartość obniża</li>
-          <li>wartość SHAP reprezentuje wpływ danej cechy, co nie oznacza, że np. skrajne punkty z wartośćią ok. 0,5 mil tyle odejmują od końcowej predykcji danej obserwacji</li>
+          <li>wartość SHAP reprezentuje wpływ danej cechy, co nie oznacza, że np. skrajne punkty z wartością ok. 0,5 mil tyle odejmują od końcowej predykcji danej obserwacji</li>
 
           <div style="height: 20px;"></div>
 
-          SHAP umożliwia przedstawienie jak dane cechy wpłynęły na przewidzianą wartość. Na przykładzie wcześniej wspomnianych mieszkań z dzielnic Włochy, Kabaty i Natolin dla modelu XGBoost wyprowadzono wykresy tzw. forceplot:
+          SHAP umożliwia przedstawienie jak dane cechy wpłynęły na przewidzianą wartość. Na przykładzie wcześniej wspomnianych mieszkań z dzielnic Włochy, Kabaty i Natolin dla modelu XGBoost wyprowadzono wykresy typu forceplot:
 
           <div style="height: 11px;"></div>
 
@@ -1169,12 +1169,12 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
 
           <h5 id="Podsumowanie">Podsumowanie</h5>
           Przy pomocy LASSO i SHAP wyznaczono, jakie cechy są istotne dla modeli, w przypadku SHAP dotyczy to wyłącznie modelu XGBoost,
-          który okzazał się znacznie lepszy niż modele z poprzednich podejść. 
+          który okazał się znacznie lepszy niż modele z poprzednich podejść. 
           Potwierdziły się też założenia, że dystanse mieszkań do najbliższej stacji metra i centrum Warszawy są bardzo istotnymi cechami.
           Sam model XGBoost osiągnął bardzo wysoką celność 84%. Trzem „kontrolnym” mieszkaniom model przewidział najbardziej realistyczne ceny. 
 
           <div style="height: 5px;"></div>
-          Jedna ineresująca rzecz przykuła moją uwagę - cecha Apartamentowiec jest niemal nieistotna (w przypadku LASSO jest zuepłnie nieistotna - niezależnie od wartości λ ma ona wagę 0). 
+          Jedna interesująca rzecz przykuła moją uwagę - cecha Apartamentowiec jest niemal nieistotna (w przypadku LASSO jest zupełnie nieistotna - niezależnie od wartości λ ma ona wagę 0). 
           Zdaje się, że zamiast cechy Apartamentowiec, model rozpatruje czy dane mieszkanie jest blokiem lub nie - cecha Blok jest piąta na wykresie wartości SHAP dla cech i jest trzecia pod względem istotności według LASSO. 
           Kamienica jest dość istotna wg wykresu lasso_paths, ale wg SHAP już nie.
 
