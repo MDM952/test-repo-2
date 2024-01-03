@@ -276,7 +276,7 @@ for topic in all_topics:
             <br><br>
 
 
-            <img class="myImg" src="css\p1_images\Warszawa.png"  style="width: 95%;">
+            <img class="myImg" src="css\p1_images\Warszawa.png"  style="width: 95%;   cursor: zoom-in">
             <div id="myModal" class="modal">
               <div class="opacity-background close">
                 <span class="close">&times;</span>
@@ -804,7 +804,7 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
 
             $$MAE=\frac{1}{n}\sum^n_{i=1}|y_i-\hat{y_i}|$$	
             <!-- MAE - średni błąd bezwzględny - średnia z sumy wartości bezwzględnych błędów -->
-            $$RSME=\sqrt{\frac{1}{n}\sum^n_{i=1}(y_i-\hat{y_i})^2}$$
+            $$RMSE=\sqrt{\frac{1}{n}\sum^n_{i=1}(y_i-\hat{y_i})^2}$$
             $$R^2=1-\frac{\sum^n_{i=1}(y_i-\hat{y_i})^2}{\sum^n_{i=1}(y_i-\overline{y_i})^2}$$
             gdzie: 
             <li>\(\sum(y_i-\hat{y_i})^2\) to suma kwadratów pozostałości, tzw. residuals, potęga różnicy między wartością prawdziwą a wartością przewidywaną</li>
@@ -979,22 +979,23 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <br>
             <h4 id="poprawki-header">8. LASSO, XGBoost, SHAP</h4>
             Do tego projektu postanowiłem wrócić ze świeżo zdobytą wiedzą na temat regularyzacji, 
-            bardziej zaawansowanych algorytmów nauczania maszynowego oraz metod analizy modeli. 
-            <li>LASSO - metoda regularyzacji regresji liniowej, umożliwająca wyeliminowanie nieistotnych cech. Tu wykorzystana do wizualizacji znaczenia cech.</li>
-            <li>XGBoostRegressor - model poprawiający się poprzez uwzględninie wyników z każdej poprzedniej iteracji</li>
-            <li>SHAP - narzędzie wyjaśniające, jak model przewidział szukaną dla danej próbki</li>
+            bardziej zaawansowanych algorytmów nauczania maszynowego oraz metod analizy modeli. Wykorzystałem narzędzia i biblioteki:
+            <li>LASSO - model z regularyzacją, umożliwającą wyeliminowanie nieistotnych cech. Tutaj wykorzystana do wizualizacji znaczenia cech.</li>
+            <li>XGBoost - model poprawiający się poprzez uwzględninie wyników z każdej poprzedniej iteracji</li>
+            <li>SHAP - narzędzie wyjaśniające jak model przewidział szukaną dla danej próbki</li>
 
             <br>
-            <h5>LASSO</h5>
+            <h5 id="LASSO">LASSO</h5>
            LASSO - Least Absolute Shrinkage and Selection Operator to odmiana regresji liniowej, która wykorzystuje regularyzację L1.
            <div style="height: 5px;"></div>
 
            Regularyzacja L1 polega na zmniejszeniu obciążenia (bias) poprzez nałożenie kary na wsp. kierunkowy wartością λ (lambda). 
-           Dzięki niej można zmniejszyć lub całkowiecie „wyłączyć” wagę nieistotnej cechy. 	
+           Dzięki niej można zmniejszyć lub całkowiecie „wyłączyć” wagę nieistotnej cechy przy wystarczająco wysokiej wartości. 	
            Wartość λ można dobierać poprzez walidację krzyżową, technikę dzięki której można znaleźć najepsze hiperparametry modelu lub podział zestawu danych na zestaw treningowy i testowy.
-           Szuka się minimalnej wartości funkcji straty z poniższego wzoru:
+           <div style="height: 5px;"></div>
+           W LASSO szuka się minimalnej wartości funkcji straty z poniższego wzoru:
 
-           $$\underset{\gamma}{argmin} \; \sum^n_{i=1}(y_i - \hat{y_i})^2 + \lambda \sum^p_{j=1} |\hat\beta_j|$$
+           $$argmin \; \sum^n_{i=1}(y_i - \hat{y_i})^2 + \lambda \sum^p_{j=1} |\hat\beta_j|$$
 
            gdzie: 
            <li>\((y_i-\hat{y_i})^2\) to pozostałości, residuals</li>
@@ -1003,11 +1004,11 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            <div style="height: 15px;"></div>
            Lasso nie zostało tu wykorzystane do utworzenia modelu, ale do wskazania, które cechy zestawu danych są istotne oraz jaką mają wagę.
            Użyto tu moetody lasso_paths i wykreślono zależność między wartością λ a współczynnikami wagi cech. 
-           Zestaw danych jest ten same, ograniczony do próbek o cenach od 125 000 do 2 500 000 zł.
+           Zestaw danych jest ten sam, ograniczony do próbek o cenach od 125 000 do 2 500 000 zł.
 
            <div style="height: 15px;"></div>
 
-           <img class="myImg" src="css\p1_images\Lasso paths.png"  style="width: 95%;">
+           <img class="myImg" src="css\p1_images\Lasso paths.png"  style="width: 95%;   cursor: zoom-in">
            <div id="myModal" class="modal">
              <div class="opacity-background close">
                <span class="close">&times;</span>
@@ -1021,24 +1022,38 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
            
            
            
-           Oś X reprezentuje wzrost wartości λ, czyli karę.
-           Odległość od 0 na osi y wskazuje na istotność cechy, a krzywe poniżej 0 wskazują, że wzrost danej cechy obniży przewidywaną cenę, nie że są mniej istotne.
+           Oś X reprezentuje  wartości λ, czasem określana jako kara.
+           Odległość od 0 na osi Y wskazuje na istotność cechy. Krzywe poniżej 0 wskazują, że dana cecha obniży przewidywaną cenę.
            <br>
            Z wykresu można odczytać, że cechy takie jak <span style="font-weight: 600;">powierzchnia mieszkania, dystans do Świętokrzyskiej i dystans do najbliższej stacji metra oraz blok</span>
            są najistotniejszymi cechami z zestawu danych. Oczywiście powierzchnia jest zdecydowanie najważniejsza. Widoczne jest również że cechy te najdłużej „przetrwały” wzrost λ, w przeciwieństwie do np. roku budowy.
+           Oznacza to, że rok budowy miał niemałe znaczenienie, jednak w mniejszej ilości obserwacji. 
 
            <br>
            <br>
 
-           <h5>XGBoost</h5>
-           XGBoost, a właściwie eXtremeGradientBoostRegressor to jeden z najbardziej skutecznych i celnych algorytmów uczenia maszynowego stosowany do zagadnień z regresji i klasyfikacji.
+           <h5 id="XGBoost">XGBoost</h5>
+           XGBoost, a właściwie eXtremeGradientBoost to jeden z najbardziej wydajnych i celnych algorytmów uczenia maszynowego stosowanych do zagadnień z regresji i klasyfikacji.
            Jest oparty na zespole drzew decyzyjnych, w którym każde drzewo jest dość słabym modelem przewidującym, zwykle mającym od 3 do 5 poziomów głębokości. 
-           Z każdą iteracją XGBoostRegressor buduje poprawki na podstawie poprzednich wyników i błędów. 
+           Z każdą iteracją XGBoost buduje drzewa na podstawie poprzednich wyników i błędów (dane są zastępowane przez pozostałości, residuals, z poprzedniej iteracji) poprzez minimalizowanie wyniku poniższego z wzoru: 
 
+           <div style="height: 5px;"></div>
+           $$\left[\sum^{n}_{i=1}\; l(y_i, p_i)\right] + \gamma T + \frac{1}{2}\lambda O^2_{value}$$
+
+           gdzie: 
+           <li>\(\left[\sum^{n}_{i=1}\; l(y_i, p_i)\right]\) - suma funkcji straty dla każdej obserwacji, np. błąd kwadratowy gdzie liczy się różnicę do drugiej potęgi między \(y_i\) - wartością prawdziwą a \(p_i\) - wartością przewidzianą</li>
+           <li>\(\gamma T\) to wyrażenie regularyzacyjne służące do przycinania drzew i usuwania nieistotnych węzłów i gałęzi drzewa, \(\gamma\) może być ustawione przy pomocy walidacji krzyżowej, \(T\) to ilość węzłów w danym drzewie</li>
+           <li>\(\lambda\) to parametr regularyzyjny, działający na takiej samej zasadzie jak w LASSO </li>
+           <li>\(O_{value}\) to <span style="font-weight: 600; font-style: italic;">Output value</span>, wartość liczona dla liści ukończonego drzewa regresyjnego ze wzoru:</li> 
+
+           <div style="height: 5px;"></div>
+           $$Output\;Value = \frac{Sum\;of\;residuals}{Number\;of\;residuals + \lambda}$$
+
+
+           gdzie residuals to wcześniej wspomniane pozostałości \((y_i-\hat{y_i})^2\).
 
            <br><br>
-           W przypadku tu przeprowadzonego modelu, błędy były liczone na podstawie funkcji straty z <span style="font-weight: 600;">SSR</span>, czyli <span style="font-weight: 600;">Sum of Squared Residuals</span> - \((y_i-\hat{y_i})^2\) 
-          , a hiperparametry znalezione przy pomocy walidacji krzyżowej to ilość drzew równa 100 i głębokość drzew równa 5. Model osiągnął bardzo wysoką celność 84%:
+           Model zbudowano na tym samym zestawie danych co wcześniej, ograniczonym do mieszkań od 125 000 do 2 500 000 zł. Do dobrania parametrów wykorzystano walidację krzyżową, a model ostatecznie osiągnął bardzo wysoką celnoś 84%. 
 
            <div class="card mb-6" style="max-width: 900px; padding: 10px;">
             <div class="row g-0">
@@ -1071,13 +1086,111 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
           </div>
 
           </div>
+                      <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Mieszkanie</th>
+                  <th scope="col">XGBoost <2,5 mln zł</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">37 m², blok, Włochy</th>
+                  <td>558 842 zł</td>
+                </tr>
+                <tr>
+                  <th scope="row">54 m², apartament, Kabaty</th>
+                  <td>810 237 zł</td>
+                </tr>
+                <tr>
+                  <th scope="row">96 m², apartament, Natolin</th>
+                  <td>1 452 726 zł</td>
+
+                </tr>
+              </tbody>
+            </table>
+
+            Powyżej przedstawiono jak model XGBoost przewidział ceny trzech wcześniej zbadanych mieszkań. W mojej opinii wyglądają one najbardziej realistycznie. 
+            Kolejno przeprowadzono analizę modelu przy pomocy SHAP oraz dogłębniej przeanalizowano jak ceny te zostały przewidziane.
+
+            <div style="height: 11px;"></div>
+
+
+          <h5 id="SHAP">SHAP</h5>
+          SHAP (SHapley Additive exPlanations) to narzędzie umożliwiające interpretację, jak dane cechy wpłynęły na budowę modelu i jego predykcje. 
+          SHAP jest oparte na wartości Shapleya wywodzącej się z teorii gier, która umożliwa sprawiedliwy rozdział nagrody w danej koalicji między graczy na podstawie wszystkich innych możliwych koalicji.
+
+          <div style="height: 7px;"></div>
+          W kontekście nauczania maszynowego koalicję tworzą cechy (np. rok budowy) i oblicza się, jak te cechy wpłynęły na przewidzianą wartość lub na prawdopodobieństwo przynależenia do danej klasy w zagadnieniach związanych z klasyfikacją.
+          Ze względu na fakt, że wraz ze wzrostem ilości cech w zestawie danych, ilość możliwych koalicji wzrasta wykładniczo, obliczanie wartości Shapleya staje się bardziej wymagające obiczeniowo i czasochłonne.
+          Dlatego wartość tę się oszacowywuje, a biblioteka SHAP ma jedne z najszybszych i efektywnych metod oszacowywania, w szczególności dla modeli opartych na drzewach decyzyjnych jak np. XGBoost. 
+
+          <div style="height: 7px;"></div>
+          Shap oferuje wiele sposobów na zwizualizowanie udziału cech w modelu jak i pojedynczych predykcji. Poniżej zamieszczono wykres typu swarm dla wartości Shapleya dla cech modelu.
+
+          <img src="css\p1_images\SHAP imp2.png" style="margin: 36px; ;">
+          <br>
+          Oś Y zawiera poszczególne cechy, natomiast oś X to wartość SHAP, która ma taką samą jednostkę jak wartość przewidywana przez model, czyli tu PLN.
+          Gęstość punktów (obserwacji) oznacza jak często dane występują w danym przedziale (niestety brak tu skali ze względu na różnorodność jednostek dla każdej cechy). 
+          Kolor pokazuje jak dana obserwacja wpłynęła na wynik predykcji. Kolejność cech reprezentuje ich istotność w modelu.
+          <div style="height: 10px;"></div>
+          Na przykładzie cechy Dystans do Świętokrzyskiej:
+          <li>większość obserwacji ma ujemne wartości - duża gęstość poniżej 0</li>
+          <li>obserwacje o ujemnej wartości w znacznej większości mają kolor czerwony - niska wartość podwyższa wartość predykcji, wysoka wartość obniża</li>
+          <li>wartość SHAP reprezentuje wpływ danej cechy, co nie oznacza, że np. skrajne punkty z wartośćią ok. 0,5 mil tyle odejmują od końcowej predykcji danej obserwacji</li>
+
+          <div style="height: 20px;"></div>
+
+          SHAP umożliwia przedstawienie jak dane cechy wpłynęły na przewidzianą wartość. Na przykładzie wcześniej wspomnianych mieszkań z dzielnic Włochy, Kabaty i Natolin dla modelu XGBoost wyprowadzono wykresy tzw. forceplot:
+
+          <div style="height: 11px;"></div>
+
+
+          <img src="css\p1_images\SHAP włochy.png" style="margin: 5px 10px; ;">
+
+          <img src="css\p1_images\SHAP kabaty.png" style="margin: 5px 10px; ;">
+
+          <img src="css\p1_images\SHAP natolin.png" style="margin: 5px 10px; ;">
+
+          Pozioma oś reprezentuje cenę mieszkania. 
+          Jest na niej zaznaczona na szaro średnia wartość (base value) równa ok. 900 000 zł, która jest średnią wartością cen mieszkań z zestawu treningowego.
+          Grubą czcionką jest oznaczona przewidziana wartość mieszkania jako f(x).
+          Pod poziomą osią są przedstawione bloki ze strzałkami reprezentujące jak dana cecha wpłynęła na predykcję. 
+          <div style="height: 10px;"></div>
+
+          Przykładowo dla mieszkania na Włochach mała powierzchnia (37 m²) przyczyniła się do obniżenia przewidywanej ceny mieszkania o około 250 000 zł, 
+          a dla mieszkania na Kabatach mały dystans do stacji metra (160 m) podwyższył cenę o ok. 100 000 zł. 
+          <div style="height: 10px;"></div>
+
+          Wykresy forceplots są bardzo łatwe w interpretacji i jasno pokazują co przyczyniło się do danej predykcji. 
+          Warto pamiętać, że SHAP oszacowywuje te wartości, nie mówiąc już o ogólnej naturze modeli regresyjnych. Wartości te należy więc zawsze przyjmować z rezerwą. 
+          <div style="height: 20px;"></div>
+
+
+          <h5 id="Podsumowanie">Podsumowanie</h5>
+          Przy pomocy LASSO i SHAP wyznaczono, jakie cechy są istotne dla modeli, w przypadku SHAP dotyczy to wyłącznie modelu XGBoost,
+          który okzazał się znacznie lepszy niż modele z poprzednich podejść. 
+          Potwierdziły się też założenia, że dystanse mieszkań do najbliższej stacji metra i centrum Warszawy są bardzo istotnymi cechami.
+          Sam model XGBoost osiągnął bardzo wysoką celność 84%. Trzem „kontrolnym” mieszkaniom model przewidział najbardziej realistyczne ceny. 
+
+          <div style="height: 5px;"></div>
+          Jedna ineresująca rzecz przykuła moją uwagę - cecha Apartamentowiec jest niemal nieistotna (w przypadku LASSO jest zuepłnie nieistotna - niezależnie od wartości λ ma ona wagę 0). 
+          Zdaje się, że zamiast cechy Apartamentowiec, model rozpatruje czy dane mieszkanie jest blokiem lub nie - cecha Blok jest piąta na wykresie wartości SHAP dla cech i jest trzecia pod względem istotności według LASSO. 
+          Kamienica jest dość istotna wg wykresu lasso_paths, ale wg SHAP już nie.
+
+<br><br>
+
+          
+
+
+
 
         </div>
       </span>
         <div class="col-md-3" style="padding-left: 36px;"> <!-- SIDEBAR -->
           <div class="sticky">
             <p>Nawigacja:</p>
-            <a href="#top">1. Wstęp</a> <br>
+            <a href="#top">1. Wstęp</a> <br>S
             <a href="#zebranie_danych-header">2. Zebranie danych</a> <br>
             <a href="#QGIS-header">3. Mapa i przetworzenie danych w QGIS</a> <br>
             <a href="#pandas-header">4. Oczyszczenie danych w Pandas</a> <br>
@@ -1085,7 +1198,14 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             <a href="#uwagi-header" style="margin-left:15px">Uwagi dotyczące korelacji</a> <br>
             <a href="#modelowanie-header">6. Modelowanie</a> <br>
             <a href="#wnioski-header">7. Wnioski</a> <br>
-            <a href="#poprawki-header">8. LASSO, XGBoost, SHAP</a>
+            <div style="height: 5px;"></div>
+            <a href="#poprawki-header", style="font-weight: 501;">8. LASSO, XGBoost, SHAP</a>
+            <li style="margin: -7px 15px; color: #0f87ff; list-style-type: square;"><a href="#LASSO">LASSO</a></li>
+            <li style="margin: -7px 15px; color: #0f87ff; list-style-type: square;"><a href="#XGBoost">XGBoost</a></li>
+            <li style="margin: -7px 15px; color: #0f87ff; list-style-type: square;"><a href="#SHAP">SHAP</a></li>
+            <li style="margin: -7px 15px; color: #0f87ff; list-style-type: square;"><a href="#Podsumowanie">Podsumowanie</a></li>
+
+
 
             <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
 
