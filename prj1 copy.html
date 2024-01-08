@@ -805,10 +805,10 @@ sns.heatmap(df.corr(), cmap='RdBu_r', annot=True, annot_kws={"fontsize":7},
             $$MAE=\frac{1}{n}\sum^n_{i=1}|y_i-\hat{y_i}|$$	
             <!-- MAE - średni błąd bezwzględny - średnia z sumy wartości bezwzględnych błędów -->
             $$RMSE=\sqrt{\frac{1}{n}\sum^n_{i=1}(y_i-\hat{y_i})^2}$$
-            $$R^2=1-\frac{\sum^n_{i=1}(y_i-\hat{y_i})^2}{\sum^n_{i=1}(y_i-\overline{y_i})^2}$$
+            $$R^2=1-\frac{\sum^n_{i=1}(y_i-\hat{y_i})^2}{\sum^n_{i=1}(y_i-\overline{y})^2}$$
             gdzie: 
             <li>\(\sum(y_i-\hat{y_i})^2\) to suma kwadratów pozostałości, tzw. residuals, potęga różnicy między wartością prawdziwą a wartością przewidywaną</li>
-            <li>\(\sum(y_i-\overline{y_i})^2\) to suma kwadratów ogółem, potęga różnicy między prawdziwą wartością a średnią tego rodzaju wartości</li>
+            <li>\(\sum(y_i-\overline{y})^2\) to suma kwadratów ogółem, potęga różnicy między prawdziwą wartością a średnią tego rodzaju wartości</li>
             <!-- RMSE - pierwiastek błędu średniokwadratowego - bardziej wyczulony na duże błędy, można go łatwo interpretować dzięki pierwiastkowi (bez pierwiastka znany jako MSE) -->
             <br>
             MAE, MSE i RMSE są wartościami, które chcemy zminimalizować podczas budowania modelu. 
