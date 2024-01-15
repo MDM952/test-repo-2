@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Projekt III 🦈</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/css_project_page.css">
+        <link rel="stylesheet" href="css/cssmaster.css">
+        <script src="scripts\copy mail.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/1c9ad4b785.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="scripts\code highlight\styles\idea.min.css"/>
+        <script src="scripts\code highlight\highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+
+        
+
+      </head>
+  <body>
+      
+
+
+    <span class="border border-0">
+
+    <div style="height: 30px;"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9"> <!--TU ZWIJAĆ-->
+
+          <div class="tresc wstep">
+            <h4 id="dataframe_overview">dataframe_overview</h4>
+
+
+            <pre><code>
+def df_overview(dataframe, modulo=5, head_rows=3, zip_nans=True):
+  shape_rows = dataframe.shape[0] # ile wierszy
+  shape_cols = dataframe.shape[1] # ile wszystkich kolumn
+  shape_cols_rest =  shape_cols % modulo # ile kolumn po dzieleniu (ogon)
+
+  main = dataframe.iloc[:,:-shape_cols_rest] # df z głównymi kolumnami
+  rest = dataframe.iloc[:,-shape_cols_rest:] # df z ogonem kolumn
+
+  main_cols = np.array(main.columns.tolist()).reshape(int(main.shape[1] / modulo), modulo) 
+  # nazwy głównych kolumn w grupach
+  rest_cols = rest.columns # nazwy kolumn ogon
+
+  for i in main_cols: # do wyświetlenia kolumn z ilorazu
+    head = dataframe[i].head(head_rows) # góra outputu
+
+    uniques = [dataframe[j].nunique() for j in head.columns] # ile unikatowych wartości
+
+    nans =  [dataframe[j].isna().sum() for j in head.columns] # ile NaN
+    nans_perc = [round(dataframe[j].isna().sum() / shape_rows  * 100, 1) for j in head.columns ] # % NaN
+
+    nans_and_perc = [(nans[i], str(nans_perc[i])+' %') for i in range(len(nans))] 
+    # kombinacja obu żeby była jeden wiersz
+
+    types = [dataframe[dataframe[j].notnull()][j].dtype for j in head.columns] # jakie typy
+
+
+    if zip_nans: # czy chcemy skrócone NaN
+      head.loc[len(head)] = types
+      head.loc[len(head)] = uniques
+      head.loc[len(head)] = nans_and_perc
+
+      head = head.rename(index={int(len(head)-3): 'Data type',
+                        int(len(head)-2): 'Unique values',
+                        int(len(head)-1): 'NaNs',
+                        })
+
+    else: # czy chcemy pełne NaN
+      head.loc[len(head)] = types
+      head.loc[len(head)] = uniques
+      head.loc[len(head)] = nans
+      head.loc[len(head)] = nans_perc
+
+      head = head.rename(index={int(len(head)-4): 'Data type',
+                        int(len(head)-3): 'Unique values',
+                        int(len(head)-2): 'NaN total',
+                        int(len(head)-1): 'NaN %'
+                        })
+
+    display(head) # wyświetla kolumny z ilorazu
+
+
+  for i in [rest_cols]: # do wyświetlenia kolumn z reszty, robimy [list] żeby działało tak samo
+    head = dataframe[i].head(head_rows) # góra outputu
+
+    uniques = [dataframe[j].nunique() for j in head.columns] # ile unikatowych wartości
+
+    nans =  [dataframe[j].isna().sum() for j in head.columns] # ile NaN
+    nans_perc = [round(dataframe[j].isna().sum() / shape_rows  * 100, 1) for j in head.columns ] # % NaN
+
+    nans_and_perc = [(nans[i], str(nans_perc[i])+' %') for i in range(len(nans))] 
+    # kombinacja obu żeby była jeden wiersz
+
+    types = [dataframe[dataframe[j].notnull()][j].dtype for j in head.columns] # jakie typy
+    if zip_nans: # czy chcemy skrócone NaN
+      head.loc[len(head)] = types
+      head.loc[len(head)] = uniques
+      head.loc[len(head)] = nans_and_perc
+      head = head.rename(index={int(len(head)-3): 'Data type',
+                        int(len(head)-2): 'Unique values',
+                        int(len(head)-1): 'NaNs',
+                        })
+
+    else: # czy chcemy pełne NaN
+      head.loc[len(head)] = types
+      head.loc[len(head)] = uniques
+      head.loc[len(head)] = nans
+      head.loc[len(head)] = nans_perc
+      head = head.rename(index={int(len(head)-4): 'Data type',
+                        int(len(head)-3): 'Unique values',
+                        int(len(head)-2): 'NaN total',
+                        int(len(head)-1): 'NaN %'
+                        })
+    display(head) # wyświetla kolumny z reszty
+
+
+
+
+df_overview(df, 10)
+            </code></pre>
+
+            <h4 id="numeric_overview">numeric_overview</h4>
+            <pre><code>
+def numeric_overview(dataframe, modulo=5,):
+  dataframe = dataframe.select_dtypes(include=np.number) # uwzględnia też NaN
+
+  shape_rows = dataframe.shape[0]            # ile wierszy
+  shape_cols = dataframe.shape[1]            # ile wszystkich kolumn
+  shape_cols_rest =  shape_cols % modulo     # ile kolumn po dzieleniu (ogon)
+
+  main = dataframe.iloc[:,:-shape_cols_rest] # df z głównymi kolumnami
+  rest = dataframe.iloc[:,-shape_cols_rest:] # df z ogonem kolumn
+
+  main_cols = np.array(main.columns.tolist()).reshape(int(main.shape[1] / modulo), modulo) 
+  # nazwy głównych kolumn w grupach
+  rest_cols = rest.columns # nazwy kolumn ogon
+
+  for i in main_cols:
+    display(df[i].describe().round(2)[1::]) # [1::] bo count już znamy i wszędzie takie samo
+
+  for i in [rest_cols]:
+    display(df[i].describe().round(2)[1::])
+
+
+
+numeric_overview(df, 6)
+            </code></pre>
+
+            <h4 id="categorical_overview">categorical_overview</h4>
+
+            <pre><code>
+def categorical_overview(dataframe, number_to_list=5):
+  shape_rows = dataframe.shape[0]
+
+  dataframe = dataframe.select_dtypes(include='object') # bierzemy część ramki z danymi kategorycznymi
+
+  categorical_cols = dataframe.columns  # tu tylko kolumny
+
+
+  for i in categorical_cols:
+
+    described = df[i].describe()[:2] 
+    # bierzemy tylko count i unique
+    # nie bierzemy top (najczęstsza wartość) i freq (jej ilość) - to i tak wyświetlimy
+
+    described['NaN'] = (df[i].isna().sum(), str(round(df[i].isna().sum() / shape_rows * 100, 2)) + '%') 
+    # dodajemy kolumnę z tuple ile NaN i % NaN
+
+    uniques = df[i].value_counts()[:number_to_list] 
+    # number_to_list - ile przykładowych wartości unikatowych do wyświetlenia
+
+    output = pd.concat([described, uniques]).reset_index().rename(columns={'index':'values'}) 
+    # składamy do kupy
+
+    display(output)
+
+
+
+categorical_overview(df)
+            </code></pre>
+
+          </div>
+
+        </div> <!--TU KONIEC-->
+      </span>
+        <div class="col-md-3" style="padding-left: 36px;"> <!-- SIDEBAR -->
+          <div class="sticky">
+            <p>Nawigacja:</p>
+            <a href="#dataframe_overview">dataframe_overview</a> <br>
+            <a href="#numeric_overview">numeric_overview</a> <br>
+            <a href="#categorical_overview">categorical_overview</a> <br>
+
+            <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
+
+            <a href="#top">Powrót do początku</a> <br>
+          </div>
+        </div>
+    </div>
+      
+    <section class="jumbotron text-center">
+      <div class="container", style="padding-top: 90px;">
+        <p>
+          <a href="#top" class="btn btn-outline-secondary my-2 botbuttons" >Powrót do początku</a>
+          <a href="index.html"class="btn btn-secondary my-2 botbuttons" >Powrót do strony głównej</a>
+        </p>
+      </div>
+  </section>
+
+
+    <div id="footer", class="bottom", style="font-size:0.77em;">      
+          <p style="margin:5px;">&copy; <script>document.write(new Date().getFullYear());</script> Konrad Jarominiak</p>
+          <p>Wykorzystano:
+            <a href="https://getbootstrap.com/" class="footer-link">Bootsrap 5</a>,
+            <a href="https://highlightjs.org/" class="footer-link">highlight.js</a>,
+            <a href="https://www.mathjax.org/" class="footer-link">MathJax</a> </p>
+      
+        </div>
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>
