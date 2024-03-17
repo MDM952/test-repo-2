@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Projekt III 🦈</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/css_project_page.css">
+        <link rel="stylesheet" href="css/cssmaster.css">
+        <script src="scripts\copy mail.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/1c9ad4b785.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="scripts\code highlight\styles\idea.min.css"/>
+        <script src="scripts\code highlight\highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+
+        
+
+      </head>
+  <body>
+      
+    <section class="jumbotron text-center" id="top">
+        <div class="container", style="padding: 40px;">
+          <h2>Model przewidujący jakość horroru na podstawie jego tytułu 
+            <br>(Niemal 100% skuteczności! Niezwykle praktyczny!)</h2>
+          <p class="lead text-muted">
+            Niezbyt poważny projekt dotyczący przewidywania oceny horrorów klasy D na podstawie ich tytułów. 
+            <br>Wizualizacja danych i model lasu losowego (random forest).
+          </p>
+
+          <div style="height: 40px;"></div>
+
+          <div class="container">
+            <div class="row justify-content-md-center">
+              <div class="col col-lg-4">
+                <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 450px;">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" style="margin: auto;">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#panelsStayOpen-collapseTwelve" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwelve">
+                      Kontakt ↴
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwelve" class="accordion-collapse collapse" style="margin-top: 20px; margin-bottom: 20px">
+                      <div class="accordion-body" style="padding: 5px" >
+    <!-- The text field -->
+    
+                          <div class="container">
+                            <div class="row" style="padding:0px">
+                              <div class="col">
+  
+                                <div style="margin: auto; padding: auto;">
+                                  <input type="text" 
+                                  id="myInput" 
+                                  class="form-control form-control-sm" 
+                                  value="konrad.jarominiak0@gmail.com" disabled
+                                 style="width: 220px">
+                                </div>
+  
+  
+                              </div>
+                              <div class="col">
+  
+                                <div style="margin: auto; padding: auto;">
+                                  <button type="button" class="btn btn-outline-secondary btn-sm" style="width: 140px; margin: 0;" onclick="myFunction()">skopiuj do schowka</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div style="width: 220px; margin-top: 10px;">
+                                  <a
+                                  href="https://www.linkedin.com/in/konrad-jarominiak-941ba0294/"
+                                  class="btn btn-outline-primary btn-sm"
+                                  style="width: 120px; border-color: #0a66c2; "
+                                  >
+                                  LinkedIn
+                                  </a>
+                                </div>
+  
+                                </div>
+                              <div class="col">
+                                 
+                              </div>
+                            </div>
+                          </div>
+    
+    
+    
+    
+    <!-- The button used to copy the text -->
+    
+    
+    <!-- The toast -->
+                          <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+                            <div class="toast" style="position: absolute; top: 0px; right: 0; width:250px">
+                              <div class="toast-body">
+                                Skopiowano do schowka!
+                              </div>
+                            </div>
+                          </div>
+                          
+                      </div>
+                    </div>
+                  </div>
+      
+                </div>   
+              </div>
+  
+              <div class="col col-lg-4">
+                
+  
+                <div style="width: 450px; padding-top: 15px; padding-bottom: 15px;">
+                  <a
+                  href="index.html"
+                  class="btn btn-secondary my-2"
+                  >Powrót do strony głównej</a>
+                </div>
+  
+              </div>
+            </div>
+          </div>
+
+
+          <div class="true_center">
+            <div class="row" style="margin:margin-top: 40px; width: 100%">
+              <div class="col col-sm">
+             </div>
+              <div class="col col-sm">
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          
+
+        </div>
+    </section>
+
+    <span class="border border-0">
+
+    <div style="height: 30px;"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9"> <!--TU ZWIJAĆ-->
+
+          <div class="tresc wstep">
+            <h4 id="wstep-header">1. Wstęp</h4>
+            Pomysł na ten projekt zrodził się z przemyśleń nad zatrzęsieniem niezaprzeczalnie fatalnych, tanich filmów na serwisach VOD, 
+            których jedynym celem jest <a href="https://www.giantfreakinrobot.com/ent/watchbait-new-clickbait.html">przyciągnięcie</a> 
+            widza swoim tytułem nawiązującym do starych, słynnych filmów. 
+            Przykładowo multum filmów o rekinach udających sequele "Szczęk" Spielberg'a.
+            <br> <br>  
+            Czy można przewidzieć powodzenie takiego filmu na podstawie jego tytułu? 
+            Ten projekt jest próbą utworzenia modelu, który przewiduje oceny horrorów i ich podróbek na podstawie ich tytułów.
+            <br><br>
+            Projekt opiera się na zestawie danych z <a href="https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset?select=movies_metadata.csv">Kaggle</a>,
+            który, według opisu, jest połączeniem danych z <a href="https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset?select=movies_metadata.csv">TMDB</a> i 
+            <a href="https://grouplens.org/datasets/movielens/">MovieLens</a>.
+            <br>
+            Do wykonania niniejszego projektu wykorzystano biblioteki:
+            <div style="height: 3px;"></div>
+
+            <ul>
+            <li>Pandas i Numpy do przetworzenia i oczyszczenia danych</li>
+            <li>Matplotlib i Seaborn do wizualizacji danych</li>
+            <li>sci-kit learn do stworzenia modelu</li>
+            </ul>
+
+          </div>
+
+          <div class="tresc analiza_zestawu_danych">
+            <h4 id="analiza_zestawu_danych-header">2. Analiza zestawu danych</h4>
+
+            W tabeli znajdują się 24 kolumny dotyczące danych poszczególnych filmów, np. tytuł, tagline, popularność, przychód, opis, etc.
+            Na potrzeby modelu, kolumny które byłyby przydatne to:
+
+            <ul>
+            <li>tytuł</li> 
+            <li>gatunek</li>
+            <li>budżet</li>
+            <li>przychód</li>
+            <li>ocena</li>
+            </ul>
+
+            W pierwszej kolejności spisano listę członów tytułów. Cześć z nich może wyglądać dość dziwnie, np. 'Dea'.
+            Taki człon ma wyłapać tytuły zawierające zarówno 'Death' jak i 'Dead'. Człony łączą się w tytuły jak np.
+            'shark' i 'tornado' w <a href="https://www.imdb.com/title/tt2724064/">Sharknado</a>. 
+            <br><br>
+            Lista członów przedstawia się następująco:
+<div style="height: 9px;"></div>
+
+            <div class="container text-left">
+              <div class="row">
+
+                <div class="col">
+                  <li>3D</li>
+                </div>
+                <div class="col">
+                  <li>American</li>
+                </div>
+                <div class="col">
+                  <li>Asylum</li>
+                </div>
+                <div class="col">
+                  <li>Blac</li>
+                </div>
+                <div class="col">
+                  <li>Blood</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Chainsaw</li>
+                </div>
+                <div class="col">
+                  <li>Child</li>
+                </div>
+                <div class="col">
+                  <li>Clown</li>
+                </div>
+                <div class="col">
+                  <li>Conjur</li>
+                </div>
+                <div class="col">
+                  <li>Corn</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Cula</li>
+                </div>
+                <div class="col">
+                  <li>Curs</li>
+                </div>
+                <div class="col">
+                  <li>Dea</li>
+                </div>
+                <div class="col">
+                  <li>Demon</li>
+                </div>
+                <div class="col">
+                  <li>Devil</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Dino</li>
+                </div>
+                <div class="col">
+                  <li>Evil</li>
+                </div>
+                <div class="col">
+                  <li>Exorc</li>
+                </div>
+                <div class="col">
+                  <li>Fear</li>
+                </div>
+                <div class="col">
+                  <li>Final</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Geist</li>
+                </div>
+                <div class="col">
+                  <li>Haunt</li>
+                </div>
+                <div class="col">
+                  <li>House</li>
+                </div>
+                <div class="col">
+                  <li>Kill</li>
+                </div>
+                <div class="col">
+                  <li>Land</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Monster</li>
+                </div>
+                <div class="col">
+                  <li>Moon</li>
+                </div>
+                <div class="col">
+                  <li>Mummy</li>
+                </div>
+                <div class="col">
+                  <li>Nado</li>
+                </div>
+                <div class="col">
+                  <li>Night</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Nurse</li>
+                </div>
+                <div class="col">
+                  <li>Ouija</li>
+                </div>
+                <div class="col">
+                  <li>Psycho</li>
+                </div>
+                <div class="col">
+                  <li>Scar</li>
+                </div>
+                <div class="col">
+                  <li>Scream</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Shark</li>
+                </div>
+                <div class="col">
+                  <li>Stein</li>
+                </div>
+                <div class="col">
+                  <li>Texas</li>
+                </div>
+                <div class="col">
+                  <li>Town</li>
+                </div>
+                <div class="col">
+                  <li>Vengeance</li>
+                </div>
+                
+                </div>
+                <div class="row">
+                
+                <div class="col">
+                  <li>Ville</li>
+                </div>
+                <div class="col">
+                  <li>Virus</li>
+                </div>
+                <div class="col">
+                  <li>Witch</li>
+                </div>
+                <div class="col">
+                  <li>Wolf</li>
+                </div>
+                <div class="col">
+                  <li>Zombie</li>
+                </div>
+                
+                </div>
+                
+            </div>
+
+            <br><br>
+            Następnie utworzono funkcję agregującą tytuły do sprawdzenia ilości filmów z danymi członami.
+
+            <pre><code>
+shape_amount = {}
+
+def check_amount(part_to_check):
+
+    # część weryfikująca
+    print(f'Title part: "{part_to_check}"')
+    print(f'Amount: {df[df["original_title"].str.contains(part_to_check, case=False)].shape[0]}')
+    print(f'Avg score: {df[df["original_title"].str.contains(part_to_check, case=False)]["vote_average"].mean().round(2)}')
+
+    # część agregująca
+    shape_amount[part_to_check] = df[df["original_title"].str.contains(part_to_check, case=False)].shape[0]
+    
+
+check_amount(random.sample(title_parts, 1)[0]) # sprawdzamy losowy człon
+
+# out:
+Title part: "Moon"
+Amount: 16
+Avg score: 4.25
+            </code></pre>
+
+            Na podstawie danych zagregowanych do słownika utworzono dataframe i wykres kolumnowy z ilością tytułów zawierającą dany człon. 
+            <br> Wykres ten zawiera 1425 członów, z czego 208 to duplikaty, co oznacza, 
+            że 17% tytułów jest przynajmniej dwuczłonowa.
+
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                  data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="true" aria-controls="panelsStayOpen-collapseNine", style="padding: auto;">
+                    <img src="css\p3_images\title parts amount.png" style="max-width: 100%; margin: auto;">                
+                  </button> 
+                </h2>
+                <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+  <pre><code>
+sf = pd.DataFrame.from_dict(shape_amount, orient='index', columns=['amount'])
+sf = sf.sort_values('amount', ascending=False)
+
+fig, ax = plt.subplots(figsize=(9,6))
+plt.xticks(rotation=90)
+chart = sns.barplot(data=sf, x=sf.index, y='amount', palette='plasma')
+chart.set_title('Rozkład części tytułów')
+chart.set(xlabel='Część tytułu', ylabel='Ilość')
+  </code></pre>                </div>
+                </div>
+              </div>
+            </div>
+
+            <br>
+            Kolejno przefiltrowano zestaw danych tak, aby pozostały tylko te horrory, które zawierają przynajmniej jeden człon z naszej listy.
+            Sprawdzono również jaka ilość filmów zawiera dane dotyczące budżetu i przychodu. 
+            Niestety znaczna większość z nich nie ma tych wartości sprecyzowanych i ostatecznie kolumny 'budget' i 'revenue' zostały usunięte przed modelowaniem.
+            Tak duże ilości brakujących danych bardzo negatywnie wpłynęłyby na jakość modelu. 
+            <br> <br>
+
+
+
+            <pre><code> <!-- Kod dla pokoleń i dystansu -->
+watchbait_df = pd.DataFrame()
+
+for i in title_parts:
+    current_part = df[df["original_title"].str.contains(i, case=False)]
+    print(f'"{i}" in titles: {current_part.shape[0]}; Average score: {current_part["vote_average"].mean().round(1)}')
+    watchbait_df = pd.concat([watchbait_df, current_part], ignore_index=True)
+
+# out:
+"Zombie" in titles: 47; Average score: 4.5
+
+print(f'Budget over 0: {watchbait_df[watchbait_df["budget"] > 0].shape[0]}')
+print(f'Revenue over 0: {watchbait_df[watchbait_df["revenue"] > 0].shape[0]}')
+print(f'Total amount of titles: {watchbait_df.shape[0]}')
+
+# out:
+Budget over 0: 419
+Revenue over 0: 251
+Total amount of titles: 1425
+            </code></pre>
+
+            Usunięto również filmy z ilością ocen 0, 1 i 2. 
+            Filmy z ilością ocen równą 3 miały wystarczająco sensowne wyniki tzn. oceny były niewiększe niż 7. 
+            Gdyby końcowy rozmiar zestawu danych nie był mały (115 tytułów), odcięcie po ilości ocen oczywiście by zwiększono np. do 10.
+            Kolejno przeprowadzono następujące operacje:
+
+            <li>Usunięto duplikaty</li>
+            <li>Ograniczono tabelę do tytułu, oceny i ilości ocen</li>
+            <li>Przeprowadzon one-hot encoding członów tytułów</li>
+            <li>Utworzono uproszczoną kolumnę ocen - 'Rating' z trzema możliwymi stopniami: 'Good', 'Decent', 'Awful'. Te wartości będzie przewidywał model. 
+              Przedziały wyznaczono na podstawie końcowego histogramu ocen, zamieszczonego poniżej.</li>
+            <li>Ograniczono tytuły tylko do tych, które mają przynajmniej dwuczłonowe tytuły - tu ilość filmów spadła do 115. </li>
+            <br>
+
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                  data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="true" aria-controls="panelsStayOpen-collapseSeven">
+                    Kod dla procedur powyżej
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+  
+                    <pre><code>
+  # usunięcie duplikatów
+  print(f'Before duplicate removal: {df.shape[0]}')
+  df = df.drop_duplicates()
+  print(f'After duplicate removal: {df.shape[0]}\n')
+  
+  # out:
+  Before duplicate removal: 1425
+  After duplicate removal: 1218
+  
+  
+  # ograniczenie df do istotnych kolumn
+  df = df[['title', 'vote_average', 'vote_count']]
+  
+  
+  # one-hot encoding członów
+  def get_part(title, part):
+      if part.lower() in title.lower():
+          return 1
+      else:
+          return 0
+  
+  for title_part in title_parts:
+      df[title_part] = df['title'].apply(lambda x: get_part(x, title_part))
+  
+  
+  def uniform_score(vote):
+      if vote >= 6.5:
+          return 'Good'
+      elif vote >= 4 and vote < 6.5:
+          return 'Decent'
+      elif vote < 4:
+          return 'Awful'
+  
+  df['Rating'] = df["vote_average"].apply(lambda x: uniform_score(x))
+  
+  
+  # ucięcie do min. dwuczłonowych filmów, to pójdzie do modelowania
+  df_cut = df[df["Title parts"] > 1]
+                    </code></pre>
+  
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                  data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+  <img src="css\p3_images\histogram ocen.png" style="margin:auto" alt="">
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+  
+                    <pre><code>
+sns.set_style('white')
+
+plt.figure(figsize=(9, 5))
+ax = sns.histplot(df_cut['vote_average'], binwidth=.2, color='#1d76bf',)
+
+plt.xticks(np.arange(1, 9, 1))
+plt.yticks(np.arange(0, 12, 2))
+ax.set_title('Histogram ocen', fontdict={'fontsize':12})
+ax.set_xlabel('Średnia ocena', fontdict={'fontsize':11})
+ax.set_ylabel('Częstość', fontdict={'fontsize':11})
+                    </code></pre>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+<br>
+
+
+          </div>
+            <div class="tresc analiza_zestawu_danych">
+              <h4 id="wizualizacja-header">3. Sprawdzenie korelacji</h4>
+
+              Przed rozpoczęciem modelowania sprawdzono, 
+              czy w zestawie danych istnieje zależność między samymi członami tytułów a oceną filmów.
+              Dokonano tego zestawiając korelację członów do oceny (słupki) wraz samą średnią oceną dla danego członu (linia).
+              
+              <br>
+              
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#panelsStayOpen-collapseFivee" aria-expanded="true" aria-controls="panelsStayOpen-collapseFivee">
+<img src="css\p3_images\titlepart and corr.png" style="width: 100%;" alt="">
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFivee" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <pre><code class="language-python">
+# kolumna członu do oceny
+corr_matrix = df_cut.corr()['vote_average'][1:]
+
+# dodanie kolumny ocen do df, do naniesienia na wykresie jako linię
+dfc_cut = pd.concat([corr_matrix, pd.Series(avg_title_dict)], axis=1)
+dfc_cut.columns = ['correlation', 'vote_average']
+
+# poprawka i usunięcie członów bez korelacji
+dfc_cut = dfc_cut.reset_index()
+dfc_cut.columns = ['title', 'correlation', 'vote_average']
+dfc_cut.dropna(inplace=True)
+
+# wykres
+fig, ax = plt.subplots(figsize=(10,7))
+plt.xticks(rotation=90)
+plt.rcParams['font.size'] = 8
+
+# naniesienie korelacji jako słupki z sortowaniem po korelacji
+ax = sns.barplot(data=dfc_cut.sort_values(by='correlation'), x='title', y='correlation', palette='magma')
+ax.set_ylim(-0.35, 0.35)
+ax.set_ylabel('Korelacja (słupki)', fontdict={'fontsize':9})
+
+# naniesienie ocen jako linii z sortowaniem po korelacji
+ax2 = ax.twinx()
+sns.lineplot(data=dfc_cut.sort_values(by='correlation'), x='title', y='vote_average', ax=ax2, marker='.', color='royalblue')
+ax2.set_ylabel('Vote Average', fontdict={'fontsize':10})
+ax2.set_ylabel('Średnia ocena (linia)')
+
+# formatowanie
+ax.set_xlabel('Człon tytułu', fontdict={'fontsize':'10'})
+plt.title('Korelacja i średnia ocena członów tytułów', fontdict={'fontsize':11})
+                    </code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <li class="opis_wiz">
+            Korelacje są niskie, czego można się było spodziewać.
+          </li>
+
+          <li class="opis_wiz">
+            W niektórych członach występuje dziwny stosunek korelacji do oceny, 
+            w szczególności "Shark" - człon ten ma najniższą średnią ocenę filmów, jednak jego korelacja jest bliska 0.
+            Być może wynika to z występowania innych członów wraz z członem "Shark".
+
+          </li>
+          <li class="opis_wiz">
+            Najgorszym członem okazało się "Zombie", co ma sens, przede wszystkim ze względu na częstość tego członu. 
+            
+          </li>
+          <li class="opis_wiz">
+            Warto znów poruszyć problem braku równowagi w ilości poszczególnych atrybutów i wpływu na korelację, jak w przypadku pokoleń w projekcie ocen usług lotniczych.
+            Aby wartości korelacji najlepiej oddawały te zależności, istotne jest aby dane atrybuty były w miarę równo reprezentowane. 
+          </li>
+
+          
+          </div>
+
+          <div class="tresc modelowanie">
+
+            <h4 id="modelowanie-header">4. Modelowanie</h4>
+            Do modelowania wykorzystano tzw. <span class="eng">las losowy</span> (ang. random forest), świetny model do klasyfikacji. 
+            Metoda lasu losowego opiera się na wykorzystywaniu wielu drzewek decyzyjnych, 
+            gdzie każdy z nich otrzymuje inny, losowo wybrany podzbiór danych uczących.
+
+            <h6>Działanie drzewek decyzyjnych</h6>
+            Drzewo decyzyjne polega na podziałach zestawu danych na podzbiory, w taki sposób, 
+            aby jak najlepiej rozróżnić je na podstawie danego atrybutu (np. pogoda - słonecznie/pochmurnie czy waga - powyżej/poniżej 7kg).
+            
+
+            <br><br>
+            <div class="d-flex align-items-center justify-content-center">
+              <figure class="figure mx-auto">
+                <img src="css\p3_images\Drzewko decyzyjne v2.png" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">Schemat budowy drzewa decyzyjnego</figcaption>
+              </figure>
+            </div>
+
+
+            Podział zbiorów można oprzeć na kilku różnych metodach, m.in. na współczynniku Giniego, entropii lub przyroście informacj.
+            Domyślnym sposobem w bibliotece sci-kit learn to wsp. Giniego, czyli miarze nierównomierności (ang. measure of impurity), która w przypadku drzew decyzyjnych osiąga wartości od 0 do 0,5.
+            Wzór wygląda następująco:
+
+            $$G_i = 1 - \sum_{j=1}^C p^2_{i,j}$$
+
+            gdzie: 
+            <li>\(G_i\) to współczynnik Giniego dla danego węzła \(i\)</li>
+            <li>\(C\) to ilść klas</li>
+            <li>\(p^2_{i,j}\) to stosunek próbek w danym węźle \(i\), które należą do danej klasy \(j\)</li>
+            <div style="height: 9px;"></div>
+            Czyli przykładowo: w węźle dzielącym zbiór wg wieku (Wiek ≤ 32 lat) z 339 próbkami rozdzielono je na 272 próbek spełniających warunek i 67 nie spełniających. Współczynnik Giniego dla tego węzła wyniósł:
+
+            $$G = 1 - (272/339)^2 - (67/339)^2$$
+            $$G = 1 - 0,64 - 0,04$$
+            $$G = 0,32$$
+
+            Im \(G\) jest bliższe 0, tym podział będzie bardziej jednoznaczny (np. \(G=0,12\) dla stosunku \(2-29\)), a klasyfikacja trafniejsza.
+
+            Takie podziały można tworzyć na wiele sposobów, a zestaw danych można dzielić, aż w końcowych odnogach drzewa (liściach), znajdzie się określona wcześniej minimalna ilość próbek, 
+            lub pojedyncze klasy. W takim przypadku model zostatnie totalnie przeuczony.
+            Niestety pojedyncze drzewa losowe nie są zbyt trafnymi modelami, m.in. ze względu na ich podatność na przeuczenie.
+
+
+
+
+            <br><br>
+            <h6>Działanie lasu losowego</h6>
+            <div style="height: 9px;"></div>
+            Las losowy jest bardziej zaawansowaną wersją drzewa decyzyjnego, która wykorzystuje wiele drzew oraz techniki <span class="eng">bagging</span> i <span class="eng">feature randomness</span>: 
+            <li><span class="eng">bagging</span> (inaczej Bootstrap Aggregation) - losowe wybieranie próbek z powtórzeniami, w jednym podzbiorze przekazanym do drzewa decyzyjnego może znaleźć się kilka takich samych próbek.</li>
+            <li><span class="eng">feature randomness</span> - losowe wybieranie, jaka część cech (kolumn zestawu danych np. wiek, waga) zostaną wykorzystane w węzłach drzewa. 
+              W drzewach decyzyjnych model rozpatruje wszystkie cechy zbioru (ale niekoniecznie wykorzystuje wszystkie).</li>
+              <div style="height: 9px;"></div>
+              Techniki te redukują powiązania między osobnymi drzewami decyzyjnymi lasu losowego, dzięki czemu można uniknąć nadmiernego dopasowania danych.
+
+            <br><br>
+            Podczas modelowania wykorzystano GridSearch, czyli narzędzie porównujące jakość modeli, w zależności od wartości parametrów im nadanych, które wyprowadza najlepsze parametry modelu. 
+            Te parametry to:
+            <li>n_estimators - ilość drzew w lesie, domyślna ilość to 100</li> 
+            <li>max_depth - maksymalna głębokość węzłów drzew, nadanie maksymalnej głębokości zapobiega nadmiernemu dopasowaniu</li>
+            <li>min_samples_split - ile gałęzi wychodzi z węzła</li>
+            <li>max_features - ile cech będzie analizowane w modelu, jest to parametr decydujący o w.w. feature randomness</li>
+
+              Przedstawiony poniżej las losowy przewiduje, którą z ocen 'Good', 'Decent', 'Awful' otrzyma film na podstawie członów tytułów.
+
+              <pre><code>
+X = df_cut.drop(["title", "vote_average", "Rating", "Title parts"], axis=1)
+y = df_cut["Rating"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+	'n_estimators': [103, 104, 105],
+	'max_depth': [10, 11, 12, None],
+	'min_samples_split': [2, 4],
+	'max_features': ['sqrt', 'log2']
+}
+
+grid_search = GridSearchCV(estimator=RandomForestClassifier(),
+						  param_grid=param_grid,
+						  verbose=True) # informacja o przebiegu
+
+grid_search.fit(X_train, y_train)
+
+grid_search.best_estimator_ 
+forest = grid_search.best_estimator_
+
+print(forest.score(X_test, y_test))
+# out:
+0.78125
+              </code></pre>
+              Początkowo, przed zastosowaniem wielu poprawek  w modelu i przed użyciem metody GridSearch modele osiągały celność poniżej 50%. 
+              Obecna celność modelu jest więc trochę zaskakująca. Pozostało sprawdzenie na ile sensowne są przewidziane przez model oceny.
+              Najpierw wykonano funkcję do łatwego sprawdzania oceny filmu.
+
+              <pre><code>
+def get_scoring(your_title):
+    my_dict = {
+        'title' : your_title
+    }
+
+    my_title = pd.DataFrame.from_dict([my_dict])
+
+    for title_part in title_parts:
+        my_title[title_part] = my_title['title'].apply(lambda x: get_part(x, title_part))
+
+    return forest.predict(my_title.drop('title', axis=1))[0]
+              </code></pre>
+
+              Następnie sprawdzono kilka tytułów i przewidziane dla nich oceny. Poniżej przedstawiono kilka wyników. 
+              
+
+              <pre><code>
+get_scoring("House of demons")
+# out:
+'Decent'
+
+get_scoring("House of demon zombies") 
+# out:
+'Awful'
+
+get_scoring("Blood of demon children")
+# out:
+'Decent'
+
+get_scoring("Zombie devils and mummy of the moonscar") # tu wrzucono 5 członów
+# out:
+'Decent'
+
+get_scoring('Sharks vs zombies vs bloody mummy 3D')
+# out:
+'Awful'
+
+get_scoring('Fear the Mummy!')
+# out:
+'Good'
+
+get_scoring('American Exorcist')
+# out:
+'Decent'
+              </code></pre>
+
+            <h4 id="wnioski-header">5. Wnioski</h4>
+              Model, który pierwotnie był jedynie niepoważnym żartem, okazał się dość celny. 
+              Choć nie można o nim powiedzieć, że ma prawdziwie praktyczne zastosowanie, spełnia on pierwotnie zamierzoną funkcję. 
+              Można powiedzieć, że jest nieco bardziej zaawansowaną odmianą generatorów nazw zespołów heavy metalowych.
+              Poniżej zamieszczono parę wniosków i uwag.
+            <li>Model był oparty na bardzo małej ilości danych, mimo to udało się coś z nich wyciągnąć.</li>
+            <li>Model wskazuje wszystkie spośród 3 możliwych ocen.</li>
+            <li>Ilość członów nie ma znaczenia, model w pewnym sensie wyprowadza 'uśrednienie' członów.</li>
+            <li>Wcześniej przedstawiona korelacja okazała się w całkiem prawdziwa - np. człon 'Zombie' zaniża oceny tytułów, ale nie do takiego stopnia, że każdy film z tym członem dostanie ocenę 'Awful'.</li>
+            <li>Ciekawe, jak na model wpłynęłaby obecność cech takich jak budżet i przychód. 
+              Najprostszym sposobem byłoby sprawdzenie, czy film zarobił lub nie, lub jaki jest stosunek budżetu do przychodu. 
+              Najpewniej większość filmów, które by na siebie nie zarobiły, miałyby negatywne oceny.
+              Jednak może zaistniałaby taka sytuacja, gdzie film nie zarobił na siebie, a otrzymał pozytywną ocenę. W jaki sposób człony tytułu takich filmów wpłynęłyby na model?</li>
+
+
+
+
+
+
+
+          </div>
+
+        </div>
+      </span>
+        <div class="col-md-3" style="padding-left: 36px;"> <!-- SIDEBAR -->
+          <div class="sticky">
+            <p>Nawigacja:</p>
+            <a href="#top">1. Wstęp</a> <br>
+            <a href="#analiza_zestawu_danych-header">2. Analiza zestawu danych</a> <br>
+            <a href="#wizualizacja-header">3. Wizualizacja danych</a> <br>
+            <a href="#modelowanie-header">4. Modelowanie</a> <br>
+            <a href="#wnioski-header">5. Wnioski</a> <br>
+
+            <hr style="width: 200px; margin-top: 26px; margin-bottom: 20px">
+
+            <a href="#top">Powrót do początku</a> <br>
+          </div>
+        </div>
+    </div>
+      
+    <section class="jumbotron text-center">
+      <div class="container", style="padding-top: 90px;">
+        <p>
+          <a href="#top" class="btn btn-outline-secondary my-2 botbuttons" >Powrót do początku</a>
+          <a href="index.html"class="btn btn-secondary my-2 botbuttons" >Powrót do strony głównej</a>
+        </p>
+      </div>
+  </section>
+
+
+    <div id="footer", class="bottom", style="font-size:0.77em;">      
+          <p style="margin:5px;">&copy; <script>document.write(new Date().getFullYear());</script> Konrad Jarominiak</p>
+          <p>Wykorzystano:
+            <a href="https://getbootstrap.com/" class="footer-link">Bootsrap 5</a>,
+            <a href="https://highlightjs.org/" class="footer-link">highlight.js</a>,
+            <a href="https://www.mathjax.org/" class="footer-link">MathJax</a> </p>
+      
+        </div>
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>
